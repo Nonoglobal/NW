@@ -25,11 +25,8 @@
     --border: rgba(232, 237, 233, 0.08);
     --border-bright: rgba(180, 255, 57, 0.3);
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
-
   body {
     background: var(--bg);
     color: var(--ink);
@@ -39,1159 +36,321 @@
     overflow-x: hidden;
     min-height: 100vh;
   }
-
-  /* Grain overlay */
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 1px 1px, rgba(180, 255, 57, 0.015) 1px, transparent 0);
+    content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+    background-image: radial-gradient(circle at 1px 1px, rgba(180,255,57,0.015) 1px, transparent 0);
     background-size: 24px 24px;
-    pointer-events: none;
-    z-index: 1;
   }
-
   body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
+    content:'';position:fixed;inset:0;z-index:2;pointer-events:none;opacity:0.03;mix-blend-mode:overlay;
     background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 2;
-    mix-blend-mode: overlay;
   }
-
-  /* ═══════════════════════════════════════ NAVIGATION */
   nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    backdrop-filter: blur(20px);
-    background: rgba(10, 14, 12, 0.75);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    backdrop-filter:blur(20px);background:rgba(10,14,12,0.75);
+    border-bottom:1px solid var(--border);padding:1rem 2rem;
+    display:flex;justify-content:space-between;align-items:center;
   }
-
-  .nav-brand {
-    font-family: 'Fraunces', serif;
-    font-weight: 900;
-    font-style: italic;
-    font-size: 1.4rem;
-    letter-spacing: -0.02em;
-  }
-  .nav-brand span { color: var(--acid); }
-
-  .nav-links {
-    display: flex;
-    gap: 0.25rem;
-    flex-wrap: wrap;
-  }
-
+  .nav-brand { font-family:'Fraunces',serif;font-weight:900;font-style:italic;font-size:1.4rem;letter-spacing:-0.02em;}
+  .nav-brand span { color: var(--acid);}
+  .nav-links { display:flex;gap:0.25rem;flex-wrap:wrap;}
   .nav-links a {
-    color: var(--ink-dim);
-    text-decoration: none;
-    font-size: 0.82rem;
-    padding: 0.5rem 0.9rem;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-    font-family: 'JetBrains Mono', monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    color:var(--ink-dim);text-decoration:none;font-size:0.82rem;
+    padding:0.5rem 0.9rem;border-radius:6px;transition:all 0.2s ease;
+    font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.05em;
   }
-  .nav-links a:hover {
-    color: var(--acid);
-    background: rgba(180, 255, 57, 0.05);
-  }
-  .nav-links a.active {
-    color: var(--acid);
-    background: rgba(180, 255, 57, 0.1);
-  }
+  .nav-links a:hover { color:var(--acid);background:rgba(180,255,57,0.05);}
+  .nav-links a.active { color:var(--acid);background:rgba(180,255,57,0.1);}
 
-  /* ═══════════════════════════════════════ HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 6rem 2rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
+  /* HERO */
+  .hero { min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden;}
+  .hero-bg { position:absolute;inset:0;z-index:0;}
+  .molecule-bg { position:absolute;opacity:0.08;animation:float 20s ease-in-out infinite;}
+  .molecule-bg.m1 { top:15%;right:10%;width:300px;}
+  .molecule-bg.m2 { bottom:15%;left:5%;width:200px;animation-delay:-7s;}
+  .molecule-bg.m3 { top:50%;left:45%;width:150px;animation-delay:-14s;}
+  @keyframes float { 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-30px) rotate(180deg);} }
 
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  .molecule-bg {
-    position: absolute;
-    opacity: 0.08;
-    animation: float 20s ease-in-out infinite;
-  }
-  .molecule-bg.m1 { top: 15%; right: 10%; width: 300px; animation-delay: 0s;}
-  .molecule-bg.m2 { bottom: 15%; left: 5%; width: 200px; animation-delay: -7s;}
-  .molecule-bg.m3 { top: 50%; left: 45%; width: 150px; animation-delay: -14s;}
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg);}
-    50% { transform: translateY(-30px) rotate(180deg);}
-  }
-
-  .hero-content { position: relative; z-index: 3; max-width: 1200px; }
-
+  .hero-content { position:relative;z-index:3;max-width:1200px;}
   .hero-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--acid);
-    border: 1px solid var(--border-bright);
-    padding: 0.4rem 0.9rem;
-    border-radius: 100px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards;
+    display:inline-flex;align-items:center;gap:0.5rem;
+    font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--acid);
+    border:1px solid var(--border-bright);padding:0.4rem 0.9rem;border-radius:100px;
+    text-transform:uppercase;letter-spacing:0.15em;margin-bottom:2rem;
+    opacity:0;animation:fadeUp 0.8s ease forwards;
   }
-  .hero-tag::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--acid);
-    border-radius: 50%;
-    animation: pulse 2s ease infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(180, 255, 57, 0.5);}
-    50% { opacity: 0.6; box-shadow: 0 0 0 8px rgba(180, 255, 57, 0);}
-  }
+  .hero-tag::before { content:'';width:6px;height:6px;background:var(--acid);border-radius:50%;animation:pulse 2s ease infinite;}
+  @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(180,255,57,0.5);} 50%{opacity:0.6;box-shadow:0 0 0 8px rgba(180,255,57,0);} }
 
   h1.hero-title {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(3rem, 10vw, 8.5rem);
-    font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.1s forwards;
-  }
-  h1.hero-title em {
-    font-style: italic;
-    font-weight: 900;
-    color: var(--acid);
-  }
-  h1.hero-title .thin { font-weight: 300; opacity: 0.6;}
-
-  .hero-subtitle {
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
-    color: var(--ink-dim);
-    max-width: 600px;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.25s forwards;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px);}
-    to { opacity: 1; transform: translateY(0);}
-  }
-
-  .hero-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-    max-width: 900px;
-    opacity: 0;
-    animation: fadeUp 1s ease 0.4s forwards;
-  }
-
-  .hero-stat {
-    border: 1px solid var(--border);
-    padding: 1.2rem;
-    border-radius: 4px;
-    background: var(--bg-card);
-    transition: all 0.3s ease;
-    cursor: default;
-  }
-  .hero-stat:hover {
-    border-color: var(--acid);
-    transform: translateY(-3px);
-  }
-  .hero-stat-num {
-    font-family: 'Fraunces', serif;
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: var(--acid);
-    line-height: 1;
-  }
-  .hero-stat-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--ink-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 0.5rem;
-  }
-
-  /* ═══════════════════════════════════════ SECTIONS */
-  section.chapter {
-    padding: 6rem 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 3;
-  }
-
-  .chapter-header {
-    display: flex;
-    align-items: baseline;
-    gap: 1.5rem;
-    margin-bottom: 4rem;
-    flex-wrap: wrap;
-  }
-
-  .chapter-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
-    color: var(--ink-faint);
-    letter-spacing: 0.2em;
-  }
-
-  .chapter-title {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 400;
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-  .chapter-title em {
-    font-style: italic;
-    color: var(--acid);
-    font-weight: 600;
-  }
-
-  .chapter-intro {
-    max-width: 700px;
-    color: var(--ink-dim);
-    font-size: 1.05rem;
-    line-height: 1.7;
-    margin-bottom: 3rem;
-  }
-
-  /* ═══════════════════════════════════════ CARDS */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
-
-  .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 2rem;
-    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--acid), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
-  }
-  .card:hover::before { transform: translateX(100%);}
-
-  .card:hover {
-    border-color: var(--border-bright);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -20px rgba(180, 255, 57, 0.1);
-  }
-
-  .card-eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--acid);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 0.5rem;
-  }
-
-  .card-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    letter-spacing: -0.02em;
-  }
-
-  .card-body { color: var(--ink-dim); font-size: 0.95rem;}
-  .card-body strong { color: var(--ink); font-weight: 500;}
-  .card-body ul { list-style: none; margin-top: 0.75rem;}
-  .card-body li {
-    padding-left: 1.2rem;
-    position: relative;
-    margin-bottom: 0.5rem;
-  }
-  .card-body li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--acid);
-  }
-
-  /* ═══════════════════════════════════════ FORMEL / CHEMICAL */
-  .formula {
-    font-family: 'JetBrains Mono', monospace;
-    background: rgba(180, 255, 57, 0.08);
-    color: var(--acid);
-    padding: 0.15em 0.5em;
-    border-radius: 3px;
-    font-size: 0.9em;
-    letter-spacing: 0.02em;
-  }
-
-  .formula-block {
-    font-family: 'JetBrains Mono', monospace;
-    background: var(--bg-elev);
-    border-left: 3px solid var(--acid);
-    padding: 1.5rem;
-    border-radius: 0 6px 6px 0;
-    margin: 1.5rem 0;
-    color: var(--ink);
-    font-size: 1.05rem;
-    overflow-x: auto;
-  }
-
-  /* ═══════════════════════════════════════ MOLEKÜL-VIEWER */
-  .molecule-viewer {
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2rem;
-    margin: 2rem 0;
-  }
-
-  .viewer-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .molecule-tabs {
-    display: flex;
-    gap: 0.3rem;
-    flex-wrap: wrap;
-  }
-
-  .mol-tab {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--ink-dim);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    transition: all 0.2s ease;
-  }
-  .mol-tab:hover { color: var(--ink); border-color: var(--ink-dim);}
-  .mol-tab.active {
-    background: var(--acid);
-    color: var(--bg);
-    border-color: var(--acid);
-  }
-
-  .molecule-canvas {
-    background: radial-gradient(circle at center, #0d120f 0%, #070908 100%);
-    border-radius: 8px;
-    padding: 3rem 1rem;
-    min-height: 320px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .molecule-canvas svg { max-width: 100%; height: auto;}
-
-  .molecule-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-
-  .info-pill {
-    background: var(--bg-card);
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-  }
-  .info-pill-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--ink-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.3rem;
-  }
-  .info-pill-value {
-    font-family: 'Fraunces', serif;
-    font-size: 1.3rem;
-    color: var(--acid);
-    font-weight: 600;
-  }
-
-  /* ═══════════════════════════════════════ HOMOLOGE REIHE */
-  .homolog-table {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 0.5rem;
-    margin: 2rem 0;
-  }
-
-  .homolog-cell {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 1.2rem 1rem;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .homolog-cell:hover {
-    border-color: var(--acid);
-    transform: scale(1.05) translateY(-2px);
-    background: rgba(180, 255, 57, 0.05);
-  }
-  .homolog-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--ink-faint);
-  }
-  .homolog-name {
-    font-family: 'Fraunces', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0.2rem 0;
-  }
-  .homolog-formula {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--acid);
-  }
-
-  /* ═══════════════════════════════════════ REAKTIONS-ANIMATION */
-  .reaction-container {
-    background: var(--bg-elev);
-    border-radius: 12px;
-    padding: 2.5rem;
-    margin: 2rem 0;
-    border: 1px solid var(--border);
-  }
-
-  .reaction-controls {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    margin: 1.5rem 0;
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--ink);
-    padding: 0.7rem 1.5rem;
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    transition: all 0.25s ease;
-  }
-  .btn:hover {
-    background: var(--acid);
-    color: var(--bg);
-    border-color: var(--acid);
-  }
-  .btn.primary {
-    background: var(--acid);
-    color: var(--bg);
-    border-color: var(--acid);
-    font-weight: 600;
-  }
-  .btn.primary:hover {
-    background: var(--acid-dim);
-    border-color: var(--acid-dim);
-  }
-
-  .reaction-stage {
-    background: radial-gradient(ellipse at center, #0d120f 0%, #060806 100%);
-    border-radius: 8px;
-    padding: 2rem 1rem;
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .react-step {
-    display: none;
-    text-align: center;
-    width: 100%;
-  }
-  .react-step.active { display: block; animation: fadeIn 0.5s ease;}
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px);}
-    to { opacity: 1; transform: translateY(0);}
-  }
-
-  .step-label {
-    font-size: 0.75rem;
-    color: var(--acid);
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    margin-bottom: 1.5rem;
-  }
-
-  .step-equation {
-    font-size: clamp(0.9rem, 2vw, 1.3rem);
-    color: var(--ink);
-    margin-bottom: 1rem;
-    word-break: break-word;
-  }
-  .step-equation .plus, .step-equation .arrow {
-    color: var(--acid);
-    margin: 0 0.5rem;
-  }
-
-  .step-desc {
-    font-family: 'Geist', sans-serif;
-    font-size: 0.9rem;
-    color: var(--ink-dim);
-    max-width: 600px;
-    margin: 1rem auto 0;
-    line-height: 1.6;
-  }
-
-  /* ═══════════════════════════════════════ QUIZ */
-  .quiz-container {
-    background: linear-gradient(135deg, var(--bg-card), var(--bg-elev));
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2.5rem;
-    margin: 3rem 0;
-  }
-
-  .quiz-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .quiz-progress {
-    height: 3px;
-    background: var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 2rem;
-  }
-  .quiz-progress-bar {
-    height: 100%;
-    background: var(--acid);
-    width: 0%;
-    transition: width 0.5s ease;
-    box-shadow: 0 0 10px var(--acid);
-  }
-
-  .question-block { min-height: 280px;}
-  .question-text {
-    font-family: 'Fraunces', serif;
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.4;
-  }
-
-  .answers {
-    display: grid;
-    gap: 0.75rem;
-  }
-
-  .answer {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 1rem 1.25rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.95rem;
-    text-align: left;
-    color: var(--ink);
-    font-family: 'Geist', sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .answer:hover {
-    border-color: var(--ink-dim);
-    background: var(--bg-elev);
-  }
-  .answer-key {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--ink-faint);
-    border: 1px solid var(--border);
-    padding: 0.25rem 0.5rem;
-    border-radius: 3px;
-    min-width: 28px;
-    text-align: center;
-  }
-  .answer.correct {
-    border-color: var(--acid);
-    background: rgba(180, 255, 57, 0.08);
-  }
-  .answer.correct .answer-key {
-    background: var(--acid);
-    color: var(--bg);
-    border-color: var(--acid);
-  }
-  .answer.wrong {
-    border-color: var(--rose);
-    background: rgba(255, 71, 133, 0.08);
-  }
-  .answer.wrong .answer-key {
-    background: var(--rose);
-    color: var(--bg);
-    border-color: var(--rose);
-  }
-  .answer.disabled { pointer-events: none; opacity: 0.5;}
-  .answer.disabled.correct, .answer.disabled.wrong { opacity: 1;}
-
-  .quiz-result {
-    text-align: center;
-    padding: 2rem 0;
-  }
-  .quiz-score {
-    font-family: 'Fraunces', serif;
-    font-size: 5rem;
-    font-weight: 900;
-    color: var(--acid);
-    line-height: 1;
-  }
-  .quiz-score span { color: var(--ink-faint); font-weight: 300;}
-
-  /* ═══════════════════════════════════════ FLASHCARDS */
-  .flashcard-deck {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1rem;
-    margin: 2rem 0;
-    perspective: 1500px;
-  }
-
-  .flashcard {
-    aspect-ratio: 3/4;
-    position: relative;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  .flashcard.flipped { transform: rotateY(180deg);}
-
-  .flash-face {
-    position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    border-radius: 10px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid var(--border);
-  }
-
-  .flash-front {
-    background: linear-gradient(135deg, var(--bg-card), var(--bg-elev));
-  }
-
-  .flash-back {
-    background: linear-gradient(135deg, #1a2218, #0d1209);
-    border-color: var(--border-bright);
-    transform: rotateY(180deg);
-    overflow: auto;
-  }
-
-  .flash-term {
-    font-family: 'Fraunces', serif;
-    font-size: 1.3rem;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-  }
-
-  .flash-hint {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--ink-faint);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-  }
-
-  .flash-def {
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: var(--ink);
-  }
-
-  /* ═══════════════════════════════════════ OXIDATION TRAINER */
-  .oxi-trainer {
-    background: var(--bg-elev);
-    border-radius: 12px;
-    padding: 2.5rem;
-    border: 1px solid var(--border);
-    margin: 2rem 0;
-  }
-
-  .oxi-compound-display {
-    font-family: 'Fraunces', serif;
-    font-size: 4rem;
-    text-align: center;
-    margin: 1.5rem 0;
-    color: var(--acid);
-    letter-spacing: 0.05em;
-  }
-
-  .oxi-input-row {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    margin: 1.5rem 0;
-    flex-wrap: wrap;
-  }
-
-  .oxi-input {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--ink);
-    padding: 0.8rem 1rem;
-    border-radius: 6px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    width: 100px;
-    text-align: center;
-  }
-  .oxi-input:focus {
-    outline: none;
-    border-color: var(--acid);
-    box-shadow: 0 0 0 3px rgba(180, 255, 57, 0.15);
-  }
-
-  .oxi-feedback {
-    text-align: center;
-    min-height: 60px;
-    margin-top: 1rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
-  }
-  .oxi-feedback.success { color: var(--acid);}
-  .oxi-feedback.error { color: var(--rose);}
-
-  /* ═══════════════════════════════════════ WASSER HÄRTE */
-  .hardness-diagram {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    margin: 2rem 0;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .hardness-side {
-    padding: 2rem;
-    position: relative;
-  }
-  .hardness-side.temp {
-    background: linear-gradient(135deg, rgba(255, 107, 53, 0.08), transparent);
-    border-right: 1px solid var(--border);
-  }
-  .hardness-side.perm {
-    background: linear-gradient(135deg, rgba(74, 158, 255, 0.08), transparent);
-  }
-
-  .hardness-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 0.5rem;
-  }
-  .hardness-side.temp .hardness-label { color: var(--flame);}
-  .hardness-side.perm .hardness-label { color: var(--cobalt);}
-
-  .hardness-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  /* ═══════════════════════════════════════ FUNCTIONAL GROUPS */
-  .func-groups-wheel {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-    margin: 2rem 0;
-  }
-
-  .func-group {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .func-group::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 0; height: 3px;
-    background: var(--acid);
-    transition: width 0.4s ease;
-  }
-  .func-group:hover::after { width: 100%;}
-
-  .func-group:hover {
-    transform: translateY(-5px);
-    border-color: var(--border-bright);
-  }
-
-  .func-symbol {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.4rem;
-    color: var(--acid);
-    margin-bottom: 0.7rem;
-  }
-
-  .func-name {
-    font-family: 'Fraunces', serif;
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-
-  .func-note {
-    font-size: 0.8rem;
-    color: var(--ink-dim);
-    line-height: 1.5;
-  }
-
-  .func-suffix {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--gold);
-    margin-top: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* ═══════════════════════════════════════ BATTERY */
-  .battery-select {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  .bat-btn {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    padding: 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.3s ease;
-    color: var(--ink);
-  }
-  .bat-btn:hover { border-color: var(--acid); transform: translateY(-2px);}
-  .bat-btn.active {
-    border-color: var(--acid);
-    background: rgba(180, 255, 57, 0.05);
-  }
-  .bat-btn-short {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--ink-dim);
-    margin-bottom: 0.3rem;
-  }
-  .bat-btn-name {
-    font-family: 'Fraunces', serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-
-  .bat-details {
-    background: var(--bg-elev);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 2rem;
-  }
-
-  .bat-specs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
-  }
-  .bat-spec {
-    padding: 1rem;
-    background: var(--bg-card);
-    border-radius: 6px;
-    border-left: 2px solid var(--acid);
-  }
-  .bat-spec-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--ink-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-  .bat-spec-value {
-    font-size: 0.95rem;
-    margin-top: 0.3rem;
-  }
-
-  /* ═══════════════════════════════════════ NOMENCLATURE BUILDER */
-  .nomen-builder {
-    background: var(--bg-elev);
-    border-radius: 12px;
-    padding: 2.5rem;
-    border: 1px solid var(--border);
-  }
-
-  .nomen-result {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(1.3rem, 3vw, 2rem);
-    text-align: center;
-    padding: 2rem;
-    background: var(--bg);
-    border-radius: 8px;
-    margin: 1.5rem 0;
-    min-height: 80px;
-    color: var(--acid);
-    letter-spacing: -0.02em;
-    word-break: break-word;
-  }
-  .nomen-result .empty { color: var(--ink-faint);}
-
-  .nomen-controls {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-
-  .nomen-slider label {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--ink-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
-  }
-
-  .nomen-slider select, .nomen-slider input[type="range"] {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    color: var(--ink);
-    padding: 0.6rem;
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .nomen-value {
-    font-family: 'Fraunces', serif;
-    color: var(--acid);
-    margin-left: 0.5rem;
-  }
-
-  /* ═══════════════════════════════════════ NOTE / RECHERCHE BOX */
-  .note {
-    background: rgba(199, 125, 255, 0.05);
-    border-left: 3px solid var(--violet);
-    padding: 1rem 1.25rem;
-    margin: 1.5rem 0;
-    border-radius: 0 6px 6px 0;
-    font-size: 0.88rem;
-    color: var(--ink-dim);
-  }
-  .note strong { color: var(--violet);}
-
-  /* ═══════════════════════════════════════ ACCORDION */
-  .accordion-item {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 0.75rem;
-    overflow: hidden;
-    transition: border-color 0.2s ease;
-  }
-  .accordion-item:hover { border-color: var(--border-bright);}
-
-  .acc-header {
-    padding: 1.2rem 1.5rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: 'Fraunces', serif;
-    font-size: 1.1rem;
-    font-weight: 500;
-  }
-  .acc-icon {
-    color: var(--acid);
-    font-family: 'JetBrains Mono', monospace;
-    transition: transform 0.3s ease;
-  }
-  .accordion-item.open .acc-icon { transform: rotate(45deg);}
-
-  .acc-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.4s ease;
-    padding: 0 1.5rem;
-    color: var(--ink-dim);
-    font-size: 0.92rem;
-    line-height: 1.7;
-  }
-  .accordion-item.open .acc-body {
-    max-height: 600px;
-    padding: 0 1.5rem 1.5rem;
-  }
-
-  /* ═══════════════════════════════════════ CIRCUIT / ELEKTROCHEMIE */
-  .galvanic-cell {
-    background: radial-gradient(ellipse at center, #0d120f 0%, #060806 100%);
-    border-radius: 12px;
-    padding: 2rem;
-    margin: 2rem 0;
-    border: 1px solid var(--border);
-  }
-
-  /* ═══════════════════════════════════════ FOOTER */
-  footer {
-    padding: 4rem 2rem 2rem;
-    border-top: 1px solid var(--border);
-    text-align: center;
-    margin-top: 6rem;
-    position: relative;
-    z-index: 3;
-  }
-
-  .footer-title {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 2rem;
-    color: var(--ink-dim);
-  }
-  .footer-title em { color: var(--acid);}
-
-  .footer-note {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--ink-faint);
-    margin-top: 1.5rem;
-    letter-spacing: 0.1em;
-  }
-
-  /* ═══════════════════════════════════════ Scrollbar */
-  ::-webkit-scrollbar { width: 10px; height: 10px;}
-  ::-webkit-scrollbar-track { background: var(--bg);}
-  ::-webkit-scrollbar-thumb {
-    background: var(--bg-elev);
-    border-radius: 5px;
-    border: 2px solid var(--bg);
-  }
-  ::-webkit-scrollbar-thumb:hover { background: var(--acid-dim);}
-
-  /* ═══════════════════════════════════════ Animations on scroll */
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0);}
+    font-family:'Fraunces',serif;font-size:clamp(3rem,10vw,8.5rem);font-weight:300;
+    line-height:0.95;letter-spacing:-0.04em;margin-bottom:1.5rem;
+    opacity:0;animation:fadeUp 1s ease 0.1s forwards;
+  }
+  h1.hero-title em { font-style:italic;font-weight:900;color:var(--acid);}
+  h1.hero-title .thin { font-weight:300;opacity:0.6;}
+  .hero-subtitle { font-size:clamp(1rem,1.5vw,1.2rem);color:var(--ink-dim);max-width:600px;margin-bottom:3rem;opacity:0;animation:fadeUp 1s ease 0.25s forwards;}
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+  .hero-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;max-width:900px;opacity:0;animation:fadeUp 1s ease 0.4s forwards;}
+  .hero-stat { border:1px solid var(--border);padding:1.2rem;border-radius:4px;background:var(--bg-card);transition:all 0.3s ease;}
+  .hero-stat:hover { border-color:var(--acid);transform:translateY(-3px);}
+  .hero-stat-num { font-family:'Fraunces',serif;font-size:2.2rem;font-weight:900;color:var(--acid);line-height:1;}
+  .hero-stat-label { font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.5rem;}
+
+  /* TEST BADGES */
+  .test-badge {
+    display:inline-flex;align-items:center;gap:0.35rem;
+    font-family:'JetBrains Mono',monospace;font-size:0.6rem;
+    text-transform:uppercase;letter-spacing:0.12em;
+    padding:0.3rem 0.7rem;border-radius:100px;margin-left:0.5rem;
+    vertical-align:middle;font-weight:600;white-space:nowrap;
+  }
+  .test-badge.hot {
+    background:linear-gradient(135deg,rgba(255,71,133,0.18),rgba(255,107,53,0.12));
+    color:var(--rose);border:1px solid rgba(255,71,133,0.4);
+    box-shadow:0 0 18px rgba(255,71,133,0.15);animation:hotGlow 2.5s ease infinite;
+  }
+  .test-badge.hot::before { content:'●';font-size:0.7rem;}
+  @keyframes hotGlow { 0%,100%{box-shadow:0 0 15px rgba(255,71,133,0.15);} 50%{box-shadow:0 0 28px rgba(255,71,133,0.4);} }
+  .test-badge.main { background:rgba(180,255,57,0.1);color:var(--acid);border:1px solid var(--border-bright);}
+  .test-badge.main::before { content:'★';font-size:0.7rem;}
+
+  .test-legend { background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin:1.5rem 0 2rem;display:flex;gap:2rem;flex-wrap:wrap;align-items:center;}
+  .test-legend-title { font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.15em;}
+  .test-legend-item { display:flex;align-items:center;gap:0.4rem;font-size:0.85rem;color:var(--ink-dim);}
+
+  .teststoff-box {
+    background:linear-gradient(135deg,rgba(255,71,133,0.08),rgba(255,107,53,0.04));
+    border:1px solid rgba(255,71,133,0.3);border-radius:12px;padding:2rem;margin:2rem 0 3rem;
+  }
+  .teststoff-box h3 { font-family:'Fraunces',serif;font-size:1.5rem;color:var(--rose);margin-bottom:1rem;}
+  .teststoff-box ul { list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem;margin-top:0.5rem;}
+  .teststoff-box li { background:var(--bg);border:1px solid var(--border);padding:0.8rem 1rem;border-radius:6px;font-size:0.9rem;display:flex;align-items:center;gap:0.5rem;}
+  .teststoff-box li::before { content:'→';color:var(--rose);font-weight:600;}
+
+  /* SECTIONS */
+  section.chapter { padding:6rem 2rem;max-width:1400px;margin:0 auto;position:relative;z-index:3;}
+  .chapter-header { display:flex;align-items:baseline;gap:1.5rem;margin-bottom:2rem;flex-wrap:wrap;}
+  .chapter-num { font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:var(--ink-faint);letter-spacing:0.2em;}
+  .chapter-title { font-family:'Fraunces',serif;font-size:clamp(2rem,5vw,4rem);font-weight:400;letter-spacing:-0.03em;line-height:1.05;}
+  .chapter-title em { font-style:italic;color:var(--acid);font-weight:600;}
+  .chapter-intro { max-width:700px;color:var(--ink-dim);font-size:1.05rem;line-height:1.7;margin-bottom:3rem;}
+
+  /* CARDS */
+  .card-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:3rem;}
+  .card { background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:2rem;transition:all 0.4s cubic-bezier(0.2,0.8,0.2,1);position:relative;overflow:hidden;}
+  .card::before { content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--acid),transparent);transform:translateX(-100%);transition:transform 0.6s ease;}
+  .card:hover::before { transform:translateX(100%);}
+  .card:hover { border-color:var(--border-bright);transform:translateY(-4px);box-shadow:0 20px 40px -20px rgba(180,255,57,0.1);}
+  .card-eyebrow { font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--acid);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.5rem;}
+  .card-title { font-family:'Fraunces',serif;font-size:1.5rem;font-weight:600;margin-bottom:1rem;letter-spacing:-0.02em;}
+  .card-body { color:var(--ink-dim);font-size:0.95rem;}
+  .card-body strong { color:var(--ink);font-weight:500;}
+  .card-body ul { list-style:none;margin-top:0.75rem;}
+  .card-body li { padding-left:1.2rem;position:relative;margin-bottom:0.5rem;}
+  .card-body li::before { content:'→';position:absolute;left:0;color:var(--acid);}
+
+  .formula { font-family:'JetBrains Mono',monospace;background:rgba(180,255,57,0.08);color:var(--acid);padding:0.15em 0.5em;border-radius:3px;font-size:0.9em;}
+  .formula-block { font-family:'JetBrains Mono',monospace;background:var(--bg-elev);border-left:3px solid var(--acid);padding:1.5rem;border-radius:0 6px 6px 0;margin:1.5rem 0;color:var(--ink);font-size:1.05rem;overflow-x:auto;}
+
+  /* MOLECULE VIEWER */
+  .molecule-viewer { background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:2rem;margin:2rem 0;}
+  .viewer-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;}
+  .molecule-canvas { background:radial-gradient(circle at center,#0d120f 0%,#070908 100%);border-radius:8px;padding:3rem 1rem;min-height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .molecule-canvas svg { max-width:100%;height:auto;}
+  .molecule-info { display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:1.5rem;}
+  .info-pill { background:var(--bg-card);padding:1rem;border-radius:6px;border:1px solid var(--border);}
+  .info-pill-label { font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.3rem;}
+  .info-pill-value { font-family:'Fraunces',serif;font-size:1.3rem;color:var(--acid);font-weight:600;}
+
+  /* HOMOLOG */
+  .homolog-table { display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0.5rem;margin:2rem 0;}
+  .homolog-cell { background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:1.2rem 1rem;text-align:center;cursor:pointer;transition:all 0.3s ease;}
+  .homolog-cell:hover { border-color:var(--acid);transform:scale(1.05) translateY(-2px);background:rgba(180,255,57,0.05);}
+  .homolog-num { font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-faint);}
+  .homolog-name { font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;margin:0.2rem 0;}
+  .homolog-formula { font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--acid);}
+
+  /* REACTION */
+  .reaction-container { background:var(--bg-elev);border-radius:12px;padding:2.5rem;margin:2rem 0;border:1px solid var(--border);}
+  .reaction-controls { display:flex;gap:0.5rem;justify-content:center;margin:1.5rem 0;flex-wrap:wrap;}
+  .btn { background:transparent;border:1px solid var(--border);color:var(--ink);padding:0.7rem 1.5rem;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:all 0.25s ease;}
+  .btn:hover { background:var(--acid);color:var(--bg);border-color:var(--acid);}
+  .btn.primary { background:var(--acid);color:var(--bg);border-color:var(--acid);font-weight:600;}
+  .btn.primary:hover { background:var(--acid-dim);border-color:var(--acid-dim);}
+  .reaction-stage { background:radial-gradient(ellipse at center,#0d120f 0%,#060806 100%);border-radius:8px;padding:2rem 1rem;min-height:300px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:1.4rem;position:relative;overflow:hidden;}
+  .react-step { display:none;text-align:center;width:100%;}
+  .react-step.active { display:block;animation:fadeIn 0.5s ease;}
+  @keyframes fadeIn { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+  .step-label { font-size:0.75rem;color:var(--acid);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:1.5rem;}
+  .step-equation { font-size:clamp(0.9rem,2vw,1.3rem);color:var(--ink);margin-bottom:1rem;word-break:break-word;}
+  .step-equation .plus, .step-equation .arrow { color:var(--acid);margin:0 0.5rem;}
+  .step-desc { font-family:'Geist',sans-serif;font-size:0.9rem;color:var(--ink-dim);max-width:600px;margin:1rem auto 0;line-height:1.6;}
+
+  /* QUIZ */
+  .quiz-container { background:linear-gradient(135deg,var(--bg-card),var(--bg-elev));border:1px solid var(--border);border-radius:12px;padding:2.5rem;margin:3rem 0;}
+  .quiz-topbar { display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+  .quiz-actions { display:flex;gap:0.5rem;flex-wrap:wrap;}
+  .mini-btn { background:transparent;border:1px solid var(--border);color:var(--ink-dim);padding:0.45rem 0.85rem;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s ease;display:inline-flex;align-items:center;gap:0.4rem;}
+  .mini-btn:hover { color:var(--acid);border-color:var(--acid);}
+  .mini-btn.active-save { color:var(--gold);border-color:var(--gold);background:rgba(255,209,102,0.08);}
+  .mini-btn.danger:hover { color:var(--rose);border-color:var(--rose);background:rgba(255,71,133,0.08);}
+  .quiz-progress { height:3px;background:var(--border);border-radius:10px;overflow:hidden;margin-bottom:2rem;}
+  .quiz-progress-bar { height:100%;background:var(--acid);width:0%;transition:width 0.5s ease;box-shadow:0 0 10px var(--acid);}
+  .question-block { min-height:280px;}
+  .question-topic { font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--acid);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.8rem;}
+  .question-text { font-family:'Fraunces',serif;font-size:1.4rem;margin-bottom:1.5rem;line-height:1.4;}
+  .answers { display:grid;gap:0.75rem;}
+  .answer { background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;cursor:pointer;transition:all 0.2s ease;font-size:0.95rem;text-align:left;color:var(--ink);font-family:'Geist',sans-serif;display:flex;align-items:center;gap:1rem;width:100%;}
+  .answer:hover { border-color:var(--ink-dim);background:var(--bg-elev);}
+  .answer-key { font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--ink-faint);border:1px solid var(--border);padding:0.25rem 0.5rem;border-radius:3px;min-width:28px;text-align:center;flex-shrink:0;}
+  .answer.correct { border-color:var(--acid);background:rgba(180,255,57,0.08);}
+  .answer.correct .answer-key { background:var(--acid);color:var(--bg);border-color:var(--acid);}
+  .answer.wrong { border-color:var(--rose);background:rgba(255,71,133,0.08);}
+  .answer.wrong .answer-key { background:var(--rose);color:var(--bg);border-color:var(--rose);}
+  .answer.disabled { pointer-events:none;}
+  .quiz-explanation { background:var(--bg);border-left:3px solid var(--acid);padding:1rem 1.25rem;border-radius:0 6px 6px 0;margin-top:1.5rem;font-size:0.88rem;color:var(--ink-dim);animation:fadeIn 0.4s ease;}
+  .quiz-explanation strong { color:var(--acid);}
+  .quiz-action-row { display:flex;justify-content:space-between;margin-top:1.5rem;gap:0.75rem;flex-wrap:wrap;}
+  .quiz-result { text-align:center;padding:2rem 0;}
+  .quiz-score { font-family:'Fraunces',serif;font-size:5rem;font-weight:900;color:var(--acid);line-height:1;}
+  .quiz-score span { color:var(--ink-faint);font-weight:300;}
+
+  /* REVIEW */
+  .review-item { background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1rem;}
+  .review-item.wrong { border-left:3px solid var(--rose);}
+  .review-item.correct-r { border-left:3px solid var(--acid);}
+  .review-meta { display:flex;gap:1rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-dim);margin-bottom:0.7rem;flex-wrap:wrap;text-transform:uppercase;letter-spacing:0.1em;align-items:center;}
+  .review-meta .wrong-tag { color:var(--rose);}
+  .review-meta .correct-tag { color:var(--acid);}
+  .review-q { font-family:'Fraunces',serif;font-size:1.1rem;margin-bottom:0.8rem;line-height:1.4;}
+  .review-answer { font-size:0.9rem;padding:0.4rem 0;display:flex;gap:0.75rem;align-items:flex-start;}
+  .review-answer .label { font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-faint);text-transform:uppercase;flex-shrink:0;padding-top:0.15rem;min-width:80px;}
+  .review-answer.correct-line { color:var(--acid);}
+  .review-answer.your-line { color:var(--ink);}
+  .review-answer.your-line.wrong-it { color:var(--rose);}
+  .review-expl { font-size:0.85rem;color:var(--ink-dim);margin-top:0.75rem;padding-top:0.75rem;border-top:1px dashed var(--border);line-height:1.6;}
+  .review-filter-bar { display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+
+  /* SAVED */
+  .saved-section { margin-top:3rem;padding:2rem;background:linear-gradient(135deg,rgba(255,209,102,0.05),transparent);border:1px solid rgba(255,209,102,0.2);border-radius:12px;}
+  .saved-header { display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;}
+  .saved-section h3 { font-family:'Fraunces',serif;font-size:1.5rem;color:var(--gold);display:flex;align-items:center;gap:0.5rem;}
+  .saved-count { font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--ink-dim);background:var(--bg);padding:0.3rem 0.7rem;border-radius:100px;border:1px solid var(--border);}
+  .saved-empty { color:var(--ink-dim);font-size:0.9rem;padding:2rem 1rem;text-align:center;font-style:italic;}
+  .saved-item { background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:6px;padding:1.2rem 1.5rem;margin-bottom:0.75rem;}
+  .saved-item-head { display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;margin-bottom:0.5rem;}
+  .saved-item-topic { font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.12em;}
+  .saved-item-q { font-family:'Fraunces',serif;font-size:1.05rem;line-height:1.4;margin-bottom:0.6rem;}
+  .saved-item-a { font-size:0.9rem;color:var(--acid);margin-bottom:0.3rem;}
+  .saved-item-expl { font-size:0.82rem;color:var(--ink-dim);line-height:1.6;}
+
+  .quiz-settings { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;padding:1.5rem;background:var(--bg);border-radius:8px;margin-bottom:1.5rem;border:1px solid var(--border);}
+  .setting-group label { display:block;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;}
+  .setting-group select { width:100%;background:var(--bg-elev);border:1px solid var(--border);color:var(--ink);padding:0.6rem;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;cursor:pointer;}
+  .setting-group select:focus { outline:none;border-color:var(--acid);}
+
+  /* HARDNESS */
+  .hardness-diagram { display:grid;grid-template-columns:1fr 1fr;gap:0;margin:2rem 0;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+  .hardness-side { padding:2rem;position:relative;}
+  .hardness-side.temp { background:linear-gradient(135deg,rgba(255,107,53,0.08),transparent);border-right:1px solid var(--border);}
+  .hardness-side.perm { background:linear-gradient(135deg,rgba(74,158,255,0.08),transparent);}
+  .hardness-label { font-family:'JetBrains Mono',monospace;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.5rem;}
+  .hardness-side.temp .hardness-label { color:var(--flame);}
+  .hardness-side.perm .hardness-label { color:var(--cobalt);}
+  .hardness-title { font-family:'Fraunces',serif;font-size:1.5rem;font-weight:600;margin-bottom:1rem;}
+
+  /* FUNC GROUPS */
+  .func-groups-wheel { display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:2rem 0;}
+  .func-group { background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;cursor:pointer;transition:all 0.3s ease;position:relative;overflow:hidden;}
+  .func-group::after { content:'';position:absolute;bottom:0;left:0;width:0;height:3px;background:var(--acid);transition:width 0.4s ease;}
+  .func-group:hover::after { width:100%;}
+  .func-group:hover { transform:translateY(-5px);border-color:var(--border-bright);}
+  .func-symbol { font-family:'JetBrains Mono',monospace;font-size:1.4rem;color:var(--acid);margin-bottom:0.7rem;}
+  .func-name { font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;margin-bottom:0.5rem;}
+  .func-note { font-size:0.8rem;color:var(--ink-dim);line-height:1.5;}
+  .func-suffix { font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--gold);margin-top:0.5rem;text-transform:uppercase;letter-spacing:0.1em;}
+
+  /* BATTERIES */
+  .battery-select { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;}
+  .bat-btn { background:var(--bg-card);border:1px solid var(--border);padding:1.2rem;border-radius:8px;cursor:pointer;text-align:left;transition:all 0.3s ease;color:var(--ink);}
+  .bat-btn:hover { border-color:var(--acid);transform:translateY(-2px);}
+  .bat-btn.active { border-color:var(--acid);background:rgba(180,255,57,0.05);}
+  .bat-btn-short { font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-dim);margin-bottom:0.3rem;}
+  .bat-btn-name { font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;}
+  .bat-details { background:var(--bg-elev);border:1px solid var(--border);border-radius:8px;padding:2rem;}
+  .bat-specs { display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:1.5rem;}
+  .bat-spec { padding:1rem;background:var(--bg-card);border-radius:6px;border-left:2px solid var(--acid);}
+  .bat-spec-label { font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.1em;}
+  .bat-spec-value { font-size:0.95rem;margin-top:0.3rem;}
+
+  /* NOMENCLATURE */
+  .nomen-builder { background:var(--bg-elev);border-radius:12px;padding:2.5rem;border:1px solid var(--border);}
+  .nomen-result { font-family:'Fraunces',serif;font-size:clamp(1.3rem,3vw,2rem);text-align:center;padding:2rem;background:var(--bg);border-radius:8px;margin:1.5rem 0;min-height:80px;color:var(--acid);letter-spacing:-0.02em;word-break:break-word;}
+  .nomen-result .empty { color:var(--ink-faint);}
+  .nomen-controls { display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
+  .nomen-slider label { display:block;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem;}
+  .nomen-slider select, .nomen-slider input[type="range"] { width:100%;background:var(--bg);border:1px solid var(--border);color:var(--ink);padding:0.6rem;border-radius:4px;font-family:'JetBrains Mono',monospace;}
+  .nomen-value { font-family:'Fraunces',serif;color:var(--acid);margin-left:0.5rem;}
+
+  .note { background:rgba(199,125,255,0.05);border-left:3px solid var(--violet);padding:1rem 1.25rem;margin:1.5rem 0;border-radius:0 6px 6px 0;font-size:0.88rem;color:var(--ink-dim);}
+  .note strong { color:var(--violet);}
+
+  /* ACCORDION */
+  .accordion-item { background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:0.75rem;overflow:hidden;}
+  .accordion-item:hover { border-color:var(--border-bright);}
+  .acc-header { padding:1.2rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Fraunces',serif;font-size:1.1rem;font-weight:500;}
+  .acc-icon { color:var(--acid);font-family:'JetBrains Mono',monospace;transition:transform 0.3s ease;}
+  .accordion-item.open .acc-icon { transform:rotate(45deg);}
+  .acc-body { max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.4s ease;padding:0 1.5rem;color:var(--ink-dim);font-size:0.92rem;line-height:1.7;}
+  .accordion-item.open .acc-body { max-height:900px;padding:0 1.5rem 1.5rem;}
+
+  .galvanic-cell { background:radial-gradient(ellipse at center,#0d120f 0%,#060806 100%);border-radius:12px;padding:2rem;margin:2rem 0;border:1px solid var(--border);}
+
+  footer { padding:4rem 2rem 2rem;border-top:1px solid var(--border);text-align:center;margin-top:6rem;position:relative;z-index:3;}
+  .footer-title { font-family:'Fraunces',serif;font-style:italic;font-size:2rem;color:var(--ink-dim);}
+  .footer-title em { color:var(--acid);}
+  .footer-note { font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--ink-faint);margin-top:1.5rem;letter-spacing:0.1em;}
+
+  ::-webkit-scrollbar { width:10px;height:10px;}
+  ::-webkit-scrollbar-track { background:var(--bg);}
+  ::-webkit-scrollbar-thumb { background:var(--bg-elev);border-radius:5px;border:2px solid var(--bg);}
+  ::-webkit-scrollbar-thumb:hover { background:var(--acid-dim);}
+
+  .reveal { opacity:0;transform:translateY(40px);transition:all 0.8s cubic-bezier(0.2,0.8,0.2,1);}
+  .reveal.visible { opacity:1;transform:translateY(0);}
 
-  /* ═══════════════════════════════════════ Responsive */
   @media (max-width: 768px) {
-    nav { padding: 0.8rem 1rem; flex-direction: column; gap: 0.5rem;}
-    .nav-links { justify-content: center;}
-    section.chapter { padding: 4rem 1rem;}
-    .hardness-diagram { grid-template-columns: 1fr;}
-    .hardness-side.temp { border-right: none; border-bottom: 1px solid var(--border);}
+    nav { padding:0.8rem 1rem;flex-direction:column;gap:0.5rem;}
+    .nav-links { justify-content:center;}
+    section.chapter { padding:4rem 1rem;}
+    .hardness-diagram { grid-template-columns:1fr;}
+    .hardness-side.temp { border-right:none;border-bottom:1px solid var(--border);}
   }
 
-  /* Molecule SVG styling */
-  .atom-c { fill: #2a2a2a; stroke: var(--ink); stroke-width: 1.5;}
-  .atom-h { fill: #e8ede9; stroke: #888; stroke-width: 1;}
-  .atom-o { fill: #ff4757; stroke: #ff6b6b; stroke-width: 1;}
-  .atom-n { fill: var(--cobalt); stroke: #6bb5ff; stroke-width: 1;}
-  .atom-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    text-anchor: middle;
-    dominant-baseline: central;
-    pointer-events: none;
+  .atom-c { fill:#2a2a2a;stroke:var(--ink);stroke-width:1.5;}
+  .atom-h { fill:#e8ede9;stroke:#888;stroke-width:1;}
+  .atom-o { fill:#ff4757;stroke:#ff6b6b;stroke-width:1;}
+  .atom-label { font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;text-anchor:middle;dominant-baseline:central;pointer-events:none;}
+  .bond { stroke:var(--ink-dim);stroke-width:2;}
+
+  @media print {
+    nav,.hero,footer,.reaction-controls,.btn,.mini-btn,.quiz-settings,.quiz-action-row { display:none !important;}
+    body { background:white;color:black;}
+    .saved-section { border:1px solid #999;background:white;}
+    .saved-item { border:1px solid #ccc;break-inside:avoid;background:white;color:black;}
+    .saved-item-q,.saved-item-a,.saved-item-expl { color:black;}
   }
-  .bond { stroke: var(--ink-dim); stroke-width: 2;}
-  .bond-double line { stroke: var(--ink-dim); stroke-width: 2;}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════ NAV ═══════════════════ -->
 <nav>
   <div class="nav-brand">NW<span>.</span><em>chemie</em></div>
   <div class="nav-links">
+    <a href="#teststoff">Teststoff</a>
     <a href="#wasser">Wasser</a>
-    <a href="#elektro">Elektrochemie</a>
+    <a href="#elektro">Elektro</a>
     <a href="#oxi">Oxidation</a>
     <a href="#organik">Organik</a>
     <a href="#benennung">Benennung</a>
@@ -1201,7 +360,6 @@
   </div>
 </nav>
 
-<!-- ═══════════════════ HERO ═══════════════════ -->
 <div class="hero">
   <div class="hero-bg">
     <svg class="molecule-bg m1" viewBox="0 0 200 200"><circle cx="100" cy="100" r="20" fill="none" stroke="#b4ff39" stroke-width="1"/><circle cx="50" cy="50" r="12" fill="none" stroke="#b4ff39" stroke-width="1"/><circle cx="150" cy="50" r="12" fill="none" stroke="#b4ff39" stroke-width="1"/><circle cx="50" cy="150" r="12" fill="none" stroke="#b4ff39" stroke-width="1"/><circle cx="150" cy="150" r="12" fill="none" stroke="#b4ff39" stroke-width="1"/><line x1="100" y1="100" x2="50" y2="50" stroke="#b4ff39" stroke-width="0.5"/><line x1="100" y1="100" x2="150" y2="50" stroke="#b4ff39" stroke-width="0.5"/><line x1="100" y1="100" x2="50" y2="150" stroke="#b4ff39" stroke-width="0.5"/><line x1="100" y1="100" x2="150" y2="150" stroke="#b4ff39" stroke-width="0.5"/></svg>
@@ -1215,34 +373,57 @@
       <span class="thin">aber</span> <em>interaktiv.</em>
     </h1>
     <p class="hero-subtitle">
-      Wasser, Elektrochemie, organische Chemie, Benennung, Reaktionen und Kunststoffe — aufgebaut aus deinem NW-Skript. Klick dich durch Moleküle, Reaktionsschritte und Quizze, bis du alles sitzt.
+      Wasser, Elektrochemie, organische Chemie, Benennung, Reaktionen und Kunststoffe — aufgebaut aus deinem NW-Skript. Klick dich durch Moleküle, Reaktionsschritte und Quizze, bis du alles sitzt. Markierte Themen sind laut Skript explizit auf der Test-Liste.
     </p>
     <div class="hero-grid">
-      <div class="hero-stat">
-        <div class="hero-stat-num">7</div>
-        <div class="hero-stat-label">Themenblöcke</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">8</div>
-        <div class="hero-stat-label">Funktionelle Gruppen</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">5</div>
-        <div class="hero-stat-label">Kunststoffe (Polymer.)</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">∞</div>
-        <div class="hero-stat-label">Durchläufe möglich</div>
-      </div>
+      <div class="hero-stat"><div class="hero-stat-num">7</div><div class="hero-stat-label">Themenblöcke</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">135</div><div class="hero-stat-label">Test-Fragen</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">10×</div><div class="hero-stat-label">Ohne Wiederholung</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">∞</div><div class="hero-stat-label">Lerndurchläufe</div></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════ 1. WASSER ═══════════════════ -->
+<section class="chapter reveal" id="teststoff">
+  <div class="chapter-header">
+    <div class="chapter-num">Teststoff · Was kommt dran?</div>
+    <h2 class="chapter-title">Was du <em>können</em> musst</h2>
+  </div>
+  <p class="chapter-intro">
+    Laut Skript steht <strong style="color:var(--ink);">explizit</strong> auf der Test-Liste: <strong style="color:var(--rose);">Wasser, Wasserenthärtung, Kläranlage</strong>. Ebenso prüfungsrelevant: <strong>Elektrochemie</strong> (elektrische Leiter, Oxidation/Reduktion, Korrosionsschutz), <strong>einfache Benennung</strong>, <strong>Reaktionen der Alkane, Alkene, Alkine</strong> und <strong>Kunststoffe</strong>.
+  </p>
+
+  <div class="teststoff-box">
+    <h3>🔥 Test-Schwerpunkte (aus dem Skript)</h3>
+    <ul>
+      <li>Wasser &amp; Eigenschaften (H-Brücken, Anomalie)</li>
+      <li>Wasserhärte (temporär &amp; permanent)</li>
+      <li>Wasserenthärtung (Ionentauscher, Destillation, Umkehr-Osmose)</li>
+      <li>Elektrische Leiter (1./2. Klasse)</li>
+      <li>Oxidation &amp; Reduktion</li>
+      <li>Oxidationszahlen bestimmen (8 Regeln)</li>
+      <li>Elektrochemische Spannungsreihe</li>
+      <li>Korrosion &amp; Korrosionsschutz</li>
+      <li>Einfache Benennung (Vorsilben–Stamm–Endungen)</li>
+      <li>Funktionelle Gruppen (a–h)</li>
+      <li>Reaktionen Alkane (Verbrennung, Substitution, Cracken)</li>
+      <li>Reaktionen Alkene/Alkine (Eliminierung, Addition, Polymerisation)</li>
+      <li>Kunststoffe (Polymerisation, -kondensation, -addition)</li>
+      <li>5 Polymerisate (PE, PP, PVC, PTFE, PS)</li>
+    </ul>
+  </div>
+
+  <div class="test-legend">
+    <div class="test-legend-title">Badge-Legende</div>
+    <div class="test-legend-item"><span class="test-badge hot">Test</span> Steht explizit auf der Teststoff-Liste</div>
+    <div class="test-legend-item"><span class="test-badge main">Wichtig</span> Grundlage, kommt fast sicher dran</div>
+  </div>
+</section>
+
 <section class="chapter reveal" id="wasser">
   <div class="chapter-header">
     <div class="chapter-num">01 / 07</div>
-    <h2 class="chapter-title">Wasser & <em>Wasserhärte</em></h2>
+    <h2 class="chapter-title">Wasser &amp; <em>Wasserhärte</em><span class="test-badge hot">Test</span></h2>
   </div>
   <p class="chapter-intro">
     Wasser ist das wichtigste Dipolmolekül. Durch die Wasserstoffbrückenbindungen ergeben sich fast alle Besonderheiten: flüssig bei Raumtemperatur, Siedepunkt 100 °C, Anomalie (größte Dichte bei 4 °C), und das Volumen beim Frieren nimmt um ca. 10 % zu.
@@ -1252,59 +433,35 @@
     <div class="viewer-header">
       <div>
         <div class="chapter-num">H₂O · Das Dipolmolekül</div>
-        <p style="font-family: 'Fraunces', serif; font-size: 1.6rem; margin-top: 0.3rem;">Bindungswinkel <span style="color: var(--acid);">104,5°</span></p>
+        <p style="font-family:'Fraunces',serif;font-size:1.6rem;margin-top:0.3rem;">Bindungswinkel <span style="color:var(--acid);">104,5°</span></p>
       </div>
     </div>
-
     <div class="molecule-canvas">
       <svg viewBox="0 0 360 280" width="360">
-        <!-- Wasserstoffbrücken gestrichelt -->
-        <line x1="180" y1="140" x2="180" y2="200" stroke="#c77dff" stroke-width="2" stroke-dasharray="4 4" opacity="0.6">
-          <animate attributeName="opacity" values="0.2;0.9;0.2" dur="2s" repeatCount="indefinite"/>
-        </line>
-        <!-- Molekül oben -->
+        <line x1="180" y1="140" x2="180" y2="200" stroke="#c77dff" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"><animate attributeName="opacity" values="0.2;0.9;0.2" dur="2s" repeatCount="indefinite"/></line>
         <line x1="180" y1="90" x2="130" y2="130" class="bond"/>
         <line x1="180" y1="90" x2="230" y2="130" class="bond"/>
         <circle cx="180" cy="90" r="22" class="atom-o"/>
         <text x="180" y="90" class="atom-label" fill="white">O</text>
         <text x="200" y="70" class="atom-label" fill="#c77dff" style="font-size:9px;">δ−</text>
-        <circle cx="130" cy="130" r="14" class="atom-h"/>
-        <text x="130" y="130" class="atom-label" fill="black">H</text>
-        <circle cx="230" cy="130" r="14" class="atom-h"/>
-        <text x="230" y="130" class="atom-label" fill="black">H</text>
+        <circle cx="130" cy="130" r="14" class="atom-h"/><text x="130" y="130" class="atom-label" fill="black">H</text>
+        <circle cx="230" cy="130" r="14" class="atom-h"/><text x="230" y="130" class="atom-label" fill="black">H</text>
         <text x="120" y="152" class="atom-label" fill="#c77dff" style="font-size:9px;">δ+</text>
         <text x="240" y="152" class="atom-label" fill="#c77dff" style="font-size:9px;">δ+</text>
-        <!-- Molekül unten -->
         <line x1="180" y1="230" x2="135" y2="190" class="bond"/>
         <line x1="180" y1="230" x2="225" y2="190" class="bond"/>
         <circle cx="180" cy="230" r="22" class="atom-o"/>
         <text x="180" y="230" class="atom-label" fill="white">O</text>
-        <circle cx="135" cy="190" r="14" class="atom-h"/>
-        <text x="135" y="190" class="atom-label" fill="black">H</text>
-        <circle cx="225" cy="190" r="14" class="atom-h"/>
-        <text x="225" y="190" class="atom-label" fill="black">H</text>
-        <!-- Label H-Brücke -->
+        <circle cx="135" cy="190" r="14" class="atom-h"/><text x="135" y="190" class="atom-label" fill="black">H</text>
+        <circle cx="225" cy="190" r="14" class="atom-h"/><text x="225" y="190" class="atom-label" fill="black">H</text>
         <text x="195" y="175" style="font-family:'JetBrains Mono',monospace;fill:#c77dff;font-size:10px;">H-Brücke</text>
       </svg>
     </div>
-
     <div class="molecule-info">
-      <div class="info-pill">
-        <div class="info-pill-label">Siedepunkt</div>
-        <div class="info-pill-value">100 °C</div>
-      </div>
-      <div class="info-pill">
-        <div class="info-pill-label">Druck</div>
-        <div class="info-pill-value">1,013 bar</div>
-      </div>
-      <div class="info-pill">
-        <div class="info-pill-label">Max. Dichte bei</div>
-        <div class="info-pill-value">4 °C</div>
-      </div>
-      <div class="info-pill">
-        <div class="info-pill-label">Volumenzunahme</div>
-        <div class="info-pill-value">~10 %</div>
-      </div>
+      <div class="info-pill"><div class="info-pill-label">Siedepunkt</div><div class="info-pill-value">100 °C</div></div>
+      <div class="info-pill"><div class="info-pill-label">Druck</div><div class="info-pill-value">1,013 bar</div></div>
+      <div class="info-pill"><div class="info-pill-label">Max. Dichte bei</div><div class="info-pill-value">4 °C</div></div>
+      <div class="info-pill"><div class="info-pill-label">Volumenzunahme</div><div class="info-pill-value">~10 %</div></div>
     </div>
   </div>
 
@@ -1312,68 +469,41 @@
     <div class="card">
       <div class="card-eyebrow">Eigenschaften</div>
       <h3 class="card-title">Warum Wasser besonders ist</h3>
-      <div class="card-body">
-        <ul>
-          <li>Wichtigstes Dipolmolekül</li>
-          <li>Lagert sich orientiert an Ionen an</li>
-          <li>Hohe Wärmekapazität</li>
-          <li>Wichtiges polares Lösungsmittel</li>
-          <li>Bildet Wasserstoffbrücken aus</li>
-        </ul>
-      </div>
+      <div class="card-body"><ul><li>Wichtigstes Dipolmolekül</li><li>Lagert sich orientiert an Ionen an</li><li>Hohe Wärmekapazität</li><li>Wichtiges polares Lösungsmittel</li><li>Bildet Wasserstoffbrücken aus</li></ul></div>
     </div>
-
     <div class="card">
       <div class="card-eyebrow">Anomalie</div>
       <h3 class="card-title">Verhalten beim Abkühlen</h3>
-      <div class="card-body">
-        Bis 4 °C rücken die Wassermoleküle näher aneinander → Dichte nimmt zu. Ab 4 °C bilden sich neue H-Brücken → mehr Platz nötig → Dichte nimmt <strong>wieder ab</strong>. Ab 0 °C Kristallbildung, Volumen steigt ~10 %.
-      </div>
+      <div class="card-body">Bis 4 °C rücken die Wassermoleküle näher aneinander → Dichte nimmt zu. Ab 4 °C bilden sich neue H-Brücken → mehr Platz nötig → Dichte nimmt <strong>wieder ab</strong>. Ab 0 °C Kristallbildung, Volumen steigt ~10 %.</div>
     </div>
-
     <div class="card">
       <div class="card-eyebrow">Gesamthärte</div>
       <h3 class="card-title">Summe aller Ca- und Mg-Verbindungen</h3>
-      <div class="card-body">
-        Die Gesamthärte = Summe aller im Wasser gelösten Kalzium- und Magnesiumverbindungen.<br><br>
-        Kalk: <span class="formula">CaCO₃</span> und <span class="formula">MgCO₃</span>
-      </div>
+      <div class="card-body">Die Gesamthärte = Summe aller im Wasser gelösten Kalzium- und Magnesiumverbindungen.<br><br>Kalk: <span class="formula">CaCO₃</span> und <span class="formula">MgCO₃</span></div>
     </div>
   </div>
 
   <div class="hardness-diagram">
     <div class="hardness-side temp">
-      <div class="hardness-label">Temporäre Härte</div>
+      <div class="hardness-label">Temporäre Härte <span class="test-badge hot" style="margin-left:0.3rem;">Test</span></div>
       <h3 class="hardness-title">Carbonathärte</h3>
-      <p style="color: var(--ink-dim); font-size: 0.92rem;">Alle im Wasser gelösten Ca- und Mg-Hydrogencarbonate:</p>
-      <div class="formula-block">
-Ca(HCO₃)₂  —  Calciumhydrogencarbonat<br>
-Mg(HCO₃)₂  —  Magnesiumhydrogencarbonat<br><br>
-Ca(HCO₃)₂ ──60°──▶ CaCO₃ + H₂O + CO₂<br>
-               (Kesselstein / Kalkstein)
-      </div>
-      <p style="color: var(--ink-dim); font-size: 0.88rem; margin-top: 1rem;"><strong style="color: var(--flame);">Folgen:</strong> erhöhter Energieverbrauch durch Kesselstein, Rohrverstopfung, Kesselexplosionen, Ablagerungen auf Geschirr und Wäsche.</p>
+      <p style="color:var(--ink-dim);font-size:0.92rem;">Alle im Wasser gelösten Ca- und Mg-Hydrogencarbonate:</p>
+      <div class="formula-block">Ca(HCO₃)₂  —  Calciumhydrogencarbonat<br>Mg(HCO₃)₂  —  Magnesiumhydrogencarbonat<br><br>Ca(HCO₃)₂ ──60°──▶ CaCO₃ + H₂O + CO₂<br>               (Kesselstein / Kalkstein)</div>
+      <p style="color:var(--ink-dim);font-size:0.88rem;margin-top:1rem;"><strong style="color:var(--flame);">Folgen:</strong> erhöhter Energieverbrauch durch Kesselstein, Rohrverstopfung, Kesselexplosionen, Ablagerungen auf Geschirr und Wäsche.</p>
     </div>
     <div class="hardness-side perm">
-      <div class="hardness-label">Permanente Härte</div>
+      <div class="hardness-label">Permanente Härte <span class="test-badge hot" style="margin-left:0.3rem;">Test</span></div>
       <h3 class="hardness-title">Nicht-Carbonathärte</h3>
-      <p style="color: var(--ink-dim); font-size: 0.92rem;">Alle im Wasser gelösten Ca- und Mg-Verbindungen <em>außer</em> den Hydrogencarbonaten:</p>
-      <div class="formula-block">
-CaCl₂   —  Calciumchlorid<br>
-MgCl₂   —  Magnesiumchlorid<br>
-MgSO₄   —  Magnesiumsulfat
-      </div>
+      <p style="color:var(--ink-dim);font-size:0.92rem;">Alle im Wasser gelösten Ca- und Mg-Verbindungen <em>außer</em> den Hydrogencarbonaten:</p>
+      <div class="formula-block">CaCl₂   —  Calciumchlorid<br>MgCl₂   —  Magnesiumchlorid<br>MgSO₄   —  Magnesiumsulfat</div>
     </div>
   </div>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Enthärtungsmethoden</h3>
+  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Enthärtungsmethoden <span class="test-badge hot">Test</span></h3>
 
-  <div class="accordion" id="enthaert-acc">
+  <div class="accordion">
     <div class="accordion-item">
-      <div class="acc-header">
-        <span>1. Ionentauscher (Kation- & Anion)</span>
-        <span class="acc-icon">+</span>
-      </div>
+      <div class="acc-header"><span>1. Ionentauscher (Kation- &amp; Anion)</span><span class="acc-icon">+</span></div>
       <div class="acc-body">
         <strong>Kationentauscher:</strong> gibt H⁺ ab, nimmt Ca²⁺/Mg²⁺ auf.<br>
         <span class="formula">K·4H⁺ + Ca²⁺  →  K·Ca²⁺ + 2H⁺</span><br><br>
@@ -1383,31 +513,20 @@ MgSO₄   —  Magnesiumsulfat
       </div>
     </div>
     <div class="accordion-item">
-      <div class="acc-header">
-        <span>2. Destillation</span>
-        <span class="acc-icon">+</span>
-      </div>
-      <div class="acc-body">
-        Wasser wird verdampft und kondensiert. Salze bleiben im Destillationsrest zurück. Sehr energieintensiv.
-      </div>
+      <div class="acc-header"><span>2. Destillation</span><span class="acc-icon">+</span></div>
+      <div class="acc-body">Wasser wird verdampft und kondensiert. Salze bleiben im Destillationsrest zurück. Sehr energieintensiv.</div>
     </div>
     <div class="accordion-item">
-      <div class="acc-header">
-        <span>3. Umkehr-Osmose</span>
-        <span class="acc-icon">+</span>
-      </div>
-      <div class="acc-body">
-        Das Wasser wird durch eine halbdurchlässige Membran gepresst, Ionen werden zurückgehalten.
-      </div>
+      <div class="acc-header"><span>3. Umkehr-Osmose</span><span class="acc-icon">+</span></div>
+      <div class="acc-body">Das Wasser wird durch eine halbdurchlässige Membran gepresst, Ionen werden zurückgehalten.</div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ 2. ELEKTROCHEMIE ═══════════════════ -->
 <section class="chapter reveal" id="elektro">
   <div class="chapter-header">
     <div class="chapter-num">02 / 07</div>
-    <h2 class="chapter-title"><em>Elektro</em>chemie</h2>
+    <h2 class="chapter-title"><em>Elektro</em>chemie<span class="test-badge hot">Test</span></h2>
   </div>
   <p class="chapter-intro">
     Die Elektrochemie untersucht die Wechselwirkung von elektrischen und chemischen Prozessen. Galvanische Elemente wandeln chemische in elektrische Energie um (z. B. Batterie). Bei der Elektrolyse ist es umgekehrt: durch Gleichstrom werden Reaktionen erzwungen.
@@ -1415,177 +534,87 @@ MgSO₄   —  Magnesiumsulfat
 
   <div class="card-grid">
     <div class="card">
-      <div class="card-eyebrow">Leiter 1. Klasse</div>
+      <div class="card-eyebrow">Leiter 1. Klasse<span class="test-badge hot" style="margin-left:0.3rem;">Test</span></div>
       <h3 class="card-title">Metalle · Halbmetalle · Kohlenstoff</h3>
-      <div class="card-body">
-        Keine Veränderung beim Stromdurchgang. Stromleitung über freie Elektronen im Metallgitter.<br><br>
-        <strong>Temperatur:</strong> Je höher die Temperatur, desto <em>schlechter</em> leiten Metalle (Gitter schwingt stärker).
-      </div>
+      <div class="card-body">Keine Veränderung beim Stromdurchgang. Stromleitung über freie Elektronen im Metallgitter.<br><br><strong>Temperatur:</strong> Je höher die Temperatur, desto <em>schlechter</em> leiten Metalle (Gitter schwingt stärker).</div>
     </div>
-
     <div class="card">
-      <div class="card-eyebrow">Leiter 2. Klasse</div>
+      <div class="card-eyebrow">Leiter 2. Klasse<span class="test-badge hot" style="margin-left:0.3rem;">Test</span></div>
       <h3 class="card-title">Ionenleiter</h3>
-      <div class="card-body">
-        Salzlösungen, Salzschmelzen, Säuren, Basen. Stromleitung über <strong>bewegliche Ionen</strong> → es kommt zur chemischen Veränderung.<br><br>
-        <strong>Temperatur:</strong> Höhere Temperatur → bessere Leitung. Keramiken werden ab ca. 800 °C zu Ionenleitern.
-      </div>
+      <div class="card-body">Salzlösungen, Salzschmelzen, Säuren, Basen. Stromleitung über <strong>bewegliche Ionen</strong> → chemische Veränderung.<br><br><strong>Temperatur:</strong> Höhere Temperatur → bessere Leitung. Keramiken werden ab ca. 800 °C zu Ionenleitern.</div>
     </div>
-
     <div class="card">
-      <div class="card-eyebrow">Spannungsreihe</div>
+      <div class="card-eyebrow">Spannungsreihe<span class="test-badge main" style="margin-left:0.3rem;">Wichtig</span></div>
       <h3 class="card-title">Normalpotenzial</h3>
-      <div class="card-body">
-        Die Spannung, die ein Metall in einer einmolaren Lösung seiner Ionen gegen die Normal&shy;wasserstoff&shy;elektrode (NHE) zeigt, heißt Normalpotenzial.<br><br>
-        <strong>Unedle Metalle:</strong> lösen sich gerne auf (hoher Lösungsdruck).<br>
-        <strong>Edle Metalle:</strong> scheiden ihre Ionen elementar ab.
-      </div>
+      <div class="card-body">Die Spannung eines Metalls in einmolarer Lösung seiner Ionen gegen die NHE (Normalwasserstoffelektrode).<br><br><strong>Unedle Metalle:</strong> lösen sich gerne auf.<br><strong>Edle Metalle:</strong> scheiden ihre Ionen elementar ab.</div>
     </div>
   </div>
 
   <div class="galvanic-cell">
-    <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:1rem;">Daniell-Element (Zn/Cu)</h3>
-    <p style="color: var(--ink-dim); margin-bottom: 1.5rem;">Ein unedles Metall (Zn) und ein edles Metall (Cu), beide in ihrer Ionen-Lösung. Spannung ≈ 1,1 V.</p>
-
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-      <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--rose);">
-        <div class="card-eyebrow" style="color: var(--rose);">Anode · unedel</div>
+    <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:1rem;">Daniell-Element (Zn/Cu) <span class="test-badge main">Wichtig</span></h3>
+    <p style="color:var(--ink-dim);margin-bottom:1.5rem;">Ein unedles Metall (Zn) und ein edles Metall (Cu), beide in ihrer Ionen-Lösung. Spannung ≈ 1,1 V.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:1.5rem;">
+      <div style="background:var(--bg-card);padding:1.5rem;border-radius:8px;border-left:3px solid var(--rose);">
+        <div class="card-eyebrow" style="color:var(--rose);">Anode · unedel</div>
         <h4 style="font-family:'Fraunces',serif;font-size:1.3rem;">Zink in ZnSO₄</h4>
         <div class="formula-block" style="margin-top:1rem;">Zn → Zn²⁺ + 2e⁻<br>E₀ = −0,76 V</div>
       </div>
-      <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--gold);">
-        <div class="card-eyebrow" style="color: var(--gold);">Kathode · edel</div>
+      <div style="background:var(--bg-card);padding:1.5rem;border-radius:8px;border-left:3px solid var(--gold);">
+        <div class="card-eyebrow" style="color:var(--gold);">Kathode · edel</div>
         <h4 style="font-family:'Fraunces',serif;font-size:1.3rem;">Kupfer in CuSO₄</h4>
         <div class="formula-block" style="margin-top:1rem;">Cu²⁺ + 2e⁻ → Cu<br>E₀ = +0,34 V</div>
       </div>
     </div>
-
-    <div style="text-align:center; padding: 1.5rem; background: rgba(180,255,57,0.05); border-radius: 8px;">
+    <div style="text-align:center;padding:1.5rem;background:rgba(180,255,57,0.05);border-radius:8px;">
       <div class="card-eyebrow">Zellspannung</div>
       <div style="font-family:'Fraunces',serif;font-size:3rem;color:var(--acid);font-weight:600;">U = 1,1 V</div>
       <div style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--ink-dim);margin-top:0.5rem;">0,34 − (−0,76) = 1,10 V</div>
     </div>
   </div>
 
-  <!-- Batterie-Vergleich -->
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Batterien & Brennstoffzellen</h3>
-
-  <div class="battery-select" id="batList">
-    <button class="bat-btn active" data-bat="leclanche">
-      <div class="bat-btn-short">Zink-Kohle</div>
-      <div class="bat-btn-name">Leclanché</div>
-    </button>
-    <button class="bat-btn" data-bat="alkali">
-      <div class="bat-btn-short">Zn/Braunstein</div>
-      <div class="bat-btn-name">Alkalisch</div>
-    </button>
-    <button class="bat-btn" data-bat="afc">
-      <div class="bat-btn-short">Brennstoffzelle</div>
-      <div class="bat-btn-name">AFC (alkalisch)</div>
-    </button>
-    <button class="bat-btn" data-bat="pemfc">
-      <div class="bat-btn-short">Brennstoffzelle</div>
-      <div class="bat-btn-name">PEMFC</div>
-    </button>
-    <button class="bat-btn" data-bat="pafc">
-      <div class="bat-btn-short">Brennstoffzelle</div>
-      <div class="bat-btn-name">PAFC</div>
-    </button>
-    <button class="bat-btn" data-bat="mcfc">
-      <div class="bat-btn-short">Brennstoffzelle</div>
-      <div class="bat-btn-name">MCFC</div>
-    </button>
-    <button class="bat-btn" data-bat="sofc">
-      <div class="bat-btn-short">Brennstoffzelle</div>
-      <div class="bat-btn-name">SOFC</div>
-    </button>
+  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Batterien &amp; Brennstoffzellen</h3>
+  <div class="battery-select">
+    <button class="bat-btn active" data-bat="leclanche"><div class="bat-btn-short">Zink-Kohle</div><div class="bat-btn-name">Leclanché</div></button>
+    <button class="bat-btn" data-bat="alkali"><div class="bat-btn-short">Zn/Braunstein</div><div class="bat-btn-name">Alkalisch</div></button>
+    <button class="bat-btn" data-bat="afc"><div class="bat-btn-short">Brennstoffzelle</div><div class="bat-btn-name">AFC</div></button>
+    <button class="bat-btn" data-bat="pemfc"><div class="bat-btn-short">Brennstoffzelle</div><div class="bat-btn-name">PEMFC</div></button>
+    <button class="bat-btn" data-bat="pafc"><div class="bat-btn-short">Brennstoffzelle</div><div class="bat-btn-name">PAFC</div></button>
+    <button class="bat-btn" data-bat="mcfc"><div class="bat-btn-short">Brennstoffzelle</div><div class="bat-btn-name">MCFC</div></button>
+    <button class="bat-btn" data-bat="sofc"><div class="bat-btn-short">Brennstoffzelle</div><div class="bat-btn-name">SOFC</div></button>
   </div>
-
   <div class="bat-details" id="batDetails"></div>
 
-  <!-- Korrosion -->
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Korrosion & Schutz</h3>
-  <p style="color: var(--ink-dim); margin-bottom: 1.5rem;">Korrosion = meist unerwünschter Materialverlust durch Oxidation von unedlen Metallen bei Anwesenheit von Feuchtigkeit und Sauerstoff.</p>
+  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Korrosion &amp; Schutz <span class="test-badge hot">Test</span></h3>
+  <p style="color:var(--ink-dim);margin-bottom:1.5rem;">Korrosion = meist unerwünschter Materialverlust durch Oxidation von unedlen Metallen bei Anwesenheit von Feuchtigkeit und Sauerstoff.</p>
 
   <div class="card-grid">
-    <div class="card">
-      <div class="card-eyebrow">Korrosionsart 1</div>
-      <h3 class="card-title">Oberflächenkorrosion</h3>
-      <div class="card-body">Materialverlust an allen Stellen gleichmäßig. Beispiele: Bauxit <span class="formula">Al₂O₃</span>, Eisenoxid <span class="formula">Fe₂O₃</span>.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Korrosionsart 2 (Lokale K.)</div>
-      <h3 class="card-title">Riss- & Lochfraßkorrosion</h3>
-      <div class="card-body">Risskorrosion ist besonders gefährlich, da oft unsichtbar → unvorhersehbarer Bruch möglich. Fehlersuche mit Ultraschall oder Röntgen.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Korrosionsart 3</div>
-      <h3 class="card-title">Kontaktkorrosion</h3>
-      <div class="card-body">Tritt an der Kontaktstelle zweier unterschiedlich edler Metalle auf.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Schutz passiv</div>
-      <h3 class="card-title">Beschichtung</h3>
-      <div class="card-body">Oberfläche wird durch Passivierungsmittel geschützt (Öl, Beizmittel, Beschichtung) → verhindert Zutritt von Wasser & Sauerstoff.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Schutz aktiv (a)</div>
-      <h3 class="card-title">Opferanode</h3>
-      <div class="card-body">Bei starker Korrosionsgefahr. Muss elektrisch leitend mit dem Werkstück verbunden sein und im selben Medium eintauchen. Die Opferanode löst sich auf → Werkstück ist <strong>kathodisch geschützt</strong>.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Schutz aktiv (b)</div>
-      <h3 class="card-title">Gleichspannungsquelle</h3>
-      <div class="card-body">Für unterirdische Rohrleitungen. Das Eisenrohr wird als <strong>Kathode</strong> angeschlossen, ein sich nicht auflösendes Metall als Anode.</div>
-    </div>
+    <div class="card"><div class="card-eyebrow">Korrosionsart 1</div><h3 class="card-title">Oberflächenkorrosion</h3><div class="card-body">Materialverlust an allen Stellen gleichmäßig. Beispiele: Bauxit <span class="formula">Al₂O₃</span>, Eisenoxid <span class="formula">Fe₂O₃</span>.</div></div>
+    <div class="card"><div class="card-eyebrow">Korrosionsart 2</div><h3 class="card-title">Riss- &amp; Lochfraßkorrosion</h3><div class="card-body">Risskorrosion besonders gefährlich, da oft unsichtbar → unvorhersehbarer Bruch möglich. Fehlersuche mit Ultraschall oder Röntgen.</div></div>
+    <div class="card"><div class="card-eyebrow">Korrosionsart 3</div><h3 class="card-title">Kontaktkorrosion</h3><div class="card-body">Tritt an der Kontaktstelle zweier unterschiedlich edler Metalle auf.</div></div>
+    <div class="card"><div class="card-eyebrow">Schutz passiv</div><h3 class="card-title">Beschichtung</h3><div class="card-body">Oberfläche wird durch Passivierungsmittel geschützt (Öl, Beizmittel, Beschichtung) → verhindert Zutritt von Wasser &amp; Sauerstoff.</div></div>
+    <div class="card"><div class="card-eyebrow">Schutz aktiv (a)</div><h3 class="card-title">Opferanode</h3><div class="card-body">Bei starker Korrosionsgefahr. Muss elektrisch leitend verbunden und im selben Medium sein. Die Opferanode löst sich auf → Werkstück <strong>kathodisch geschützt</strong>.</div></div>
+    <div class="card"><div class="card-eyebrow">Schutz aktiv (b)</div><h3 class="card-title">Gleichspannungsquelle</h3><div class="card-body">Für unterirdische Rohrleitungen. Das Eisenrohr wird als <strong>Kathode</strong> angeschlossen, ein nicht-auflösendes Metall als Anode.</div></div>
   </div>
 </section>
 
-<!-- ═══════════════════ 3. OXIDATION ═══════════════════ -->
 <section class="chapter reveal" id="oxi">
   <div class="chapter-header">
     <div class="chapter-num">03 / 07</div>
-    <h2 class="chapter-title"><em>Oxidation</em>, Reduktion & Oxidationszahlen</h2>
+    <h2 class="chapter-title"><em>Oxidation</em>, Reduktion &amp; Oxidationszahlen<span class="test-badge hot">Test</span></h2>
   </div>
   <p class="chapter-intro">
     Reduktion und Oxidation laufen immer gleichzeitig ab → <strong>Redox-Reaktion</strong>. Neue Definition: Oxidation = Elektronen abgeben, Reduktion = Elektronen aufnehmen.
   </p>
 
   <div class="card-grid">
-    <div class="card">
-      <div class="card-eyebrow">Oxidation</div>
-      <h3 class="card-title">Alt & Neu</h3>
-      <div class="card-body">
-        <strong>Alt:</strong> Sauerstoff wird aufgenommen.<br>
-        <strong>Neu:</strong> Bei einer Teilreaktion werden Elektronen <em>abgegeben</em>.<br><br>
-        Die Oxidationszahl nimmt <strong>zu</strong>. Das unedle Metall wird oxidiert.
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Reduktion</div>
-      <h3 class="card-title">Alt & Neu</h3>
-      <div class="card-body">
-        <strong>Alt:</strong> Sauerstoff wird abgegeben.<br>
-        <strong>Neu:</strong> Bei einer Teilreaktion werden Elektronen <em>aufgenommen</em>.<br><br>
-        Die Oxidationszahl nimmt <strong>ab</strong>.
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Reduktionsmittel</div>
-      <h3 class="card-title">Partner der Oxidation</h3>
-      <div class="card-body">
-        Bei einer Redox-Reaktion wirkt der Partner, der oxidiert wird, <em>reduzierend</em> auf den anderen Partner → er ist das <strong>Reduktionsmittel</strong>.
-      </div>
-    </div>
+    <div class="card"><div class="card-eyebrow">Oxidation</div><h3 class="card-title">Alt &amp; Neu</h3><div class="card-body"><strong>Alt:</strong> Sauerstoff wird aufgenommen.<br><strong>Neu:</strong> Elektronen werden <em>abgegeben</em>.<br><br>Oxidationszahl nimmt <strong>zu</strong>.</div></div>
+    <div class="card"><div class="card-eyebrow">Reduktion</div><h3 class="card-title">Alt &amp; Neu</h3><div class="card-body"><strong>Alt:</strong> Sauerstoff wird abgegeben.<br><strong>Neu:</strong> Elektronen werden <em>aufgenommen</em>.<br><br>Oxidationszahl nimmt <strong>ab</strong>.</div></div>
+    <div class="card"><div class="card-eyebrow">Reduktionsmittel</div><h3 class="card-title">Partner der Oxidation</h3><div class="card-body">Der Partner, der oxidiert wird, wirkt <em>reduzierend</em> auf den anderen → er ist das <strong>Reduktionsmittel</strong>.</div></div>
   </div>
 
-  <div class="formula-block">
-Beispiel:  Cu²⁺ + Fe  →  Cu + Fe²⁺<br>
-Reduktion: Cu²⁺ + 2e⁻ → Cu<br>
-Oxidation: Fe → Fe²⁺ + 2e⁻
-  </div>
+  <div class="formula-block">Beispiel:  Cu²⁺ + Fe  →  Cu + Fe²⁺<br>Reduktion: Cu²⁺ + 2e⁻ → Cu<br>Oxidation: Fe → Fe²⁺ + 2e⁻</div>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Die 8 Regeln der Oxidationszahlen</h3>
+  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Die 8 Regeln der Oxidationszahlen <span class="test-badge hot">Test</span></h3>
 
   <div class="card-grid">
     <div class="card"><div class="card-eyebrow">Regel 1</div><div class="card-body">Einzelnes Atom oder ganzes Molekül → Oxi-Zahl in Summe <strong>0</strong>.</div></div>
@@ -1597,179 +626,74 @@ Oxidation: Fe → Fe²⁺ + 2e⁻
     <div class="card"><div class="card-eyebrow">Regel 7</div><div class="card-body"><strong>Alkalimetalle</strong> (Gruppe 1) immer +I.</div></div>
     <div class="card"><div class="card-eyebrow">Regel 8</div><div class="card-body"><strong>Erdalkalimetalle</strong> (Gruppe 2) immer +II.</div></div>
   </div>
-
-  <p style="color: var(--ink-dim); margin-top: 1rem;">Die Oxi-Zahlen werden in <strong>römischen Zahlen</strong> direkt über das Atom geschrieben. Die häufigste und stabilste Oxi-Zahl findet man im Periodensystem rot dargestellt.</p>
-
-  <!-- Interaktiver Oxi-Trainer -->
-  <div class="oxi-trainer">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.5rem;flex-wrap:wrap;gap:1rem;">
-      <div>
-        <div class="chapter-num">Trainer</div>
-        <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-top:0.3rem;">Oxidationszahl bestimmen</h3>
-      </div>
-      <div id="oxiCounter" style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--ink-dim);">Aufgabe 1 / 10</div>
-    </div>
-
-    <div id="oxiDisplay" class="oxi-compound-display">H₂SO₄</div>
-    <div id="oxiInputs" class="oxi-input-row"></div>
-    <div class="reaction-controls">
-      <button class="btn primary" onclick="checkOxi()">Prüfen</button>
-      <button class="btn" onclick="nextOxi()">Nächste →</button>
-      <button class="btn" onclick="revealOxi()">Lösung zeigen</button>
-    </div>
-    <div id="oxiFeedback" class="oxi-feedback"></div>
-  </div>
+  <p style="color:var(--ink-dim);margin-top:1rem;">Die Oxi-Zahlen werden in <strong>römischen Zahlen</strong> direkt über das Atom geschrieben. Die häufigste und stabilste Oxi-Zahl findet man im Periodensystem rot dargestellt.</p>
 </section>
 
-<!-- ═══════════════════ 4. ORGANIK ═══════════════════ -->
 <section class="chapter reveal" id="organik">
   <div class="chapter-header">
     <div class="chapter-num">04 / 07</div>
-    <h2 class="chapter-title">Organische <em>Chemie</em></h2>
+    <h2 class="chapter-title">Organische <em>Chemie</em><span class="test-badge main">Wichtig</span></h2>
   </div>
   <p class="chapter-intro">
     Die Chemie des Kohlenstoffs — außer <span class="formula">CO</span>, <span class="formula">CO₂</span>, <span class="formula">H₂CO₃</span>, Carbonaten (<span class="formula">CaCO₃</span>) und Carbiden (<span class="formula">CaC₂</span>). Kohlenstoff kann sich quasi unendlich oft mit sich selbst verbinden. Jedes der 4 Valenzelektronen hat die gleiche Wertigkeit.
   </p>
 
-  <!-- Homologe Reihe -->
-  <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:1rem;font-weight:600;">Homologe Reihe der Alkane</h3>
-  <p style="color:var(--ink-dim); margin-bottom:1rem;">Klicke eine Zahl für Strukturformel & Summenformel. Endung <span style="color:var(--acid);">-an</span> = Einfachbindung, <span style="color:var(--acid);">-en</span> = Doppelbindung, <span style="color:var(--acid);">-in</span> = Dreifachbindung.</p>
+  <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:1rem;font-weight:600;">Homologe Reihe der Alkane <span class="test-badge hot">Test</span></h3>
+  <p style="color:var(--ink-dim);margin-bottom:1rem;">Klicke eine Zahl für Strukturformel &amp; Summenformel. Endung <span style="color:var(--acid);">-an</span> = Einfachbindung, <span style="color:var(--acid);">-en</span> = Doppelbindung, <span style="color:var(--acid);">-in</span> = Dreifachbindung.</p>
 
   <div class="homolog-table" id="homologTable"></div>
   <div class="molecule-viewer" id="homologDetail" style="display:none;">
     <div class="viewer-header">
-      <div>
-        <div class="chapter-num" id="hdSubtitle">Alkan</div>
-        <p id="hdName" style="font-family: 'Fraunces', serif; font-size: 1.8rem; margin-top: 0.3rem;"></p>
-      </div>
+      <div><div class="chapter-num" id="hdSubtitle">Alkan</div><p id="hdName" style="font-family:'Fraunces',serif;font-size:1.8rem;margin-top:0.3rem;"></p></div>
       <div id="hdFormula" style="font-family:'JetBrains Mono',monospace;color:var(--acid);font-size:1.3rem;"></div>
     </div>
     <div class="molecule-canvas" id="hdCanvas"></div>
   </div>
 
-  <!-- Zyklisch + Aromatisch -->
-  <div class="card-grid" style="margin-top: 2rem;">
-    <div class="card">
-      <div class="card-eyebrow">Aliphatisch</div>
-      <h3 class="card-title">Geradlinige Kohlenwasserstoffe</h3>
-      <div class="card-body">Offene C-Ketten. Stammname gibt die Anzahl der C-Atome an (Meth-, Eth-, Prop-, But-, …).</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Zyklisch</div>
-      <h3 class="card-title">Ring-Kohlenwasserstoffe</h3>
-      <div class="card-body">Geschlossene Ringe. In diese Kohlenstoffringe können Fremdatome wie <strong>Sauerstoff, Stickstoff oder Schwefel</strong> eingebaut werden.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Aromatisch</div>
-      <h3 class="card-title">Benzol <span class="formula">C₆H₆</span></h3>
-      <div class="card-body">Planares Hexagon, Kantenlänge 140 pm. Delokalisierte π-Orbitalwolke (Mesomerie). Sehr gutes aprotisches Lösungsmittel, aber stark kanzerogen → Ersatzstoff: <strong>Toluol</strong>.</div>
-    </div>
+  <div class="card-grid" style="margin-top:2rem;">
+    <div class="card"><div class="card-eyebrow">Aliphatisch</div><h3 class="card-title">Geradlinige KW</h3><div class="card-body">Offene C-Ketten. Stammname gibt die Anzahl der C-Atome an (Meth-, Eth-, Prop-, But-, …).</div></div>
+    <div class="card"><div class="card-eyebrow">Zyklisch</div><h3 class="card-title">Ring-KW</h3><div class="card-body">Geschlossene Ringe. In diese Kohlenstoffringe können Fremdatome wie <strong>Sauerstoff, Stickstoff oder Schwefel</strong> eingebaut werden.</div></div>
+    <div class="card"><div class="card-eyebrow">Aromatisch</div><h3 class="card-title">Benzol C₆H₆</h3><div class="card-body">Planares Hexagon, Kantenlänge 140 pm. Delokalisierte π-Orbitalwolke (Mesomerie). Sehr gutes aprotisches Lösungsmittel, aber stark kanzerogen → Ersatzstoff: <strong>Toluol</strong>.</div></div>
   </div>
 
-  <!-- Aromatisches Benzol SVG -->
   <div class="molecule-viewer">
     <div class="viewer-header">
-      <div>
-        <div class="chapter-num">Benzolring</div>
-        <p style="font-family: 'Fraunces', serif; font-size: 1.5rem; margin-top: 0.3rem;">Delokalisierte π-Elektronen</p>
-      </div>
+      <div><div class="chapter-num">Benzolring</div><p style="font-family:'Fraunces',serif;font-size:1.5rem;margin-top:0.3rem;">Delokalisierte π-Elektronen</p></div>
       <div style="font-family:'JetBrains Mono',monospace;color:var(--acid);font-size:1.3rem;">C₆H₆</div>
     </div>
     <div class="molecule-canvas">
       <svg viewBox="0 0 300 260" width="280">
-        <!-- delokalisierte Wolke -->
-        <ellipse cx="150" cy="130" rx="70" ry="28" fill="none" stroke="#b4ff39" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5">
-          <animateTransform attributeName="transform" type="rotate" from="0 150 130" to="360 150 130" dur="15s" repeatCount="indefinite"/>
-        </ellipse>
-        <ellipse cx="150" cy="130" rx="55" ry="20" fill="rgba(180,255,57,0.1)" stroke="none"/>
-        <!-- Hexagon -->
-        <polygon points="150,70 210,105 210,175 150,210 90,175 90,105"
-                 fill="none" stroke="var(--ink)" stroke-width="2"/>
-        <polygon points="150,85 195,110 195,170 150,195 105,170 105,110"
-                 fill="none" stroke="var(--ink-dim)" stroke-width="1.5" stroke-dasharray="4 4"/>
-        <!-- C-H -->
-        <g style="font-family:'JetBrains Mono',monospace;font-size:11px;fill:var(--ink-dim);">
-          <text x="150" y="58" text-anchor="middle">H</text>
-          <text x="226" y="108" text-anchor="middle">H</text>
-          <text x="226" y="180" text-anchor="middle">H</text>
-          <text x="150" y="230" text-anchor="middle">H</text>
-          <text x="74" y="180" text-anchor="middle">H</text>
-          <text x="74" y="108" text-anchor="middle">H</text>
-        </g>
-        <!-- Bond lines to H -->
-        <g stroke="var(--ink-dim)" stroke-width="1">
-          <line x1="150" y1="70" x2="150" y2="63"/>
-          <line x1="210" y1="105" x2="220" y2="103"/>
-          <line x1="210" y1="175" x2="220" y2="177"/>
-          <line x1="150" y1="210" x2="150" y2="220"/>
-          <line x1="90" y1="175" x2="80" y2="177"/>
-          <line x1="90" y1="105" x2="80" y2="103"/>
+        <ellipse cx="150" cy="130" rx="70" ry="28" fill="none" stroke="#b4ff39" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"><animateTransform attributeName="transform" type="rotate" from="0 150 130" to="360 150 130" dur="15s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="150" cy="130" rx="55" ry="20" fill="rgba(180,255,57,0.1)"/>
+        <polygon points="150,70 210,105 210,175 150,210 90,175 90,105" fill="none" stroke="#e8ede9" stroke-width="2"/>
+        <polygon points="150,85 195,110 195,170 150,195 105,170 105,110" fill="none" stroke="#8a9590" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <g style="font-family:'JetBrains Mono',monospace;font-size:11px;fill:#8a9590;">
+          <text x="150" y="58" text-anchor="middle">H</text><text x="226" y="108" text-anchor="middle">H</text><text x="226" y="180" text-anchor="middle">H</text>
+          <text x="150" y="230" text-anchor="middle">H</text><text x="74" y="180" text-anchor="middle">H</text><text x="74" y="108" text-anchor="middle">H</text>
         </g>
       </svg>
     </div>
   </div>
 
-  <!-- Funktionelle Gruppen -->
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1rem;font-weight:600;">Funktionelle Gruppen</h3>
-  <p style="color:var(--ink-dim); margin-bottom: 1.5rem;">Wichtig: <strong>Immer, wenn am Kohlenstoff nur ein Strich hängt, bedeutet das eine Wasserstoffbindung.</strong> Kohlenstoff muss aufgrund seiner 4 Valenzelektronen immer 4 Bindungen machen.</p>
+  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1rem;font-weight:600;">Funktionelle Gruppen <span class="test-badge hot">Test</span></h3>
+  <p style="color:var(--ink-dim);margin-bottom:1.5rem;">Wichtig: <strong>Immer, wenn am Kohlenstoff nur ein Strich hängt, bedeutet das eine Wasserstoffbindung.</strong> Kohlenstoff muss immer 4 Bindungen machen.</p>
 
   <div class="func-groups-wheel">
-    <div class="func-group">
-      <div class="func-symbol">−X</div>
-      <div class="func-name">a) Halogene</div>
-      <div class="func-note">F, Cl, Br, I — Salzbildner</div>
-      <div class="func-suffix">Vorsilbe: Fluor-/Chlor-/Brom-/Iod-</div>
-    </div>
-    <div class="func-group">
-      <div class="func-symbol">R−OH</div>
-      <div class="func-name">b) Alkohole</div>
-      <div class="func-note">R = beliebiger Kohlenwasserstoffrest</div>
-      <div class="func-suffix">Vorsilbe: Hydroxy- · Endung: -ol</div>
-    </div>
-    <div class="func-group">
-      <div class="func-symbol">R−COOH</div>
-      <div class="func-name">c) Carbonsäuren</div>
-      <div class="func-note">Säuregruppe am Ende der Kette</div>
-      <div class="func-suffix">Endung: -säure</div>
-    </div>
-    <div class="func-group">
-      <div class="func-symbol">R₁−COO−R₂</div>
-      <div class="func-name">d) Ester</div>
-      <div class="func-note">Säure + Alkohol → Ester + H₂O</div>
-      <div class="func-suffix">Veresterung</div>
-    </div>
-    <div class="func-group">
-      <div class="func-symbol">R−</div>
-      <div class="func-name">e) Alkyl-Gruppen</div>
-      <div class="func-note">Methyl-, Ethyl-, Propyl-, …</div>
-      <div class="func-suffix">Vorsilbe</div>
-    </div>
-    <div class="func-group">
-      <div class="func-symbol">R−COH</div>
-      <div class="func-name">f) Aldehyde</div>
-      <div class="func-note">Methanal = Formaldehyd</div>
-      <div class="func-suffix">Endung: -al</div>
-    </div>
-    <div class="func-group">
-      <div class="func-symbol">R−NO₂</div>
-      <div class="func-name">g) Nitrogruppe</div>
-      <div class="func-note">z. B. Nitromethan</div>
-      <div class="func-suffix">Vorsilbe: Nitro-</div>
-    </div>
-    <div class="func-group">
-      <div class="func-symbol">R−NH₂</div>
-      <div class="func-name">h) Amine</div>
-      <div class="func-note">z. B. Aminomethan</div>
-      <div class="func-suffix">Vorsilbe: Amino-</div>
-    </div>
+    <div class="func-group"><div class="func-symbol">−X</div><div class="func-name">a) Halogene</div><div class="func-note">F, Cl, Br, I — Salzbildner</div><div class="func-suffix">Vorsilbe: Fluor-/Chlor-/Brom-/Iod-</div></div>
+    <div class="func-group"><div class="func-symbol">R−OH</div><div class="func-name">b) Alkohole</div><div class="func-note">R = Kohlenwasserstoffrest</div><div class="func-suffix">Vorsilbe: Hydroxy- · Endung: -ol</div></div>
+    <div class="func-group"><div class="func-symbol">R−COOH</div><div class="func-name">c) Carbonsäuren</div><div class="func-note">Säuregruppe am Kettenende</div><div class="func-suffix">Endung: -säure</div></div>
+    <div class="func-group"><div class="func-symbol">R₁−COO−R₂</div><div class="func-name">d) Ester</div><div class="func-note">Säure + Alkohol → Ester + H₂O</div><div class="func-suffix">Veresterung</div></div>
+    <div class="func-group"><div class="func-symbol">R−</div><div class="func-name">e) Alkyl-Gruppen</div><div class="func-note">Methyl-, Ethyl-, Propyl-, …</div><div class="func-suffix">Vorsilbe</div></div>
+    <div class="func-group"><div class="func-symbol">R−COH</div><div class="func-name">f) Aldehyde</div><div class="func-note">Methanal = Formaldehyd</div><div class="func-suffix">Endung: -al</div></div>
+    <div class="func-group"><div class="func-symbol">R−NO₂</div><div class="func-name">g) Nitrogruppe</div><div class="func-note">z. B. Nitromethan</div><div class="func-suffix">Vorsilbe: Nitro-</div></div>
+    <div class="func-group"><div class="func-symbol">R−NH₂</div><div class="func-name">h) Amine</div><div class="func-note">z. B. Aminomethan</div><div class="func-suffix">Vorsilbe: Amino-</div></div>
   </div>
 </section>
 
-<!-- ═══════════════════ 5. BENENNUNG ═══════════════════ -->
 <section class="chapter reveal" id="benennung">
   <div class="chapter-header">
     <div class="chapter-num">05 / 07</div>
-    <h2 class="chapter-title">Einfache <em>Benennung</em></h2>
+    <h2 class="chapter-title">Einfache <em>Benennung</em><span class="test-badge hot">Test</span></h2>
   </div>
   <p class="chapter-intro">
     Regel: <strong>Vorsilben − Stamm − Endungen.</strong> Der Stamm gibt die Anzahl der C-Atome in der längsten Kette an. Endungen: −an (einfach), −en (doppel), −in (dreifach), −säure, −ol, −al.
@@ -1777,117 +701,55 @@ Oxidation: Fe → Fe²⁺ + 2e⁻
 
   <div class="formula-block">
 Aufbau: [Vorsilben] + [Stamm] + [Endungen]<br><br>
-Beispiel aus dem Skript:<br>
-→ 2,3-cis-dihydroxy-6-Nitro-6-Amino-6-Flour-hex-2-en-4-in-säure<br><br>
+Beispiele aus dem Skript:<br>
+→ 2,3-cis-dihydroxy-6-Nitro-6-Amino-6-Fluor-hex-2-en-4-in-säure<br>
 → 1-Hydroxy-2,3-cis-di-Amino-but-2-en<br>
 → 3-Hydroxy-propansäure<br>
-→ 6,6-di-Flour-hept-2,4-di-in-säure<br>
+→ 6,6-di-Fluor-hept-2,4-di-in-säure<br>
 → 4,5-trans-di-Methyl-7,7,7-tri-Hydroxy-hept-2-in-4-en-säure<br>
 → 2,3-trans-di-Nitro-pent-2-en-5-al-säure
   </div>
 
   <div class="note">
-    <strong>cis / trans</strong> — Aus dem Skript: bei Doppelbindungen gibt es die räumliche Anordnung cis (Substituenten auf derselben Seite) und trans (gegenüber).<br>
-    <em>Ergänzung (nicht im Skript, recherchiert):</em> Die Begriffe cis/trans werden in der modernen IUPAC-Nomenklatur oft durch (Z) bzw. (E) ersetzt — Z für „zusammen", E für „entgegen".
+    <strong>cis / trans</strong> — Bei Doppelbindungen gibt es die räumliche Anordnung cis (Substituenten auf derselben Seite) und trans (gegenüber).<br>
+    <em>Ergänzung (nicht im Skript, recherchiert):</em> In der modernen IUPAC-Nomenklatur werden cis/trans oft durch (Z) bzw. (E) ersetzt — Z für „zusammen", E für „entgegen".
   </div>
 
-  <!-- Nomenclature Builder -->
   <div class="nomen-builder">
     <div class="chapter-num" style="margin-bottom:0.5rem;">Benennungs-Sandbox</div>
     <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:1.5rem;">Bau dir deinen Namen zusammen</h3>
-
     <div class="nomen-result" id="nomenResult"><span class="empty">Stell die Regler ein…</span></div>
-
     <div class="nomen-controls">
-      <div class="nomen-slider">
-        <label>C-Anzahl (Stamm)<span class="nomen-value" id="vCAtoms">3</span></label>
-        <input type="range" id="cAtoms" min="1" max="10" value="3">
-      </div>
-      <div class="nomen-slider">
-        <label>Bindungstyp</label>
-        <select id="bondType">
-          <option value="an">-an (Einfach)</option>
-          <option value="en">-en (Doppel)</option>
-          <option value="in">-in (Dreifach)</option>
-        </select>
-      </div>
-      <div class="nomen-slider">
-        <label>Funktionelle Endung</label>
-        <select id="funcEnd">
-          <option value="">(keine)</option>
-          <option value="ol">-ol (Alkohol)</option>
-          <option value="säure">-säure (Carbonsäure)</option>
-          <option value="al">-al (Aldehyd)</option>
-        </select>
-      </div>
-      <div class="nomen-slider">
-        <label>Vorsilbe</label>
-        <select id="prefix">
-          <option value="">(keine)</option>
-          <option value="Hydroxy-">Hydroxy-</option>
-          <option value="Amino-">Amino-</option>
-          <option value="Nitro-">Nitro-</option>
-          <option value="Fluor-">Fluor-</option>
-          <option value="Chlor-">Chlor-</option>
-          <option value="Brom-">Brom-</option>
-          <option value="Iod-">Iod-</option>
-        </select>
-      </div>
+      <div class="nomen-slider"><label>C-Anzahl (Stamm)<span class="nomen-value" id="vCAtoms">3</span></label><input type="range" id="cAtoms" min="1" max="10" value="3"></div>
+      <div class="nomen-slider"><label>Bindungstyp</label><select id="bondType"><option value="an">-an (Einfach)</option><option value="en">-en (Doppel)</option><option value="in">-in (Dreifach)</option></select></div>
+      <div class="nomen-slider"><label>Funktionelle Endung</label><select id="funcEnd"><option value="">(keine)</option><option value="ol">-ol (Alkohol)</option><option value="säure">-säure (Carbonsäure)</option><option value="al">-al (Aldehyd)</option></select></div>
+      <div class="nomen-slider"><label>Vorsilbe</label><select id="prefix"><option value="">(keine)</option><option value="Hydroxy-">Hydroxy-</option><option value="Amino-">Amino-</option><option value="Nitro-">Nitro-</option><option value="Fluor-">Fluor-</option><option value="Chlor-">Chlor-</option><option value="Brom-">Brom-</option><option value="Iod-">Iod-</option></select></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ 6. REAKTIONEN ═══════════════════ -->
 <section class="chapter reveal" id="reaktionen">
   <div class="chapter-header">
     <div class="chapter-num">06 / 07</div>
-    <h2 class="chapter-title">Reaktionen der <em>Alkane, Alkene, Alkine</em></h2>
+    <h2 class="chapter-title">Reaktionen der <em>Alkane, Alkene, Alkine</em><span class="test-badge hot">Test</span></h2>
   </div>
   <p class="chapter-intro">
-    Alkane sind <em>gesättigt</em>, Alkene & Alkine <em>ungesättigt</em> (Doppel- bzw. Dreifachbindung). Daraus ergeben sich ganz unterschiedliche Reaktionstypen.
+    Alkane sind <em>gesättigt</em>, Alkene &amp; Alkine <em>ungesättigt</em> (Doppel- bzw. Dreifachbindung). Daraus ergeben sich ganz unterschiedliche Reaktionstypen.
   </p>
 
-  <!-- Verbrennungs-Rechner -->
   <div class="reaction-container">
-    <div class="chapter-num">Alkane · Reaktion 1</div>
+    <div class="chapter-num">Alkane · Reaktion 1 <span class="test-badge hot">Test</span></div>
     <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin:0.3rem 0 1rem;">Verbrennung (Reaktion mit O₂)</h3>
-    <p style="color:var(--ink-dim);margin-bottom:1rem;">Bei <strong>vollständiger Verbrennung</strong> entstehen immer CO₂ und H₂O. Beispiel aus dem Skript: Wie viel g CO₂ pro km bei 5,2 L Diesel / 100 km (C₁₈H₃₈)? Dichte Diesel 0,93 g/mL.</p>
+    <p style="color:var(--ink-dim);margin-bottom:1rem;">Bei <strong>vollständiger Verbrennung</strong> entstehen immer CO₂ und H₂O. Beispiel: Wie viel g CO₂ pro km bei 5,2 L Diesel/100 km (C₁₈H₃₈)? Dichte Diesel 0,93 g/mL.</p>
 
     <div class="reaction-stage">
-      <div class="react-step active">
-        <div class="step-label">Schritt 1 · Reaktionsgleichung</div>
-        <div class="step-equation">C₁₈H₃₈ + 27½ O₂ <span class="arrow">→</span> 18 CO₂ <span class="plus">+</span> 19 H₂O</div>
-        <p class="step-desc">Alkan-Verbrennung erzeugt CO₂ und Wasser. Die Stoichiometrie folgt aus den Molekülformeln.</p>
-      </div>
-      <div class="react-step">
-        <div class="step-label">Schritt 2 · Diesel-Masse</div>
-        <div class="step-equation">5,2 L × 0,93 g/mL = <span style="color:var(--acid);">4836 g Diesel</span></div>
-        <p class="step-desc">Volumen × Dichte = Masse des Kraftstoffs pro 100 km.</p>
-      </div>
-      <div class="react-step">
-        <div class="step-label">Schritt 3 · Molare Masse C₁₈H₃₈</div>
-        <div class="step-equation">18 × 12,011 + 38 × 1,00794 ≈ <span style="color:var(--acid);">254,5 g/mol</span></div>
-        <p class="step-desc">Summe der Atommassen aller C- und H-Atome im Molekül.</p>
-      </div>
-      <div class="react-step">
-        <div class="step-label">Schritt 4 · Stoffmenge Diesel</div>
-        <div class="step-equation">n = m / M = 4836 / 254,5 = <span style="color:var(--acid);">19 mol Diesel</span></div>
-      </div>
-      <div class="react-step">
-        <div class="step-label">Schritt 5 · Stoffmenge CO₂</div>
-        <div class="step-equation">19 × 18 = <span style="color:var(--acid);">342 mol CO₂</span></div>
-        <p class="step-desc">Pro Mol C₁₈H₃₈ entstehen 18 Mol CO₂.</p>
-      </div>
-      <div class="react-step">
-        <div class="step-label">Schritt 6 · Masse CO₂</div>
-        <div class="step-equation">342 × 44 g = <span style="color:var(--acid);">15 048 g CO₂</span></div>
-        <p class="step-desc">M(CO₂) = 12,011 + 2×16 ≈ 44 g/mol</p>
-      </div>
-      <div class="react-step">
-        <div class="step-label">Schritt 7 · Pro Kilometer</div>
-        <div class="step-equation">15 048 / 100 = <span style="color:var(--acid);font-size:1.8rem;">150,5 g CO₂ / km</span></div>
-        <p class="step-desc">Ergebnis: pro gefahrenem Kilometer stößt das Auto etwa 150 g CO₂ aus.</p>
-      </div>
+      <div class="react-step active"><div class="step-label">Schritt 1 · Reaktionsgleichung</div><div class="step-equation">C₁₈H₃₈ + 27½ O₂ <span class="arrow">→</span> 18 CO₂ <span class="plus">+</span> 19 H₂O</div><p class="step-desc">Alkan-Verbrennung erzeugt CO₂ und Wasser.</p></div>
+      <div class="react-step"><div class="step-label">Schritt 2 · Diesel-Masse</div><div class="step-equation">5,2 L × 0,93 g/mL = <span style="color:var(--acid);">4836 g Diesel</span></div><p class="step-desc">Volumen × Dichte = Masse des Kraftstoffs pro 100 km.</p></div>
+      <div class="react-step"><div class="step-label">Schritt 3 · Molare Masse C₁₈H₃₈</div><div class="step-equation">18 × 12,011 + 38 × 1,00794 ≈ <span style="color:var(--acid);">254,5 g/mol</span></div><p class="step-desc">Summe der Atommassen.</p></div>
+      <div class="react-step"><div class="step-label">Schritt 4 · Stoffmenge Diesel</div><div class="step-equation">n = m / M = 4836 / 254,5 = <span style="color:var(--acid);">19 mol</span></div></div>
+      <div class="react-step"><div class="step-label">Schritt 5 · Stoffmenge CO₂</div><div class="step-equation">19 × 18 = <span style="color:var(--acid);">342 mol CO₂</span></div><p class="step-desc">Pro Mol C₁₈H₃₈ entstehen 18 Mol CO₂.</p></div>
+      <div class="react-step"><div class="step-label">Schritt 6 · Masse CO₂</div><div class="step-equation">342 × 44 g = <span style="color:var(--acid);">15 048 g CO₂</span></div><p class="step-desc">M(CO₂) = 44 g/mol</p></div>
+      <div class="react-step"><div class="step-label">Schritt 7 · Pro Kilometer</div><div class="step-equation">15 048 / 100 = <span style="color:var(--acid);font-size:1.8rem;">150,5 g CO₂ / km</span></div><p class="step-desc">~150 g CO₂ pro km.</p></div>
     </div>
 
     <div class="reaction-controls">
@@ -1897,320 +759,187 @@ Beispiel aus dem Skript:<br>
     </div>
   </div>
 
-  <!-- Weitere Reaktionstypen -->
   <div class="card-grid">
-    <div class="card">
-      <div class="card-eyebrow">Alkane · Reaktion 2</div>
-      <h3 class="card-title">Substitution</h3>
-      <div class="card-body">
-        Austausch von einem Atom/Atomgruppe — <strong>Kohlenstoffgerüst bleibt unverändert</strong>. Reaktion mit F, Cl, Br, I.<br><br>
-        <span class="formula">CH₄ + Cl₂ → CH₃Cl + HCl</span><br><br>
-        4 Schritte bis zum Tetrachlormethan.
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-eyebrow">Alkane · Reaktion 3</div>
-      <h3 class="card-title">Cracken</h3>
-      <div class="card-body">
-        Aus langen Alkanen entstehen durch Crackreaktionen kurzkettige <strong>Alkene</strong> oder <strong>Alkine</strong> (benzinähnlich). Wichtig in der Raffinerie.
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-eyebrow">Alkene/Alkine · Reaktion 1</div>
-      <h3 class="card-title">Eliminierung</h3>
-      <div class="card-body">
-        Von 2 benachbarten C-Atomen werden Atome oder Gruppen entfernt → es entsteht eine Doppelbindung. Beispiel: H und Cl werden abgespalten → HCl (Salzsäure).
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-eyebrow">Alkene/Alkine · Reaktion 2</div>
-      <h3 class="card-title">Addition</h3>
-      <div class="card-body">
-        Umkehr der Eliminierung. An die Doppel-/Dreifachbindung werden Atome geknüpft, ohne dass andere abgespalten werden.<br><br>
-        Dreifachbindung → Doppelbindung → Einfachbindung. z. B. <strong>Halogenierung</strong> mit Cl₂, F₂, Br₂, I₂.
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-eyebrow">Alkene/Alkine · Reaktion 3</div>
-      <h3 class="card-title">Polymerisation</h3>
-      <div class="card-body">
-        Aus kleinen ungesättigten Molekülen entstehen lange, gesättigte <strong>Polymere</strong>. Start durch Fremdatome, die <strong>Radikale</strong> sind. Abbruch, wenn zwei Radikale aufeinander treffen.
-      </div>
-    </div>
+    <div class="card"><div class="card-eyebrow">Alkane · Reaktion 2</div><h3 class="card-title">Substitution</h3><div class="card-body">Austausch von einem Atom/Atomgruppe — <strong>Kohlenstoffgerüst bleibt unverändert</strong>. Reaktion mit F, Cl, Br, I.<br><br><span class="formula">CH₄ + Cl₂ → CH₃Cl + HCl</span><br><br>4 Schritte bis zum Tetrachlormethan.</div></div>
+    <div class="card"><div class="card-eyebrow">Alkane · Reaktion 3</div><h3 class="card-title">Cracken</h3><div class="card-body">Aus langen Alkanen entstehen durch Crackreaktionen kurzkettige <strong>Alkene</strong> oder <strong>Alkine</strong> (benzinähnlich).</div></div>
+    <div class="card"><div class="card-eyebrow">Alkene/Alkine · 1</div><h3 class="card-title">Eliminierung</h3><div class="card-body">Von 2 benachbarten C-Atomen werden Atome/Gruppen entfernt → Doppelbindung entsteht. z. B. H und Cl → HCl.</div></div>
+    <div class="card"><div class="card-eyebrow">Alkene/Alkine · 2</div><h3 class="card-title">Addition</h3><div class="card-body">Umkehr der Eliminierung. Atome werden an die Doppel-/Dreifachbindung geknüpft.<br><br>Dreifach → Doppel → Einfachbindung. z. B. <strong>Halogenierung</strong>.</div></div>
+    <div class="card"><div class="card-eyebrow">Alkene/Alkine · 3</div><h3 class="card-title">Polymerisation</h3><div class="card-body">Aus kleinen ungesättigten Molekülen entstehen lange gesättigte <strong>Polymere</strong>. Start durch <strong>Radikale</strong>. Abbruch, wenn zwei Radikale aufeinander treffen.</div></div>
   </div>
 </section>
 
-<!-- ═══════════════════ 7. KUNSTSTOFFE ═══════════════════ -->
 <section class="chapter reveal" id="kunststoffe">
   <div class="chapter-header">
     <div class="chapter-num">07 / 07</div>
-    <h2 class="chapter-title"><em>Kunststoffe</em></h2>
+    <h2 class="chapter-title"><em>Kunststoffe</em><span class="test-badge hot">Test</span></h2>
   </div>
-  <p class="chapter-intro">
-    Kunststoffe können auf <strong>3 Arten</strong> hergestellt werden: Polymerisation, Polykondensation, Polyaddition.
-  </p>
+  <p class="chapter-intro">Kunststoffe können auf <strong>3 Arten</strong> hergestellt werden: Polymerisation, Polykondensation, Polyaddition.</p>
 
   <div class="card-grid">
-    <div class="card">
-      <div class="card-eyebrow">Methode I</div>
-      <h3 class="card-title">Polymerisation</h3>
-      <div class="card-body">Kleine ungesättigte Moleküle werden durch Radikale miteinander verknüpft. Keine Abspaltung.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Methode II</div>
-      <h3 class="card-title">Polykondensation</h3>
-      <div class="card-body">Makromoleküle aus art-gleichen oder art-verschiedenen Monomeren mit zwei reaktiven Gruppen. Dabei werden immer <strong>kleine Moleküle abgespalten</strong> (meist Wasser).</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Methode III</div>
-      <h3 class="card-title">Polyaddition</h3>
-      <div class="card-body">Makromoleküle werden durch Umlagerung von Atomen erzeugt — <strong>ohne Abspaltung</strong>. 2 Monomere. Beispiele: Polyurethane, Polyharnstoff (Nylon).</div>
-    </div>
+    <div class="card"><div class="card-eyebrow">Methode I</div><h3 class="card-title">Polymerisation</h3><div class="card-body">Kleine ungesättigte Moleküle werden durch Radikale verknüpft. <strong>Keine Abspaltung</strong>.</div></div>
+    <div class="card"><div class="card-eyebrow">Methode II</div><h3 class="card-title">Polykondensation</h3><div class="card-body">Makromoleküle aus zwei reaktiven Gruppen. <strong>Kleine Moleküle werden abgespalten</strong> (meist Wasser).</div></div>
+    <div class="card"><div class="card-eyebrow">Methode III</div><h3 class="card-title">Polyaddition</h3><div class="card-body">Makromoleküle durch Umlagerung von Atomen — <strong>ohne Abspaltung</strong>. Beispiele: Polyurethane, Polyharnstoff (Nylon).</div></div>
   </div>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Die 5 großen Polymerisate</h3>
+  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Die 5 großen Polymerisate <span class="test-badge hot">Test</span></h3>
 
-  <div class="accordion" id="plasticsAcc">
-    <div class="accordion-item">
-      <div class="acc-header">
-        <span>a) Polyethylen (PE)</span>
-        <span class="acc-icon">+</span>
-      </div>
-      <div class="acc-body">
-        <strong>Monomer:</strong> Ethylen (C₂H₄)<br>
-        <strong>Polymer:</strong> Kette bis n = 100.000<br><br>
-        <strong>LDPE (Low Density):</strong> ρ = 0,92 g/cm³ — weich und flexibel, wird bei Drücken bis 3000 bar erzeugt.<br>
-        <strong>HDPE (High Density):</strong> ρ = 0,98 bis 1,12 g/cm³ — hart und spröde, bei 1 bis 100 bar.<br><br>
-        <strong>Eigenschaften:</strong> + gut färbbar, + gut schweißbar, + gut spanabhebend bearbeitbar, − kaum klebbar, − hoher Wärmeausdehnungskoeffizient<br>
-        <strong>Verwendung:</strong> Abdeckungen, Schläuche, Folien, Verpackung, Maschinenteile.
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <div class="acc-header">
-        <span>b) Polypropylen (PP)</span>
-        <span class="acc-icon">+</span>
-      </div>
-      <div class="acc-body">
-        <strong>Monomer:</strong> Propylen (C₃H₆)<br>
-        Eigenschaften und Verwendung ähnlich zu PE (gut färb- und schweißbar, kaum klebbar, hoher Wärmeausdehnungskoeffizient; Abdeckungen, Schläuche, Folien, Verpackung, Maschinenteile).
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <div class="acc-header">
-        <span>c) Polyvinylchlorid (PVC)</span>
-        <span class="acc-icon">+</span>
-      </div>
-      <div class="acc-body">
-        <strong>Monomer:</strong> Vinylchlorid<br><br>
-        <strong>Begründung für die Entwicklung:</strong> Schmelzflusselektrolyse von NaCl — geschmolzenes NaCl (ca. 750 °C) → 2 NaCl → 2 Na + Cl₂↑ · 2 Na + 2 H₂O → 2 NaOH + H₂↑. Damit fiel viel Chlor an, für das Verwendung gebraucht wurde → PVC.<br><br>
-        <strong>Vorteile:</strong> lebensmittelecht, kostengünstig, spanabhebend bearbeitbar, sehr gut färbbar, es gibt Hart- und Weich-PVC.<br>
-        <strong>Nachteil:</strong> bei der Verbrennung entsteht HCl.<br>
-        <strong>Anwendungen:</strong> Rohre, Schläuche, Folien, Böden, Maschinenteile, Abdeckungen, Fensterrahmen, Gummistiefel.
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <div class="acc-header">
-        <span>d) Polytetrafluorethan (PTFE · Teflon)</span>
-        <span class="acc-icon">+</span>
-      </div>
-      <div class="acc-body">
-        <strong>Monomer:</strong> Tetrafluorethen (C₂F₄)<br><br>
-        Die Fluor-Atome sind so groß, dass sie die C-C-Bindung vor Angriffen von außen schützen. Außerdem ist die C-F-Bindung sehr stark. Dadurch ist Teflon <strong>beständig</strong> gegen Säuren, Basen und Lösungsmittel. Temperaturbereich −200 °C bis 300 °C elastisch. Ab 350 °C sublimiert Teflon. Lebensmittelecht.<br><br>
-        <strong>Anwendung:</strong> Rohre, Gleitlager, Schläuche, Beschichtungen, Folien, Dichtungsmaterial, Goretex, Ventile, Schmiermittel (Spray).
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <div class="acc-header">
-        <span>e) Polystyrol (PS)</span>
-        <span class="acc-icon">+</span>
-      </div>
-      <div class="acc-body">
-        <strong>Monomer:</strong> Styrol<br><br>
-        <strong>Styropor</strong> = geschäumtes Polystyrol.<br><br>
-        Geschäumtes PS wird als Dämm- bzw. Verpackungsmaterial verwendet. PS ist schlecht beständig gegen organische Lösungsmittel. Transparent → Einsatz z. B. für Lichterabdeckung bei Autos.
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <div class="acc-header">
-        <span>Polyester (UP) · Polykondensation</span>
-        <span class="acc-icon">+</span>
-      </div>
-      <div class="acc-body">
-        Bei Polyestern sind pro Monomer mindestens 2 reaktive Gruppen nötig (entweder 2 Säuren oder 2 Alkohole oder eine Mischung). Bei der Reaktion wird <strong>Wasser abgespalten</strong>.<br><br>
-        Die verschiedenen Monomere ergeben unterschiedlichste Eigenschaften (weich, hart, elastisch). Meistens glasklar, gut beständig gegen schwache Säuren, aber schlecht gegen Basen.<br><br>
-        <strong>Pyrolyse:</strong> bei 600–700 °C unter Sauerstoffausschluss oder Vakuum.<br>
-        <strong>Polyamid:</strong> nimmt bei 100 °C etwa 2–3 % Wasser auf → quillt → <strong>nicht für elektrische Isolierungen geeignet</strong>. Verwendung: Zahnräder, Dichtungen, Schrauben, Kraftstofftanks.
-      </div>
-    </div>
+  <div class="accordion">
+    <div class="accordion-item"><div class="acc-header"><span>a) Polyethylen (PE)</span><span class="acc-icon">+</span></div><div class="acc-body"><strong>Monomer:</strong> Ethylen (C₂H₄) · <strong>Polymer:</strong> Kette bis n = 100.000<br><br><strong>LDPE:</strong> ρ = 0,92 g/cm³ — weich, flexibel, bis 3000 bar.<br><strong>HDPE:</strong> ρ = 0,98–1,12 g/cm³ — hart, spröde, 1–100 bar.<br><br><strong>+</strong> gut färbbar, gut schweißbar, spanabhebend<br><strong>−</strong> kaum klebbar, hoher Wärmeausdehnungskoeffizient<br><strong>Verwendung:</strong> Abdeckungen, Schläuche, Folien, Verpackung, Maschinenteile.</div></div>
+    <div class="accordion-item"><div class="acc-header"><span>b) Polypropylen (PP)</span><span class="acc-icon">+</span></div><div class="acc-body"><strong>Monomer:</strong> Propylen<br>Eigenschaften &amp; Verwendung ähnlich PE.</div></div>
+    <div class="accordion-item"><div class="acc-header"><span>c) Polyvinylchlorid (PVC)</span><span class="acc-icon">+</span></div><div class="acc-body"><strong>Monomer:</strong> Vinylchlorid<br><br><strong>Begründung:</strong> Schmelzflusselektrolyse von NaCl (ca. 750 °C). 2 NaCl → 2 Na + Cl₂↑ · 2 Na + 2 H₂O → 2 NaOH + H₂↑. Viel Chlor → Verwendung in PVC.<br><br><strong>Vorteile:</strong> lebensmittelecht, kostengünstig, spanabhebend, sehr gut färbbar, Hart- und Weich-PVC.<br><strong>Nachteil:</strong> bei Verbrennung entsteht HCl.<br><strong>Anwendungen:</strong> Rohre, Schläuche, Folien, Böden, Fensterrahmen, Gummistiefel.</div></div>
+    <div class="accordion-item"><div class="acc-header"><span>d) Polytetrafluorethan (PTFE · Teflon)</span><span class="acc-icon">+</span></div><div class="acc-body"><strong>Monomer:</strong> Tetrafluorethen (C₂F₄)<br><br>F-Atome schützen die C-C-Bindung. C-F-Bindung sehr stark → <strong>beständig</strong> gegen Säuren, Basen, Lösungsmittel. −200 °C bis 300 °C elastisch. Ab 350 °C sublimiert. Lebensmittelecht.<br><br><strong>Anwendung:</strong> Rohre, Gleitlager, Beschichtungen, Goretex, Ventile, Schmiermittel.</div></div>
+    <div class="accordion-item"><div class="acc-header"><span>e) Polystyrol (PS)</span><span class="acc-icon">+</span></div><div class="acc-body"><strong>Monomer:</strong> Styrol · <strong>Styropor</strong> = geschäumtes PS.<br><br>Geschäumtes PS als Dämm-/Verpackungsmaterial. Schlecht beständig gegen organische Lösungsmittel. Transparent → Lichterabdeckung bei Autos.</div></div>
+    <div class="accordion-item"><div class="acc-header"><span>Polyester (UP) · Polykondensation</span><span class="acc-icon">+</span></div><div class="acc-body">Pro Monomer mindestens 2 reaktive Gruppen. <strong>Wasser wird abgespalten</strong>.<br><br>Eigenschaften je nach Monomer: weich, hart, elastisch. Meist glasklar, gut gegen schwache Säuren, schlecht gegen Basen.<br><br><strong>Pyrolyse:</strong> 600–700 °C, Sauerstoffausschluss/Vakuum.<br><strong>Polyamid:</strong> nimmt bei 100 °C ~2–3 % Wasser auf → quillt → nicht für elektr. Isolierung. Verwendung: Zahnräder, Dichtungen, Schrauben, Kraftstofftanks.</div></div>
   </div>
 
-  <!-- Veränderung von Kunststoffen -->
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Veränderung von Kunststoffen · Zusatzstoffe</h3>
+  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Zusatzstoffe</h3>
 
   <div class="card-grid">
-    <div class="card">
-      <div class="card-eyebrow">1 · Füllstoffe</div>
-      <h3 class="card-title">Billiger & fester</h3>
-      <div class="card-body">Papierfasern, Gesteinsmehl → Kunststoff billiger. Glasfasern → Festigkeit erhöht (Glasfaser-Verbund). Kohlenstoff → Wärme-/elektr. Leitfähigkeit (z. B. Reifen). Mit <strong>Graphit</strong> leitend.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">2 · Farbstoffe</div>
-      <h3 class="card-title">Optik & Alterung</h3>
-      <div class="card-body">Chemisch gebunden oder eingelagert. Nicht alle Kunststoffe lassen sich gut färben. Zweck: Optik und Alterungsschutz.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">3 · Weichmacher</div>
-      <h3 class="card-title">Elastizität</h3>
-      <div class="card-body">Verantwortlich für die Elastizität. Verhindern die Anziehung der Molekülketten und die Vernetzung des Kunststoffes.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">4 · Flammschutz</div>
-      <h3 class="card-title">Phosphorverbindungen</h3>
-      <div class="card-body">Bei Verbrennung entsteht Phosphorsäure. Diese ist schwerer als Luft und verhindert den weiteren Zutritt von Sauerstoff.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">5 · Antistatika</div>
-      <h3 class="card-title">Oberflächenleitung</h3>
-      <div class="card-body">Erhöhen die Oberflächenleitfähigkeit → verhindern elektrostatische Aufladung.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">6 · Alterungs-/Lichtschutz</div>
-      <h3 class="card-title">UV-Abbau verhindern</h3>
-      <div class="card-body">Greifen direkt in den radikalischen Abbau durch UV-Licht ein.</div>
-    </div>
+    <div class="card"><div class="card-eyebrow">1 · Füllstoffe</div><h3 class="card-title">Billiger &amp; fester</h3><div class="card-body">Papierfasern, Gesteinsmehl → billiger. Glasfasern → Festigkeit. Kohlenstoff/Graphit → Leitfähigkeit.</div></div>
+    <div class="card"><div class="card-eyebrow">2 · Farbstoffe</div><h3 class="card-title">Optik &amp; Alterung</h3><div class="card-body">Chemisch gebunden oder eingelagert. Optik &amp; Alterungsschutz.</div></div>
+    <div class="card"><div class="card-eyebrow">3 · Weichmacher</div><h3 class="card-title">Elastizität</h3><div class="card-body">Verhindern die Anziehung der Molekülketten / Vernetzung.</div></div>
+    <div class="card"><div class="card-eyebrow">4 · Flammschutz</div><h3 class="card-title">Phosphor</h3><div class="card-body">Bei Verbrennung entsteht Phosphorsäure. Schwerer als Luft → verhindert Sauerstoffzutritt.</div></div>
+    <div class="card"><div class="card-eyebrow">5 · Antistatika</div><h3 class="card-title">Oberflächenleitung</h3><div class="card-body">Erhöhen Oberflächenleitfähigkeit → keine elektrostatische Aufladung.</div></div>
+    <div class="card"><div class="card-eyebrow">6 · Alterungsschutz</div><h3 class="card-title">UV-Abbau</h3><div class="card-body">Greifen direkt in den radikalischen Abbau durch UV-Licht ein.</div></div>
   </div>
 </section>
 
-<!-- ═══════════════════ QUIZ ═══════════════════ -->
 <section class="chapter reveal" id="quiz">
   <div class="chapter-header">
-    <div class="chapter-num">Final Boss</div>
-    <h2 class="chapter-title"><em>Quiz</em> · 15 Fragen</h2>
+    <div class="chapter-num">Final Boss · Zufalls-Quiz</div>
+    <h2 class="chapter-title"><em>Quiz</em> · 135 Test-Fragen</h2>
   </div>
+  <p class="chapter-intro">
+    <strong style="color:var(--rose);">Alle Fragen sind test-relevant.</strong> Jedes Mal andere Fragen — der Pool reicht für viele Durchgänge. Nach dem Quiz siehst du, welche Fragen falsch waren, und du kannst einzelne Fragen <span style="color:var(--gold);">★ markieren</span>, um sie kurz vor dem Test noch mal durchzulesen.
+  </p>
 
   <div class="quiz-container">
-    <div class="quiz-header">
-      <div>
-        <div class="chapter-num">Testvorbereitung</div>
-        <p id="quizCounter" style="font-family:'Fraunces',serif;font-size:1.3rem;margin-top:0.3rem;">Frage 1 / 15</p>
+    <div id="quizSetupScreen">
+      <h3 style="font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:1rem;">Quiz-Einstellungen</h3>
+      <div class="quiz-settings">
+        <div class="setting-group">
+          <label>Anzahl Fragen</label>
+          <select id="setCount">
+            <option value="10">10 Fragen (kurz)</option>
+            <option value="15" selected>15 Fragen (Standard)</option>
+            <option value="20">20 Fragen</option>
+            <option value="30">30 Fragen (intensiv)</option>
+            <option value="50">50 Fragen (Marathon)</option>
+          </select>
+        </div>
+        <div class="setting-group">
+          <label>Themenbereich</label>
+          <select id="setTopic">
+            <option value="all">Alle Themen</option>
+            <option value="wasser">Nur Wasser &amp; Härte</option>
+            <option value="elektro">Nur Elektro &amp; Redox</option>
+            <option value="organik">Nur Organik &amp; Benennung</option>
+            <option value="reaktionen">Nur Reaktionen</option>
+            <option value="kunststoffe">Nur Kunststoffe</option>
+          </select>
+        </div>
       </div>
-      <div id="quizScore" style="font-family:'JetBrains Mono',monospace;color:var(--acid);font-size:0.85rem;">Score: 0 / 0</div>
+      <div class="quiz-action-row" style="justify-content:flex-start;">
+        <button class="btn primary" onclick="startQuiz()">Quiz starten →</button>
+      </div>
     </div>
-    <div class="quiz-progress"><div class="quiz-progress-bar" id="quizProgress"></div></div>
-    <div id="quizBody" class="question-block"></div>
+
+    <div id="quizLiveScreen" style="display:none;">
+      <div class="quiz-topbar">
+        <div><div class="chapter-num">Testvorbereitung</div><p id="quizCounter" style="font-family:'Fraunces',serif;font-size:1.3rem;margin-top:0.3rem;">Frage 1 / 15</p></div>
+        <div class="quiz-actions">
+          <span id="quizScore" style="font-family:'JetBrains Mono',monospace;color:var(--acid);font-size:0.85rem;padding:0.45rem 0.85rem;">Score: 0 / 0</span>
+          <button class="mini-btn danger" onclick="abortQuiz()">Abbrechen</button>
+        </div>
+      </div>
+      <div class="quiz-progress"><div class="quiz-progress-bar" id="quizProgress"></div></div>
+      <div id="quizBody" class="question-block"></div>
+    </div>
+
+    <div id="quizResultScreen" style="display:none;"></div>
+  </div>
+
+  <div class="saved-section" id="savedSection">
+    <div class="saved-header">
+      <h3>★ Deine gespeicherten Fragen</h3>
+      <span class="saved-count" id="savedCount">0 Fragen</span>
+    </div>
+    <p style="color:var(--ink-dim);font-size:0.9rem;margin-bottom:1rem;">
+      Markiere während des Quizzes Fragen mit dem Stern-Button. Kurz vor dem Test kannst du hier nochmal alles durchlesen. Die Liste bleibt gespeichert, auch wenn du die Seite neu lädst.
+    </p>
+    <div class="quiz-action-row" style="justify-content:flex-start;margin-bottom:1.5rem;">
+      <button class="mini-btn" onclick="printSaved()">🖨 Drucken / PDF</button>
+      <button class="mini-btn danger" onclick="clearSaved()">Alle löschen</button>
+    </div>
+    <div id="savedList"></div>
   </div>
 </section>
 
-<!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer>
   <div class="footer-title"><em>Viel Erfolg</em> beim Test.</div>
   <div class="footer-note">NW 2024 · Interaktive Lernseite · Alle Inhalte aus dem Skript</div>
 </footer>
 
 <script>
-// ═══════════════════════════════════════ REVEAL ON SCROLL
+// REVEAL ON SCROLL
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible');});
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// ═══════════════════════════════════════ NAV ACTIVE
+// NAV ACTIVE
 const navLinks = document.querySelectorAll('.nav-links a');
 const sections = document.querySelectorAll('section.chapter');
 const sectionObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      navLinks.forEach(l => l.classList.toggle('active',
-        l.getAttribute('href') === '#' + e.target.id));
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
     }
   });
 }, { rootMargin: '-40% 0px -55% 0px' });
 sections.forEach(s => sectionObs.observe(s));
 
-// ═══════════════════════════════════════ ACCORDION
+// ACCORDION
 document.querySelectorAll('.accordion-item').forEach(item => {
   item.querySelector('.acc-header').addEventListener('click', () => {
     item.classList.toggle('open');
   });
 });
 
-// ═══════════════════════════════════════ HOMOLOGE REIHE
+// HOMOLOGE REIHE
 const alkanes = [
-  {n: 1, name: 'Methan', formula: 'CH₄'},
-  {n: 2, name: 'Ethan',  formula: 'C₂H₆'},
-  {n: 3, name: 'Propan', formula: 'C₃H₈'},
-  {n: 4, name: 'Butan',  formula: 'C₄H₁₀'},
-  {n: 5, name: 'Pentan', formula: 'C₅H₁₂'},
-  {n: 6, name: 'Hexan',  formula: 'C₆H₁₄'},
-  {n: 7, name: 'Heptan', formula: 'C₇H₁₆'},
-  {n: 8, name: 'Octan',  formula: 'C₈H₁₈'},
-  {n: 9, name: 'Nonan',  formula: 'C₉H₂₀'},
-  {n: 10, name: 'Decan', formula: 'C₁₀H₂₂'}
+  {n:1,name:'Methan',formula:'CH₄'},{n:2,name:'Ethan',formula:'C₂H₆'},{n:3,name:'Propan',formula:'C₃H₈'},
+  {n:4,name:'Butan',formula:'C₄H₁₀'},{n:5,name:'Pentan',formula:'C₅H₁₂'},{n:6,name:'Hexan',formula:'C₆H₁₄'},
+  {n:7,name:'Heptan',formula:'C₇H₁₆'},{n:8,name:'Octan',formula:'C₈H₁₈'},{n:9,name:'Nonan',formula:'C₉H₂₀'},
+  {n:10,name:'Decan',formula:'C₁₀H₂₂'}
 ];
-
 const homologTable = document.getElementById('homologTable');
 alkanes.forEach(a => {
   const cell = document.createElement('div');
   cell.className = 'homolog-cell';
-  cell.innerHTML = `
-    <div class="homolog-num">C${a.n}</div>
-    <div class="homolog-name">${a.name}</div>
-    <div class="homolog-formula">${a.formula}</div>
-  `;
+  cell.innerHTML = `<div class="homolog-num">C${a.n}</div><div class="homolog-name">${a.name}</div><div class="homolog-formula">${a.formula}</div>`;
   cell.addEventListener('click', () => showHomolog(a));
   homologTable.appendChild(cell);
 });
-
 function buildAlkaneSVG(n) {
-  const spacing = 65;
-  const start = 40;
+  const spacing = 65, start = 40, centerY = 100;
   const width = Math.max(300, start*2 + (n-1)*spacing);
-  const centerY = 100;
   let svg = `<svg viewBox="0 0 ${width} 200" width="${Math.min(width, 700)}">`;
-  // Bonds C-C
   for (let i = 0; i < n - 1; i++) {
-    const x1 = start + i*spacing + 16;
-    const x2 = start + (i+1)*spacing - 16;
+    const x1 = start + i*spacing + 16, x2 = start + (i+1)*spacing - 16;
     svg += `<line x1="${x1}" y1="${centerY}" x2="${x2}" y2="${centerY}" class="bond"/>`;
   }
   for (let i = 0; i < n; i++) {
     const x = start + i*spacing;
-    // top H
-    svg += `<line x1="${x}" y1="${centerY-16}" x2="${x}" y2="${centerY-38}" class="bond"/>`;
-    svg += `<circle cx="${x}" cy="${centerY-44}" r="10" class="atom-h"/>`;
-    svg += `<text x="${x}" y="${centerY-44}" class="atom-label" fill="#333">H</text>`;
-    // bottom H
-    svg += `<line x1="${x}" y1="${centerY+16}" x2="${x}" y2="${centerY+38}" class="bond"/>`;
-    svg += `<circle cx="${x}" cy="${centerY+44}" r="10" class="atom-h"/>`;
-    svg += `<text x="${x}" y="${centerY+44}" class="atom-label" fill="#333">H</text>`;
-    // terminal
-    if (i === 0) {
-      svg += `<line x1="${x-16}" y1="${centerY}" x2="${x-36}" y2="${centerY}" class="bond"/>`;
-      svg += `<circle cx="${x-42}" cy="${centerY}" r="10" class="atom-h"/>`;
-      svg += `<text x="${x-42}" y="${centerY}" class="atom-label" fill="#333">H</text>`;
-    }
-    if (i === n-1) {
-      svg += `<line x1="${x+16}" y1="${centerY}" x2="${x+36}" y2="${centerY}" class="bond"/>`;
-      svg += `<circle cx="${x+42}" cy="${centerY}" r="10" class="atom-h"/>`;
-      svg += `<text x="${x+42}" y="${centerY}" class="atom-label" fill="#333">H</text>`;
-    }
-    // C atom
-    svg += `<circle cx="${x}" cy="${centerY}" r="16" class="atom-c"/>`;
-    svg += `<text x="${x}" y="${centerY}" class="atom-label" fill="#e8ede9">C</text>`;
+    svg += `<line x1="${x}" y1="${centerY-16}" x2="${x}" y2="${centerY-38}" class="bond"/><circle cx="${x}" cy="${centerY-44}" r="10" class="atom-h"/><text x="${x}" y="${centerY-44}" class="atom-label" fill="#333">H</text>`;
+    svg += `<line x1="${x}" y1="${centerY+16}" x2="${x}" y2="${centerY+38}" class="bond"/><circle cx="${x}" cy="${centerY+44}" r="10" class="atom-h"/><text x="${x}" y="${centerY+44}" class="atom-label" fill="#333">H</text>`;
+    if (i === 0) svg += `<line x1="${x-16}" y1="${centerY}" x2="${x-36}" y2="${centerY}" class="bond"/><circle cx="${x-42}" cy="${centerY}" r="10" class="atom-h"/><text x="${x-42}" y="${centerY}" class="atom-label" fill="#333">H</text>`;
+    if (i === n-1) svg += `<line x1="${x+16}" y1="${centerY}" x2="${x+36}" y2="${centerY}" class="bond"/><circle cx="${x+42}" cy="${centerY}" r="10" class="atom-h"/><text x="${x+42}" y="${centerY}" class="atom-label" fill="#333">H</text>`;
+    svg += `<circle cx="${x}" cy="${centerY}" r="16" class="atom-c"/><text x="${x}" y="${centerY}" class="atom-label" fill="#e8ede9">C</text>`;
   }
   svg += '</svg>';
   return svg;
 }
-
 function showHomolog(a) {
   const d = document.getElementById('homologDetail');
   d.style.display = 'block';
@@ -2220,106 +949,23 @@ function showHomolog(a) {
   document.getElementById('hdCanvas').innerHTML = buildAlkaneSVG(a.n);
   d.scrollIntoView({behavior:'smooth', block:'center'});
 }
-// default zeigen
 showHomolog(alkanes[2]);
 
-// ═══════════════════════════════════════ BATTERIEN
+// BATTERIEN
 const batteries = {
-  leclanche: {
-    name: 'Leclanché · Zink-Kohle',
-    type: 'Primärelement (nicht wiederaufladbar)',
-    cathode: 'MnO₂ (Braunstein)',
-    electrolyte: 'NH₄Cl (Ammoniumchlorid)',
-    anode: 'Zn',
-    reactions: [
-      'Anode:   Zn → Zn²⁺ + 2e⁻',
-      'Kathode: 2Mn⁴⁺ + 2e⁻ → 2Mn³⁺'
-    ],
-    notes: 'Aufbau: Graphitstab mit Messingkappe (Pluspol) · Vergussmasse · Braunsteinbeutel · gelatinierte Ammoniumchlorid-Lösung · Zinkbehälter (Minuspol).'
-  },
-  alkali: {
-    name: 'Alkalische Zink/Braunsteinzelle',
-    type: 'Weiterentwicklung des Leclanché-Elements',
-    cathode: 'MnO₂ (Braunstein)',
-    electrolyte: 'KOH (Kalilauge) — überall in Batterie',
-    anode: 'Zn (mit Quecksilber dotiert)',
-    reactions: [
-      'Anode:   Zn → Zn²⁺ + 2e⁻',
-      'Kathode: 2Mn⁴⁺ + 2e⁻ → 2Mn³⁺'
-    ],
-    notes: 'Unterschiede zur Zink-Kohle Batterie: Stahlbehälter statt Zink · Anode und Kathode haben den Platz getauscht · Elektrolyt KOH statt Ammoniumchlorid · Zink mit Quecksilber dotiert zur Reduktion der Überspannung · Stahlnagel statt Graphitstift. Vorteile: Auslaufsicherheit, längere Lebensdauer, hohe Kapazität.'
-  },
-  afc: {
-    name: 'AFC — Alkaline Fuel Cell',
-    type: 'Alkalische Brennstoffzelle',
-    cathode: 'Sauerstoff bzw. Luft',
-    electrolyte: 'Kalilauge (KOH)',
-    anode: 'Wasserstoff, Methanol',
-    temp: '60–120 °C',
-    reactions: [],
-    notes: 'Brennstoffzellen erzeugen Gleichstrom, solange Brennstoff zugeführt wird. Klassifikation nach Elektrolyt.'
-  },
-  pemfc: {
-    name: 'PEMFC — Polymer Electrolyte Membrane Fuel Cell',
-    type: 'Polymermembran-Brennstoffzelle',
-    cathode: 'Sauerstoff bzw. Luft',
-    electrolyte: 'saure Membran',
-    anode: 'Wasserstoff, Methanol',
-    temp: '60–120 °C',
-    reactions: [],
-    notes: 'Häufig in Fahrzeugen eingesetzt.'
-  },
-  pafc: {
-    name: 'PAFC — Phosphoric Acid Fuel Cell',
-    type: 'Phosphorsaure Brennstoffzelle',
-    cathode: 'Sauerstoff bzw. Luft',
-    electrolyte: 'Phosphorsäure',
-    anode: 'Wasserstoff (direkt reformierten Erdgas, mit Resten von Kohlenmonoxid)',
-    temp: '180–220 °C',
-    reactions: [],
-    notes: 'Kann leicht verunreinigten Wasserstoff verarbeiten.'
-  },
-  mcfc: {
-    name: 'MCFC — Molten Carbonate Fuel Cell',
-    type: 'Schmelzkarbonatbrennstoffzelle',
-    cathode: 'Sauerstoff bzw. Luft',
-    electrolyte: 'geschmolzenes Karbonat',
-    anode: 'Wasserstoff, CO',
-    temp: 'ca. 650 °C',
-    reactions: [],
-    notes: 'Hochtemperatur-Zelle für stationäre Großanlagen.'
-  },
-  sofc: {
-    name: 'SOFC — Solid Oxide Fuel Cell',
-    type: 'Festoxidbrennstoffzelle',
-    cathode: 'Sauerstoff bzw. Luft',
-    electrolyte: 'Keramik',
-    anode: 'Wasserstoff, CO',
-    temp: 'ca. 1000 °C',
-    reactions: [],
-    notes: 'Sehr hohe Betriebstemperatur → hoher Wirkungsgrad.'
-  }
+  leclanche: { name:'Leclanché · Zink-Kohle', type:'Primärelement', cathode:'MnO₂ (Braunstein)', electrolyte:'NH₄Cl (Ammoniumchlorid)', anode:'Zn', reactions:['Anode:   Zn → Zn²⁺ + 2e⁻','Kathode: 2Mn⁴⁺ + 2e⁻ → 2Mn³⁺'], notes:'Aufbau: Graphitstab mit Messingkappe (Pluspol) · Vergussmasse · Braunsteinbeutel · gelatinierte Ammoniumchlorid-Lösung · Zinkbehälter (Minuspol).'},
+  alkali: { name:'Alkalische Zink/Braunsteinzelle', type:'Weiterentwicklung des Leclanché-Elements', cathode:'MnO₂', electrolyte:'KOH (Kalilauge)', anode:'Zn (mit Quecksilber dotiert)', reactions:['Anode:   Zn → Zn²⁺ + 2e⁻','Kathode: 2Mn⁴⁺ + 2e⁻ → 2Mn³⁺'], notes:'Unterschiede zur Zink-Kohle: Stahlbehälter statt Zink · Anode/Kathode getauscht · KOH statt NH₄Cl · Zn mit Quecksilber dotiert · Stahlnagel. Vorteile: Auslaufsicherheit, lange Lebensdauer, hohe Kapazität.'},
+  afc: { name:'AFC', type:'Alkaline Fuel Cell', cathode:'Sauerstoff bzw. Luft', electrolyte:'Kalilauge (KOH)', anode:'Wasserstoff, Methanol', temp:'60–120 °C', reactions:[], notes:'Brennstoffzellen erzeugen Gleichstrom, solange Brennstoff zugeführt wird.'},
+  pemfc: { name:'PEMFC', type:'Polymer Electrolyte Membrane Fuel Cell', cathode:'Sauerstoff bzw. Luft', electrolyte:'saure Membran', anode:'Wasserstoff, Methanol', temp:'60–120 °C', reactions:[], notes:'Häufig in Fahrzeugen eingesetzt.'},
+  pafc: { name:'PAFC', type:'Phosphoric Acid Fuel Cell', cathode:'Sauerstoff bzw. Luft', electrolyte:'Phosphorsäure', anode:'Wasserstoff (reformiertes Erdgas, mit Resten von CO)', temp:'180–220 °C', reactions:[], notes:'Kann leicht verunreinigten Wasserstoff verarbeiten.'},
+  mcfc: { name:'MCFC', type:'Molten Carbonate Fuel Cell', cathode:'Sauerstoff bzw. Luft', electrolyte:'geschmolzenes Karbonat', anode:'Wasserstoff, CO', temp:'ca. 650 °C', reactions:[], notes:'Hochtemperatur-Zelle für Großanlagen.'},
+  sofc: { name:'SOFC', type:'Solid Oxide Fuel Cell', cathode:'Sauerstoff bzw. Luft', electrolyte:'Keramik', anode:'Wasserstoff, CO', temp:'ca. 1000 °C', reactions:[], notes:'Sehr hohe Betriebstemperatur → hoher Wirkungsgrad.'}
 };
-
 function renderBattery(key) {
   const b = batteries[key];
   const box = document.getElementById('batDetails');
-  let html = `
-    <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:1rem;">
-      <h4 style="font-family:'Fraunces',serif;font-size:1.6rem;">${b.name}</h4>
-      <div class="chapter-num">${b.type}</div>
-    </div>
-    <p style="color:var(--ink-dim);margin:1rem 0;">${b.notes}</p>
-    <div class="bat-specs">
-      <div class="bat-spec"><div class="bat-spec-label">Anode</div><div class="bat-spec-value">${b.anode}</div></div>
-      <div class="bat-spec"><div class="bat-spec-label">Elektrolyt</div><div class="bat-spec-value">${b.electrolyte}</div></div>
-      <div class="bat-spec"><div class="bat-spec-label">Kathode</div><div class="bat-spec-value">${b.cathode}</div></div>
-      ${b.temp ? `<div class="bat-spec"><div class="bat-spec-label">Betriebstemp.</div><div class="bat-spec-value">${b.temp}</div></div>` : ''}
-    </div>
-  `;
-  if (b.reactions && b.reactions.length) {
-    html += `<div class="formula-block" style="margin-top:1.5rem;">${b.reactions.join('<br>')}</div>`;
-  }
+  let html = `<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:1rem;"><h4 style="font-family:'Fraunces',serif;font-size:1.6rem;">${b.name}</h4><div class="chapter-num">${b.type}</div></div><p style="color:var(--ink-dim);margin:1rem 0;">${b.notes}</p><div class="bat-specs"><div class="bat-spec"><div class="bat-spec-label">Anode</div><div class="bat-spec-value">${b.anode}</div></div><div class="bat-spec"><div class="bat-spec-label">Elektrolyt</div><div class="bat-spec-value">${b.electrolyte}</div></div><div class="bat-spec"><div class="bat-spec-label">Kathode</div><div class="bat-spec-value">${b.cathode}</div></div>${b.temp ? `<div class="bat-spec"><div class="bat-spec-label">Betriebstemp.</div><div class="bat-spec-value">${b.temp}</div></div>` : ''}</div>`;
+  if (b.reactions && b.reactions.length) html += `<div class="formula-block" style="margin-top:1.5rem;">${b.reactions.join('<br>')}</div>`;
   box.innerHTML = html;
 }
 renderBattery('leclanche');
@@ -2331,256 +977,503 @@ document.querySelectorAll('.bat-btn').forEach(btn => {
   });
 });
 
-// ═══════════════════════════════════════ OXIDATIONSZAHLEN TRAINER
-// basierend auf dem Übungsblatt aus dem Skript
-const oxiTasks = [
-  {compound:'FeO', atoms:[{el:'Fe', ox:'+II'}, {el:'O', ox:'-II'}]},
-  {compound:'H₂SO₄', atoms:[{el:'H', ox:'+I'}, {el:'S', ox:'+VI'}, {el:'O', ox:'-II'}]},
-  {compound:'CO₂', atoms:[{el:'C', ox:'+IV'}, {el:'O', ox:'-II'}]},
-  {compound:'KMnO₄', atoms:[{el:'K', ox:'+I'}, {el:'Mn', ox:'+VII'}, {el:'O', ox:'-II'}]},
-  {compound:'HCl', atoms:[{el:'H', ox:'+I'}, {el:'Cl', ox:'-I'}]},
-  {compound:'NH₄⁺', atoms:[{el:'N', ox:'-III'}, {el:'H', ox:'+I'}]},
-  {compound:'Na₂O', atoms:[{el:'Na', ox:'+I'}, {el:'O', ox:'-II'}]},
-  {compound:'Al₂O₃', atoms:[{el:'Al', ox:'+III'}, {el:'O', ox:'-II'}]},
-  {compound:'H₂O₂', atoms:[{el:'H', ox:'+I'}, {el:'O', ox:'-I'}]},
-  {compound:'CH₄', atoms:[{el:'C', ox:'-IV'}, {el:'H', ox:'+I'}]}
-];
-let oxiIdx = 0;
-
-function renderOxi() {
-  const t = oxiTasks[oxiIdx];
-  document.getElementById('oxiDisplay').textContent = t.compound;
-  document.getElementById('oxiCounter').textContent = `Aufgabe ${oxiIdx+1} / ${oxiTasks.length}`;
-  const inp = document.getElementById('oxiInputs');
-  inp.innerHTML = '';
-  t.atoms.forEach((a, i) => {
-    const wrap = document.createElement('div');
-    wrap.style.display = 'flex';
-    wrap.style.flexDirection = 'column';
-    wrap.style.alignItems = 'center';
-    wrap.style.gap = '0.3rem';
-    wrap.innerHTML = `<span style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--ink-dim);">${a.el}</span>
-      <input class="oxi-input" data-idx="${i}" placeholder="z.B. +II"/>`;
-    inp.appendChild(wrap);
-  });
-  document.getElementById('oxiFeedback').textContent = '';
-  document.getElementById('oxiFeedback').className = 'oxi-feedback';
-}
-
-function normalize(s) {
-  return String(s||'').trim().toUpperCase().replace(/\s+/g,'');
-}
-
-function checkOxi() {
-  const t = oxiTasks[oxiIdx];
-  const inputs = document.querySelectorAll('.oxi-input');
-  let all = true;
-  inputs.forEach((inp, i) => {
-    if (normalize(inp.value) !== normalize(t.atoms[i].ox)) all = false;
-  });
-  const fb = document.getElementById('oxiFeedback');
-  if (all) {
-    fb.textContent = '✓ Richtig! Super, weiter so.';
-    fb.className = 'oxi-feedback success';
-  } else {
-    fb.textContent = '× Nicht ganz — mit "Lösung zeigen" siehst du die Antwort, oder versuch es nochmal.';
-    fb.className = 'oxi-feedback error';
-  }
-}
-function revealOxi() {
-  const t = oxiTasks[oxiIdx];
-  document.querySelectorAll('.oxi-input').forEach((inp, i) => {
-    inp.value = t.atoms[i].ox;
-  });
-  document.getElementById('oxiFeedback').textContent = 'Lösung angezeigt.';
-  document.getElementById('oxiFeedback').className = 'oxi-feedback success';
-}
-function nextOxi() {
-  oxiIdx = (oxiIdx + 1) % oxiTasks.length;
-  renderOxi();
-}
-renderOxi();
-
-// ═══════════════════════════════════════ REAKTIONS-STEPS
+// REAKTIONS-STEPS
 let reactStep = 0;
 const reactSteps = document.querySelectorAll('.react-step');
-
-function reactUpdate() {
-  reactSteps.forEach((s, i) => s.classList.toggle('active', i === reactStep));
-}
+function reactUpdate() { reactSteps.forEach((s, i) => s.classList.toggle('active', i === reactStep));}
 function reactNext() { reactStep = Math.min(reactSteps.length - 1, reactStep + 1); reactUpdate();}
 function reactPrev() { reactStep = Math.max(0, reactStep - 1); reactUpdate();}
 function reactReset() { reactStep = 0; reactUpdate();}
 
-// ═══════════════════════════════════════ NOMENCLATURE BUILDER
+// NOMENCLATURE
 const stems = ['Meth','Eth','Prop','But','Pent','Hex','Hept','Oct','Non','Dec'];
-
 function updateNomen() {
   const n = parseInt(document.getElementById('cAtoms').value);
   const bond = document.getElementById('bondType').value;
   const func = document.getElementById('funcEnd').value;
   const pre = document.getElementById('prefix').value;
   document.getElementById('vCAtoms').textContent = n;
-
   const stem = stems[n-1];
-  let name = pre + stem.toLowerCase() + bond;
-  if (func) name += (func === 'säure' ? '' : '') + func;
+  let name = pre + stem.toLowerCase() + bond + func;
   name = name[0].toUpperCase() + name.slice(1);
-
   document.getElementById('nomenResult').textContent = name;
 }
-document.getElementById('cAtoms').addEventListener('input', updateNomen);
-document.getElementById('bondType').addEventListener('change', updateNomen);
-document.getElementById('funcEnd').addEventListener('change', updateNomen);
-document.getElementById('prefix').addEventListener('change', updateNomen);
+['cAtoms','bondType','funcEnd','prefix'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateNomen);
+  document.getElementById(id).addEventListener('change', updateNomen);
+});
 updateNomen();
 
-// ═══════════════════════════════════════ QUIZ
-const quizQuestions = [
-  {
-    q: 'Wie groß ist der Bindungswinkel im Wassermolekül?',
-    a: ['90°', '104,5°', '120°', '180°'],
-    correct: 1
-  },
-  {
-    q: 'Wann hat Wasser seine größte Dichte?',
-    a: ['bei 0 °C', 'bei 4 °C', 'bei 100 °C', 'direkt nach dem Gefrieren'],
-    correct: 1
-  },
-  {
-    q: 'Welche Verbindung gehört zur temporären Härte?',
-    a: ['CaCl₂', 'MgSO₄', 'Ca(HCO₃)₂', 'NaCl'],
-    correct: 2
-  },
-  {
-    q: 'Was ist die "neue" Definition der Oxidation?',
-    a: ['Sauerstoff wird aufgenommen', 'Elektronen werden aufgenommen', 'Elektronen werden abgegeben', 'Sauerstoff wird abgegeben'],
-    correct: 2
-  },
-  {
-    q: 'Welche Oxidationszahl hat H in Metallhydriden (z. B. NiH₂)?',
-    a: ['+I', '−I', '0', '+II'],
-    correct: 1
-  },
-  {
-    q: 'Welche Oxidationszahl hat O in H₂O₂ (Wasserstoffperoxid)?',
-    a: ['−II', '−I', '0', '+II'],
-    correct: 1
-  },
-  {
-    q: 'Welche Zellspannung liefert das Daniell-Element (Zn/Cu)?',
-    a: ['0,34 V', '−0,76 V', '1,1 V', '2,1 V'],
-    correct: 2
-  },
-  {
-    q: 'Was passiert bei einer Opferanode mit dem Werkstück?',
-    a: ['Es löst sich auf', 'Es ist kathodisch geschützt', 'Es wird zur Anode', 'Es korrodiert schneller'],
-    correct: 1
-  },
-  {
-    q: 'Wie heißt ein Alkan mit 7 C-Atomen?',
-    a: ['Hexan', 'Heptan', 'Octan', 'Pentan'],
-    correct: 1
-  },
-  {
-    q: 'Welche Endung kennzeichnet eine Dreifachbindung?',
-    a: ['-an', '-en', '-in', '-ol'],
-    correct: 2
-  },
-  {
-    q: 'Was ist die allgemeine Form eines Alkohols?',
-    a: ['R-COOH', 'R-OH', 'R-NO₂', 'R-NH₂'],
-    correct: 1
-  },
-  {
-    q: 'Welche Reaktion erzeugt aus einem langen Alkan kürzere Alkene?',
-    a: ['Substitution', 'Verbrennung', 'Cracken', 'Addition'],
-    correct: 2
-  },
-  {
-    q: 'Was entsteht bei der Verbrennung von PVC (unerwünscht)?',
-    a: ['HCl', 'CO', 'H₂O₂', 'CH₄'],
-    correct: 0
-  },
-  {
-    q: 'Bei welcher Kunststoff-Herstellung werden kleine Moleküle abgespalten?',
-    a: ['Polymerisation', 'Polykondensation', 'Polyaddition', 'Pyrolyse'],
-    correct: 1
-  },
-  {
-    q: 'Welcher Elektrolyt wird in der SOFC verwendet?',
-    a: ['KOH', 'Phosphorsäure', 'Keramik', 'Schmelzkarbonat'],
-    correct: 2
-  }
+// ═══════════════════════════════════════════════════════════
+// QUIZ - FRAGENPOOL (135 Fragen)
+// topic: wasser | elektro | oxi | organik | reaktionen | kunststoffe
+// hot: true = Test-Schwerpunkt laut Skript
+// ═══════════════════════════════════════════════════════════
+const questionPool = [
+  // ═══ WASSER & WASSERHÄRTE (Test-Schwerpunkt laut Skript) ═══
+  {topic:'wasser',hot:true,q:'Wie groß ist der Bindungswinkel im Wassermolekül?',a:['90°','104,5°','120°','180°'],c:1,e:'Der H-O-H-Bindungswinkel beträgt 104,5°. Deshalb ist Wasser gewinkelt und polar.'},
+  {topic:'wasser',hot:true,q:'Bei welcher Temperatur hat Wasser seine größte Dichte?',a:['0 °C','4 °C','100 °C','−4 °C'],c:1,e:'Anomalie des Wassers: größte Dichte bei 4 °C, nicht im festen Zustand.'},
+  {topic:'wasser',hot:true,q:'Warum ist Wasser bei Raumtemperatur flüssig?',a:['hohes Molekulargewicht','Wasserstoffbrücken','nur wegen Polarität','Schwerkraft'],c:1,e:'Die Wasserstoffbrückenbindungen halten die Moleküle zusammen.'},
+  {topic:'wasser',hot:true,q:'Wie viel nimmt das Volumen von Wasser beim Gefrieren zu?',a:['~5 %','~10 %','~20 %','~1 %'],c:1,e:'Beim Gefrieren erhöht sich das Volumen um ca. 10 % durch Neuausrichtung der H-Brücken.'},
+  {topic:'wasser',hot:true,q:'Welcher Siedepunkt hat Wasser bei 1,013 bar?',a:['80 °C','100 °C','120 °C','90 °C'],c:1,e:'100 °C bei Normaldruck (1,013 bar).'},
+  {topic:'wasser',hot:true,q:'Welche Ladung hat der Sauerstoff im Wassermolekül?',a:['δ+ (leicht positiv)','δ− (leicht negativ)','neutral','2+'],c:1,e:'O ist elektronegativer → zieht Elektronen an → δ−. H-Atome sind δ+.'},
+  {topic:'wasser',hot:true,q:'Welche Eigenschaft hat Wasser NICHT?',a:['hohe Wärmekapazität','polares Lösungsmittel','Dipolmolekül','unpolar'],c:3,e:'Wasser ist das wichtigste Dipolmolekül und polar.'},
+  {topic:'wasser',hot:true,q:'Wie verhält sich Wasser bis 4 °C?',a:['Moleküle rücken näher','Moleküle entfernen sich','Volumen bleibt gleich','kein Effekt'],c:0,e:'Bis 4°C: Moleküle näher → Dichte steigt. Ab 4°C: neue H-Brücken → mehr Platz.'},
+  {topic:'wasser',hot:true,q:'Welches Verhalten nennt man "Anomalie des Wassers"?',a:['hoher Siedepunkt','Dichte-Maximum bei 4 °C','hohe Wärmekapazität','Polarität'],c:1,e:'Dass die max. Dichte bei 4 °C und nicht beim Gefrierpunkt liegt, ist die Anomalie.'},
+
+  {topic:'wasser',hot:true,q:'Welche Verbindung gehört zur temporären Härte?',a:['CaCl₂','MgSO₄','Ca(HCO₃)₂','NaCl'],c:2,e:'Temporäre Härte = gelöste Ca- und Mg-Hydrogencarbonate.'},
+  {topic:'wasser',hot:true,q:'Welche Verbindung gehört zur permanenten Härte?',a:['Ca(HCO₃)₂','Mg(HCO₃)₂','MgSO₄','CaCO₃'],c:2,e:'Permanente Härte = Ca/Mg-Verbindungen außer den Hydrogencarbonaten.'},
+  {topic:'wasser',hot:true,q:'Was entsteht beim Erhitzen von Ca(HCO₃)₂ auf 60 °C?',a:['nur Wasser','CaCO₃ + H₂O + CO₂','CaO + H₂','CaCl₂ + CO₂'],c:1,e:'Ca(HCO₃)₂ → CaCO₃ (Kesselstein) + H₂O + CO₂.'},
+  {topic:'wasser',hot:true,q:'Was ist die Gesamthärte?',a:['nur Kalzium-Ionen','Summe aller gelösten Ca- und Mg-Verbindungen','nur Magnesium','nur Carbonate'],c:1,e:'Gesamthärte = Summe aller im Wasser gelösten Kalzium- und Magnesiumverbindungen.'},
+  {topic:'wasser',hot:true,q:'Was ist KEINE Folge der temporären Wasserhärte?',a:['Kesselstein','Rohrverstopfung','Gesundheitsschäden','Kesselexplosionen'],c:2,e:'Laut Skript: Kesselstein, Rohrverstopfung, Kesselexplosionen, Ablagerungen — NICHT Gesundheitsschäden.'},
+  {topic:'wasser',hot:true,q:'Welche Verbindung ist Magnesiumhydrogencarbonat?',a:['MgSO₄','Mg(HCO₃)₂','MgCl₂','MgCO₃'],c:1,e:'Mg(HCO₃)₂ = Magnesiumhydrogencarbonat (temporäre Härte).'},
+  {topic:'wasser',hot:true,q:'Welche Verbindung ist Calciumchlorid?',a:['CaCO₃','CaCl₂','Ca(HCO₃)₂','CaO'],c:1,e:'CaCl₂ = Calciumchlorid (permanente Härte).'},
+  {topic:'wasser',hot:true,q:'Was ist Kesselstein chemisch?',a:['CaCO₃','Ca(HCO₃)₂','CaCl₂','CaSO₄'],c:0,e:'Kesselstein/Kalkstein = CaCO₃, entsteht aus Ca(HCO₃)₂ beim Erhitzen.'},
+  {topic:'wasser',hot:true,q:'Wovon hängt die Wasserhärte-Entstehung ab?',a:['Temperatur allein','gelösten Ca- und Mg-Verbindungen','nur Säure','Druck'],c:1,e:'Wasserhärte wird durch gelöste Ca- und Mg-Verbindungen bestimmt.'},
+  {topic:'wasser',hot:true,q:'Welche zwei Mg-Verbindungen der permanenten Härte gibt es laut Skript?',a:['MgCl₂ und MgSO₄','MgCO₃ und MgO','Mg(HCO₃)₂ und MgCl₂','MgSO₄ und MgCO₃'],c:0,e:'Permanente Mg-Härte: MgCl₂ (Magnesiumchlorid) und MgSO₄ (Magnesiumsulfat).'},
+
+  // ─── Enthärtung ───
+  {topic:'wasser',hot:true,q:'Was macht ein Kationentauscher?',a:['gibt OH⁻ ab','gibt H⁺ ab und nimmt Ca²⁺/Mg²⁺ auf','filtert mechanisch','erhitzt das Wasser'],c:1,e:'Kationentauscher: H⁺ wird abgegeben, Ca²⁺/Mg²⁺ aufgenommen.'},
+  {topic:'wasser',hot:true,q:'Was macht ein Anionentauscher?',a:['gibt H⁺ ab','gibt OH⁻ ab und nimmt HCO₃⁻ auf','gibt Ca²⁺ ab','destilliert'],c:1,e:'Anionentauscher tauscht OH⁻ gegen negative Ionen wie HCO₃⁻.'},
+  {topic:'wasser',hot:true,q:'Welche Enthärtungsmethode ist NICHT im Skript?',a:['Ionentauscher','Destillation','Umkehr-Osmose','Zentrifugation'],c:3,e:'Im Skript: Ionentauscher, Destillation, Umkehr-Osmose.'},
+  {topic:'wasser',hot:true,q:'Welcher Ionentauscher kann regeneriert werden?',a:['Mischbett','getrennter Ionentauscher','beide','keiner'],c:1,e:'Nur der getrennte Ionentauscher kann regeneriert werden.'},
+  {topic:'wasser',hot:true,q:'Wie funktioniert die Umkehr-Osmose?',a:['Wasser wird erhitzt','Wasser wird durch eine halbdurchlässige Membran gepresst','Chemische Fällung','Ionen werden ausgetauscht'],c:1,e:'Umkehr-Osmose: Wasser durch halbdurchlässige Membran → Ionen bleiben zurück.'},
+  {topic:'wasser',hot:true,q:'Was passiert bei der Destillation als Enthärtungsmethode?',a:['Ionen werden getauscht','Wasser wird verdampft und kondensiert, Salze bleiben zurück','Säuren neutralisieren die Härtebildner','Membranfiltration'],c:1,e:'Destillation: Wasser verdampfen → kondensieren → Salze bleiben im Rest.'},
+
+  // ═══ ELEKTROCHEMIE: Leiter, Redox, Korrosion ═══
+  {topic:'elektro',hot:true,q:'Wozu zählen Leiter 1. Klasse?',a:['Salzlösungen','Metalle, Halbmetalle, Kohlenstoff','Keramiken bei Zimmertemperatur','Säuren'],c:1,e:'Leiter 1. Klasse: Metalle, Halbmetalle, Kohlenstoff. Keine chem. Veränderung.'},
+  {topic:'elektro',hot:true,q:'Wie verhalten sich Metalle bei steigender Temperatur?',a:['leiten besser','leiten schlechter','keine Änderung','werden Ionenleiter'],c:1,e:'Höhere Temperatur → Gitterschwingungen → schlechtere Leitung.'},
+  {topic:'elektro',hot:true,q:'Wie verhalten sich Ionenleiter (Leiter 2. Klasse) bei steigender Temperatur?',a:['leiten besser','leiten schlechter','keine Änderung','isolieren'],c:0,e:'Ionen bewegen sich schneller → bessere Leitung.'},
+  {topic:'elektro',hot:true,q:'Ab welcher Temperatur werden Keramiken zu Ionenleitern?',a:['100 °C','400 °C','800 °C','2000 °C'],c:2,e:'Ab ca. 800°C werden Ionen aus Gitterplätzen gerissen → Keramik leitet.'},
+  {topic:'elektro',hot:true,q:'Was zählt NICHT zu den Leitern 2. Klasse?',a:['Salzlösungen','Salzschmelzen','Säuren und Basen','reine Metalle'],c:3,e:'Leiter 2. Klasse = Salzlösungen, -schmelzen, Säuren, Basen. Metalle sind 1. Klasse.'},
+  {topic:'elektro',hot:true,q:'Wie leiten Leiter 1. Klasse den Strom?',a:['über bewegliche Ionen','über freie Elektronen','über Wärmebewegung','gar nicht'],c:1,e:'Leiter 1. Klasse: Stromleitung über freie Elektronen im Metallgitter.'},
+  {topic:'elektro',hot:true,q:'Wie leiten Leiter 2. Klasse den Strom?',a:['über freie Elektronen','über bewegliche Ionen (mit chem. Veränderung)','über Protonen','über Photonen'],c:1,e:'Leiter 2. Klasse: Stromleitung über bewegliche Ionen → chemische Veränderung.'},
+
+  // Redox / Oxidation (aus Skript)
+  {topic:'elektro',hot:true,q:'Was ist die neue Definition der Oxidation?',a:['Sauerstoff aufnehmen','Elektronen aufnehmen','Elektronen abgeben','Sauerstoff abgeben'],c:2,e:'Neue Def: Elektronen werden abgegeben, Oxi-Zahl steigt.'},
+  {topic:'elektro',hot:true,q:'Was ist die neue Definition der Reduktion?',a:['Elektronen aufnehmen','Elektronen abgeben','Sauerstoff aufnehmen','läuft langsamer'],c:0,e:'Neue Def: Elektronen werden aufgenommen, Oxi-Zahl sinkt.'},
+  {topic:'elektro',hot:true,q:'Was passiert mit der Oxidationszahl bei einer Oxidation?',a:['steigt','sinkt','bleibt gleich','verschwindet'],c:0,e:'Bei Oxidation nimmt die Oxidationszahl zu.'},
+  {topic:'elektro',hot:true,q:'Was ist ein Reduktionsmittel?',a:['wird reduziert','wird selbst oxidiert','Katalysator','Elektrolyt'],c:1,e:'Reduktionsmittel = Partner, der selbst oxidiert wird und den anderen reduziert.'},
+  {topic:'elektro',hot:true,q:'Welches Metall wird in einer Redox-Reaktion oxidiert?',a:['das edlere','das unedlere','höhere Oxi-Zahl','keines'],c:1,e:'Das unedlere Metall gibt Elektronen ab → wird oxidiert.'},
+  {topic:'elektro',hot:true,q:'Wie verhalten sich unedle Metalle in Lösung?',a:['lösen sich gerne auf','scheiden Ionen ab','bleiben passiv','verdampfen'],c:0,e:'Unedle Metalle haben hohen Lösungsdruck.'},
+  {topic:'elektro',hot:true,q:'Wie verhalten sich edle Metalle in Lösung?',a:['lösen sich auf','scheiden ihre Ionen elementar ab','schmelzen','werden zu Gas'],c:1,e:'Edle Metalle scheiden ihre Ionen elementar ab.'},
+
+  // Oxidationszahlen-Regeln
+  {topic:'elektro',hot:true,q:'Welche Oxidationszahl hat H in H₂O?',a:['+I','−I','0','+II'],c:0,e:'H hat fast immer +I.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat H in Metallhydriden (NiH₂)?',a:['+I','−I','0','+II'],c:1,e:'Ausnahme! In Metallhydriden hat H −I.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat O in Peroxiden (H₂O₂)?',a:['−II','−I','0','+II'],c:1,e:'Ausnahme! In Peroxiden hat O −I statt −II.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat O normalerweise?',a:['−II','−I','0','+II'],c:0,e:'Sauerstoff: meistens −II.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl haben Alkalimetalle (Gruppe 1)?',a:['0','+I','+II','−I'],c:1,e:'Alkalimetalle (Gruppe 1) immer +I.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl haben Erdalkalimetalle (Gruppe 2)?',a:['+I','+II','+III','0'],c:1,e:'Erdalkalimetalle (Gruppe 2) immer +II.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl haben Halogene meistens?',a:['+I','−I','0','−II'],c:1,e:'Halogene (Gruppe 7) meistens −I.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat S in H₂SO₄?',a:['+IV','+VI','−II','+II'],c:1,e:'H:+I(×2)=+2, O:−II(×4)=−8, Summe=0 → S=+VI.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat C in CO₂?',a:['+II','+IV','−IV','0'],c:1,e:'O:−II(×2)=−4, Summe=0 → C=+IV.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat C in CH₄?',a:['+IV','−IV','+II','0'],c:1,e:'H:+I(×4)=+4, Summe=0 → C=−IV.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat Mn in KMnO₄?',a:['+V','+VI','+VII','+IV'],c:2,e:'K:+I, O:−II(×4)=−8, Summe=0 → Mn=+VII.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat N in NH₄⁺?',a:['+III','−III','+V','−V'],c:1,e:'H:+I(×4)=+4, Summe=+1 → N=−III.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat Fe in Fe₂O₃?',a:['+II','+III','+IV','+VI'],c:1,e:'O:−II(×3)=−6, Summe=0 → 2 Fe müssen +6 beitragen → Fe=+III.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat Cl in HCl?',a:['+I','−I','0','+VII'],c:1,e:'H:+I, Summe=0 → Cl=−I (Halogen-Regel).'},
+  {topic:'elektro',hot:true,q:'Wie wird die Oxi-Zahl notiert?',a:['arabische Zahlen','römische Zahlen über dem Atom','Buchstaben','Farben'],c:1,e:'Oxi-Zahl in römischen Zahlen direkt über dem Atom.'},
+  {topic:'elektro',hot:true,q:'Welche Oxi-Zahl hat ein einatomiges Ion?',a:['immer 0','gleich seiner Ladung','+I','−I'],c:1,e:'Regel 4: Oxi-Zahl eines einatomigen Ions = Ladung.'},
+  {topic:'elektro',hot:true,q:'Summe der Oxi-Zahlen in einem neutralen Molekül?',a:['+1','−1','0','Anzahl Atome'],c:2,e:'Regel 1: Summe ist immer 0.'},
+
+  // Korrosion & Schutz
+  {topic:'elektro',hot:true,q:'Was ist Korrosion?',a:['gewollter Prozess','Materialverlust durch Oxidation unedler Metalle','Katalysator','Isoliervorgang'],c:1,e:'Korrosion = meist unerwünschter Materialverlust bei Feuchtigkeit und O₂.'},
+  {topic:'elektro',hot:true,q:'Welche Korrosionsart ist besonders gefährlich, weil oft unsichtbar?',a:['Oberflächen','Risskorrosion','Kontakt','gleichmäßige'],c:1,e:'Risskorrosion: oft nicht sichtbar → unvorhersehbarer Bruch. Ultraschall/Röntgen zur Prüfung.'},
+  {topic:'elektro',hot:true,q:'Was ist Kontaktkorrosion?',a:['Korrosion bei Hitze','an Kontaktstelle zweier unterschiedlich edler Metalle','durch Licht','durch Schall'],c:1,e:'Zwischen zwei verschieden edlen Metallen, die sich berühren.'},
+  {topic:'elektro',hot:true,q:'Was ist passiver Korrosionsschutz?',a:['Opferanode','Beschichtung mit Passivierungsmittel','Gleichspannungsquelle','bakteriell'],c:1,e:'Passiver Schutz = Öl/Beiz/Beschichtung → kein Zutritt von H₂O + O₂.'},
+  {topic:'elektro',hot:true,q:'Welche Bedingung muss eine Opferanode erfüllen?',a:['nur elektrisch verbunden','nur im selben Medium','beides: elektr. leitend verbunden UND im selben Medium','nur unedel'],c:2,e:'Beide Bedingungen nötig.'},
+  {topic:'elektro',hot:true,q:'Wie ist das Werkstück bei einer Opferanode geschützt?',a:['anodisch','kathodisch','galvanisch','passiv'],c:1,e:'Opferanode löst sich auf → Werkstück ist kathodisch geschützt.'},
+  {topic:'elektro',hot:true,q:'Wie wird ein Eisenrohr bei Gleichspannungsquellen-Schutz geschaltet?',a:['Anode','Kathode','gar nicht','Widerstand'],c:1,e:'Rohr wird Kathode, ein nicht-auflösendes Metall wird Anode.'},
+  {topic:'elektro',hot:true,q:'Was ist Oberflächenkorrosion?',a:['punktuelle Lochfraßkorrosion','gleichmäßiger Materialverlust an allen Stellen','nur im Innern','unter Wasser nur'],c:1,e:'Oberflächenkorrosion: Materialverlust gleichmäßig überall.'},
+  {topic:'elektro',hot:true,q:'Bei welcher Korrosionsart hilft Ultraschall oder Röntgen zur Erkennung?',a:['Oberflächenkorrosion','Risskorrosion','Kontaktkorrosion','Lochfraßkorrosion'],c:1,e:'Risskorrosion ist oft unsichtbar → Ultraschall/Röntgen nötig.'},
+
+  // ═══ ORGANIK: Einfache Benennung ═══
+  {topic:'organik',hot:true,q:'Welche Verbindung gehört NICHT zur organischen Chemie?',a:['CH₄','C₂H₆','CO₂','C₆H₆'],c:2,e:'CO, CO₂, H₂CO₃, Carbonate und Carbide gehören NICHT zur Organik.'},
+  {topic:'organik',hot:true,q:'Wie viele Bindungen muss Kohlenstoff immer machen?',a:['2','3','4','8'],c:2,e:'C hat 4 Valenzelektronen → immer 4 Bindungen.'},
+  {topic:'organik',hot:true,q:'In welcher Reihenfolge werden Namen aufgebaut?',a:['Endung-Stamm-Vorsilben','Vorsilben-Stamm-Endungen','Stamm-Vorsilben-Endungen','Endungen-Vorsilben-Stamm'],c:1,e:'Reihenfolge: Vorsilben − Stamm − Endungen.'},
+  {topic:'organik',hot:true,q:'Wie heißt ein Alkan mit 7 C-Atomen?',a:['Hexan','Heptan','Octan','Pentan'],c:1,e:'Hept- = 7 → Heptan.'},
+  {topic:'organik',hot:true,q:'Wie heißt ein Alkan mit 4 C-Atomen?',a:['Propan','Butan','Pentan','Hexan'],c:1,e:'But- = 4 → Butan.'},
+  {topic:'organik',hot:true,q:'Wie heißt ein Alkan mit 8 C-Atomen?',a:['Heptan','Octan','Nonan','Decan'],c:1,e:'Oct- = 8 → Octan.'},
+  {topic:'organik',hot:true,q:'Wie heißt ein Alkan mit 10 C-Atomen?',a:['Nonan','Decan','Octan','Dodecan'],c:1,e:'Dec- = 10 → Decan.'},
+  {topic:'organik',hot:true,q:'Welche Endung kennzeichnet eine Doppelbindung?',a:['-an','-en','-in','-ol'],c:1,e:'-an = Einfach, -en = Doppel, -in = Dreifach.'},
+  {topic:'organik',hot:true,q:'Welche Endung kennzeichnet eine Dreifachbindung?',a:['-an','-en','-in','-al'],c:2,e:'-in = Dreifachbindung.'},
+  {topic:'organik',hot:true,q:'Welche Endung kennzeichnet eine Einfachbindung?',a:['-an','-en','-in','-al'],c:0,e:'-an = Einfachbindung (Alkan).'},
+  {topic:'organik',hot:true,q:'Welche Summenformel hat Methan?',a:['CH₃','CH₄','C₂H₆','CH₂'],c:1,e:'Methan = CH₄.'},
+  {topic:'organik',hot:true,q:'Welche Summenformel hat Ethan?',a:['C₂H₄','C₂H₆','C₂H₂','CH₄'],c:1,e:'Ethan = C₂H₆ (gesättigt).'},
+  {topic:'organik',hot:true,q:'Welche Summenformel hat Ethen?',a:['C₂H₂','C₂H₄','C₂H₆','C₃H₆'],c:1,e:'Ethen = C₂H₄ (Doppelbindung).'},
+  {topic:'organik',hot:true,q:'Welche Summenformel hat Ethin (Acetylen)?',a:['C₂H₂','C₂H₄','C₂H₆','C₃H₄'],c:0,e:'Ethin = C₂H₂ (Dreifachbindung).'},
+  {topic:'organik',hot:true,q:'Welche Summenformel hat Propan?',a:['C₂H₈','C₃H₈','C₃H₆','C₃H₄'],c:1,e:'Propan = C₃H₈.'},
+
+  // Funktionelle Gruppen
+  {topic:'organik',hot:true,q:'Welche allgemeine Form haben Alkohole?',a:['R-COOH','R-OH','R-NO₂','R-NH₂'],c:1,e:'Alkohol = R-OH, Endung -ol.'},
+  {topic:'organik',hot:true,q:'Welche allgemeine Form haben Carbonsäuren?',a:['R-COOH','R-OH','R-COH','R-NH₂'],c:0,e:'Carbonsäure = R-COOH, Endung -säure.'},
+  {topic:'organik',hot:true,q:'Welche allgemeine Form haben Aldehyde?',a:['R-COH','R-NO₂','R-OH','R-NH₂'],c:0,e:'Aldehyd = R-COH, Endung -al. Methanal = Formaldehyd.'},
+  {topic:'organik',hot:true,q:'Welche allgemeine Form haben Amine?',a:['R-NO₂','R-NH₂','R-OH','R-COOH'],c:1,e:'Amin = R-NH₂, Vorsilbe Amino-.'},
+  {topic:'organik',hot:true,q:'Welche Vorsilbe hat die Nitrogruppe?',a:['Hydroxy-','Amino-','Nitro-','Methyl-'],c:2,e:'R-NO₂ → Vorsilbe Nitro-.'},
+  {topic:'organik',hot:true,q:'Welche Endung hat ein Alkohol?',a:['-an','-ol','-säure','-al'],c:1,e:'Alkohol-Endung -ol oder Vorsilbe Hydroxy-.'},
+  {topic:'organik',hot:true,q:'Welche Endung hat eine Carbonsäure?',a:['-an','-ol','-säure','-al'],c:2,e:'Carbonsäure-Endung: -säure.'},
+  {topic:'organik',hot:true,q:'Welche Endung hat ein Aldehyd?',a:['-an','-ol','-säure','-al'],c:3,e:'Aldehyd-Endung: -al. Methanal = Formaldehyd.'},
+  {topic:'organik',hot:true,q:'Welche allgemeine Form hat ein Ester?',a:['R-OH','R₁-COO-R₂','R-COH','R-NH₂'],c:1,e:'Ester = R₁-COO-R₂, aus Säure + Alkohol.'},
+  {topic:'organik',hot:true,q:'Welche Vorsilbe bedeutet Hydroxygruppe?',a:['Nitro-','Amino-','Hydroxy-','Fluor-'],c:2,e:'R-OH → Vorsilbe Hydroxy- oder Endung -ol.'},
+  {topic:'organik',hot:true,q:'Welche Vorsilbe bedeutet Aminogruppe?',a:['Nitro-','Amino-','Hydroxy-','Fluor-'],c:1,e:'R-NH₂ → Vorsilbe Amino-.'},
+  {topic:'organik',hot:true,q:'Was bedeutet cis / trans bei Doppelbindungen?',a:['Anzahl C-Atome','räumliche Anordnung der Substituenten','Art des Atoms','Größe des Moleküls'],c:1,e:'cis = Substituenten auf derselben Seite, trans = gegenüber.'},
+  {topic:'organik',hot:true,q:'Welches Fremdatom kann NICHT in zyklische Kohlenwasserstoffe eingebaut werden (laut Skript)?',a:['Sauerstoff','Stickstoff','Schwefel','Helium'],c:3,e:'Laut Skript: O, N, S können eingebaut werden.'},
+  {topic:'organik',hot:true,q:'Warum wird Toluol statt Benzol verwendet?',a:['billiger','Benzol ist kanzerogen','Toluol unpolar','Toluol fester'],c:1,e:'Benzol ist stark kanzerogen → Ersatzstoff Toluol.'},
+
+  // ═══ REAKTIONEN der Alkane, Alkene, Alkine ═══
+  {topic:'reaktionen',hot:true,q:'Was entsteht bei vollständiger Verbrennung eines Alkans?',a:['CO + H₂','CO₂ + H₂O','C + H₂O','CH₄ + O'],c:1,e:'Vollständige Verbrennung: Alkan + O₂ → CO₂ + H₂O.'},
+  {topic:'reaktionen',hot:true,q:'Bei welcher Reaktion bleibt das C-Gerüst unverändert?',a:['Substitution','Eliminierung','Addition','Cracken'],c:0,e:'Substitution: Atom/Gruppe wird getauscht, C-Gerüst bleibt.'},
+  {topic:'reaktionen',hot:true,q:'Mit welchen Atomen reagiert eine Substitution?',a:['O, N, S','F, Cl, Br, I (Halogene)','Na, K','nur H'],c:1,e:'Substitution mit Halogenen: F, Cl, Br, I.'},
+  {topic:'reaktionen',hot:true,q:'Was entsteht bei der direkten Chlorierung von Methan?',a:['CH₃Cl + HCl','nur CH₂Cl₂','CHCl₃','bleibt unverändert'],c:0,e:'CH₄ + Cl₂ → CH₃Cl + HCl.'},
+  {topic:'reaktionen',hot:true,q:'Wie viele Schritte bis zum Tetrachlormethan?',a:['2','3','4','5'],c:2,e:'4 Schritte.'},
+  {topic:'reaktionen',hot:true,q:'Was entsteht beim Cracken aus langen Alkanen?',a:['längere Alkane','kurze Alkene oder Alkine','nur Metalle','Keramiken'],c:1,e:'Cracken erzeugt kurzkettige Alkene/Alkine (benzinähnlich).'},
+  {topic:'reaktionen',hot:true,q:'Welche 3 Reaktionstypen gibt es bei Alkanen?',a:['Verbrennung, Substitution, Cracken','Addition, Eliminierung, Polymerisation','Kondensation, Hydrierung, Oxidation','nur Verbrennung'],c:0,e:'Alkane-Reaktionen laut Skript: Verbrennung, Substitution, Cracken.'},
+  {topic:'reaktionen',hot:true,q:'Welche 3 Reaktionstypen gibt es bei Alkenen/Alkinen?',a:['Verbrennung, Substitution, Cracken','Eliminierung, Addition, Polymerisation','nur Polymerisation','Hydrierung, Halogenierung, Cracken'],c:1,e:'Alkene/Alkine-Reaktionen laut Skript: Eliminierung, Addition, Polymerisation.'},
+  {topic:'reaktionen',hot:true,q:'Was ist eine Eliminierungsreaktion?',a:['Atome werden hinzugefügt','Atome werden von 2 benachbarten C-Atomen entfernt','C-Gerüst wird aufgespalten','nur H₂O wird abgespalten'],c:1,e:'Eliminierung: Atome von 2 benachbarten C-Atomen entfernt → Doppelbindung entsteht.'},
+  {topic:'reaktionen',hot:true,q:'Was passiert bei einer Additionsreaktion?',a:['Atome werden abgespalten','Atome werden an Doppel-/Dreifachbindung angeknüpft','C-Gerüst wird länger','Isomerisierung'],c:1,e:'Addition = Umkehr der Eliminierung. Dreifach → Doppel → Einfach.'},
+  {topic:'reaktionen',hot:true,q:'Was ist eine Halogenierung?',a:['Substitution','spezielle Addition','Oxidation','Polymerisation'],c:1,e:'Halogenierung = Additionsreaktion mit F₂, Cl₂, Br₂, I₂.'},
+  {topic:'reaktionen',hot:true,q:'Was startet eine Polymerisation?',a:['Wasser','Radikale (Fremdatome)','Säuren','immer nur Licht'],c:1,e:'Start durch Fremdatome, die Radikale sind.'},
+  {topic:'reaktionen',hot:true,q:'Wann bricht die Polymerisation ab?',a:['nach fester Zeit','wenn zwei Radikale aufeinander treffen','wenn Wasser entsteht','nie'],c:1,e:'Abbruch bei Treffen zweier Radikale.'},
+  {topic:'reaktionen',hot:true,q:'Welche Moleküle werden polymerisiert?',a:['gesättigte','ungesättigte','nur Aromaten','nur Alkohole'],c:1,e:'Polymerisation nutzt ungesättigte Moleküle (Doppel-/Dreifachbindung).'},
+  {topic:'reaktionen',hot:true,q:'Welches Produkt entsteht bei Eliminierung von HCl?',a:['Alkan','Alken (mit Doppelbindung)','Alkohol','Ester'],c:1,e:'Eliminierung von HCl erzeugt Doppelbindung → Alken.'},
+  {topic:'reaktionen',hot:true,q:'Was ist der Unterschied zwischen Alkanen und Alkenen?',a:['Alkane haben Doppelbindungen','Alkene haben Doppelbindungen, Alkane nicht','nichts','Größe der Moleküle'],c:1,e:'Alkane = gesättigt (nur Einfachbindungen), Alkene = ungesättigt (Doppelbindung).'},
+  {topic:'reaktionen',hot:true,q:'Ethan ist …',a:['gesättigt','ungesättigt','aromatisch','anorganisch'],c:0,e:'Ethan: nur Einfachbindungen → gesättigt.'},
+  {topic:'reaktionen',hot:true,q:'Ethen ist …',a:['gesättigt','ungesättigt (Doppelbindung)','aromatisch','Alkohol'],c:1,e:'Ethen (C₂H₄) hat Doppelbindung → ungesättigt.'},
+  {topic:'reaktionen',hot:true,q:'Was passiert bei der Addition an einem Alkin mit einem Halogen?',a:['Alkin bleibt','Dreifach → Doppelbindung','C-Gerüst verlängert sich','Alkin wird aromatisch'],c:1,e:'Bei Addition: Dreifach → Doppel → Einfachbindung.'},
+
+  // ═══ KUNSTSTOFFE ═══
+  {topic:'kunststoffe',hot:true,q:'Wie viele Arten der Kunststoff-Herstellung gibt es?',a:['2','3','4','5'],c:1,e:'3 Arten: Polymerisation, Polykondensation, Polyaddition.'},
+  {topic:'kunststoffe',hot:true,q:'Bei welcher Herstellung werden kleine Moleküle abgespalten?',a:['Polymerisation','Polykondensation','Polyaddition','Pyrolyse'],c:1,e:'Polykondensation: Monomere reagieren unter Abspaltung kleiner Moleküle (meist H₂O).'},
+  {topic:'kunststoffe',hot:true,q:'Bei welcher Herstellung wird NICHTS abgespalten (außer Polymerisation)?',a:['Polyaddition','Polykondensation','Pyrolyse','Hydrierung'],c:0,e:'Polyaddition: Umlagerung von Atomen ohne Abspaltung. Polymerisation ebenfalls.'},
+  {topic:'kunststoffe',hot:true,q:'Was ist das Prinzip der Polymerisation?',a:['Abspaltung von H₂O','Radikale verknüpfen ungesättigte Moleküle ohne Abspaltung','Umkehrung der Eliminierung','Destillation'],c:1,e:'Polymerisation: kleine ungesättigte Moleküle werden durch Radikale verknüpft.'},
+  {topic:'kunststoffe',hot:true,q:'Welches Monomer bildet PE?',a:['Propylen','Ethylen','Styrol','Vinylchlorid'],c:1,e:'PE = Polyethylen aus Ethylen (C₂H₄).'},
+  {topic:'kunststoffe',hot:true,q:'Welches Monomer bildet PP?',a:['Propylen','Ethylen','Styrol','Vinylchlorid'],c:0,e:'PP = Polypropylen aus Propylen.'},
+  {topic:'kunststoffe',hot:true,q:'Welches Monomer bildet PVC?',a:['Propylen','Ethylen','Styrol','Vinylchlorid'],c:3,e:'PVC = Polyvinylchlorid aus Vinylchlorid.'},
+  {topic:'kunststoffe',hot:true,q:'Welches Monomer bildet PS?',a:['Propylen','Ethylen','Styrol','Vinylchlorid'],c:2,e:'PS = Polystyrol aus Styrol.'},
+  {topic:'kunststoffe',hot:true,q:'Welches Monomer bildet PTFE (Teflon)?',a:['Tetrafluorethen','Ethylen','Styrol','Vinylchlorid'],c:0,e:'PTFE aus Tetrafluorethen (C₂F₄).'},
+  {topic:'kunststoffe',hot:true,q:'Was entsteht bei der Verbrennung von PVC (unerwünscht)?',a:['HCl','CO','H₂O₂','CH₄'],c:0,e:'PVC-Verbrennung → HCl (Salzsäure).'},
+  {topic:'kunststoffe',hot:true,q:'LDPE ist …',a:['hart und spröde','weich und flexibel','kristallin','transparent'],c:1,e:'LDPE: ρ=0,92 g/cm³, weich, flexibel, bis 3000 bar.'},
+  {topic:'kunststoffe',hot:true,q:'HDPE ist …',a:['hart und spröde','weich und flexibel','elastisch','gasförmig'],c:0,e:'HDPE: ρ=0,98–1,12 g/cm³, hart, spröde, 1–100 bar.'},
+  {topic:'kunststoffe',hot:true,q:'Ab welcher Temperatur sublimiert Teflon (PTFE)?',a:['200 °C','300 °C','350 °C','500 °C'],c:2,e:'Teflon sublimiert ab 350 °C. Vorher (−200 bis 300°C) elastisch.'},
+  {topic:'kunststoffe',hot:true,q:'Was schützt die C-C-Bindung in Teflon?',a:['große F-Atome','Wasser','Quecksilber','Stickstoff'],c:0,e:'F-Atome sind so groß, dass sie die C-C-Bindung schützen.'},
+  {topic:'kunststoffe',hot:true,q:'Was ist Styropor?',a:['hartes PVC','geschäumtes Polystyrol','elastisches PE','PTFE'],c:1,e:'Styropor = geschäumtes Polystyrol → Dämm-/Verpackungsmaterial.'},
+  {topic:'kunststoffe',hot:true,q:'Warum ist Polyamid NICHT für elektr. Isolierung geeignet?',a:['nicht leitend','quillt bei 100 °C durch Wasseraufnahme','zu hart','zu weich'],c:1,e:'Polyamid nimmt bei 100°C ~2-3% Wasser auf → quillt.'},
+  {topic:'kunststoffe',hot:true,q:'Welche Begründung gab es für die Entwicklung von PVC?',a:['bessere Optik','Chlor aus NaCl-Schmelzflusselektrolyse verwerten','höhere Festigkeit','einfachere Produktion'],c:1,e:'Schmelzflusselektrolyse von NaCl liefert viel Cl₂, das für PVC verwendet wird.'},
+  {topic:'kunststoffe',hot:true,q:'Welches Polymer ist lebensmittelecht und kostengünstig?',a:['PE','PTFE','PVC','PP'],c:2,e:'PVC: lebensmittelecht, kostengünstig, spanabhebend, gut färbbar. Auch PTFE ist lebensmittelecht.'},
+  {topic:'kunststoffe',hot:true,q:'Welches Polymer gibt es als Hart- und Weich-Form?',a:['PE','PP','PVC','PTFE'],c:2,e:'PVC kommt als Hart- und Weich-PVC vor.'},
+  {topic:'kunststoffe',hot:true,q:'Wie ist die Temperaturbeständigkeit von Teflon (elastisch)?',a:['0 bis 100 °C','−50 bis 150 °C','−200 bis 300 °C','−300 bis 500 °C'],c:2,e:'Teflon ist von −200 bis 300 °C elastisch.'},
+  {topic:'kunststoffe',hot:true,q:'Was ist das Besondere an Polyester (UP)?',a:['nur 1 reaktive Gruppe pro Monomer','mindestens 2 reaktive Gruppen pro Monomer, Wasser wird abgespalten','keine Abspaltung','nur durch Radikale'],c:1,e:'Polyester durch Polykondensation: ≥2 reaktive Gruppen, H₂O wird abgespalten.'},
+  {topic:'kunststoffe',hot:true,q:'Was ist Pyrolyse (Kunststoffe)?',a:['Erhitzen auf 600-700°C ohne Sauerstoff','Verbrennung an Luft','Schmelzen bei 100°C','Schmelzflusselektrolyse'],c:0,e:'Pyrolyse: 600-700°C unter Sauerstoffausschluss / im Vakuum.'}
 ];
 
-let qIdx = 0, qScore = 0, qAnswered = 0;
+// Pool schließen
+// (questionPool bereits oben beendet)
 
-function renderQuiz() {
-  const body = document.getElementById('quizBody');
-  if (qIdx >= quizQuestions.length) {
-    body.innerHTML = `
-      <div class="quiz-result">
-        <div class="quiz-score">${qScore}<span> / ${quizQuestions.length}</span></div>
-        <p style="color:var(--ink-dim);margin-top:1rem;font-size:1.1rem;">
-          ${qScore === quizQuestions.length ? 'Perfekt! Du bist testfit.' :
-            qScore >= 12 ? 'Sehr gut — noch ein bisschen feinschleifen.' :
-            qScore >= 8 ? 'Solide — ein paar Themen noch mal durchgehen.' :
-            'Nochmal durchs Skript — du schaffst das.'}
-        </p>
-        <button class="btn primary" style="margin-top:2rem;" onclick="restartQuiz()">Nochmal starten</button>
-      </div>
-    `;
-    document.getElementById('quizCounter').textContent = 'Fertig!';
-    document.getElementById('quizProgress').style.width = '100%';
+// ═══════════════════════════════════════════════════════════
+// QUIZ ENGINE
+// ═══════════════════════════════════════════════════════════
+const STORAGE_KEY = 'nw_chemie_saved_v1';
+let quizState = {
+  questions: [],      // aktuelle Fragen-Auswahl
+  currentIdx: 0,
+  score: 0,
+  results: []         // {qIndex, userIdx, correct}
+};
+
+// Fisher-Yates Shuffle
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  const count = parseInt(document.getElementById('setCount').value);
+  const topic = document.getElementById('setTopic').value;
+
+  // Pool filtern
+  let filtered = questionPool.map((q, i) => ({...q, _poolIdx: i}));
+  if (topic !== 'all') filtered = filtered.filter(q => q.topic === topic);
+
+  if (filtered.length === 0) {
+    alert('Keine Fragen passen zu dieser Auswahl. Probier andere Einstellungen.');
     return;
   }
-  const q = quizQuestions[qIdx];
-  const keys = ['A','B','C','D'];
+
+  // Shuffle und Slice
+  const shuffled = shuffle(filtered);
+  const picked = shuffled.slice(0, Math.min(count, shuffled.length));
+
+  quizState = {
+    questions: picked,
+    currentIdx: 0,
+    score: 0,
+    results: []
+  };
+
+  document.getElementById('quizSetupScreen').style.display = 'none';
+  document.getElementById('quizResultScreen').style.display = 'none';
+  document.getElementById('quizLiveScreen').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = quizState.questions[quizState.currentIdx];
+  const idx = quizState.currentIdx;
+  const total = quizState.questions.length;
+
+  document.getElementById('quizCounter').textContent = `Frage ${idx+1} / ${total}`;
+  document.getElementById('quizScore').textContent = `Score: ${quizState.score} / ${idx}`;
+  document.getElementById('quizProgress').style.width = `${(idx/total)*100}%`;
+
+  // Antworten mischen wir nicht — wir zeigen sie fest (c-Index bleibt gültig)
+  const saved = isSaved(q._poolIdx);
+  const topicLabel = topicDisplayName(q.topic);
+  const hotTag = q.hot ? '<span class="test-badge hot" style="margin-left:0.5rem;">Test</span>' : '';
+
+  const body = document.getElementById('quizBody');
   body.innerHTML = `
+    <div class="question-topic">${topicLabel}${hotTag}</div>
     <div class="question-text">${q.q}</div>
-    <div class="answers">
+    <div class="answers" id="answerBox">
       ${q.a.map((ans, i) => `
-        <button class="answer" data-i="${i}">
-          <span class="answer-key">${keys[i]}</span>
+        <button class="answer" data-i="${i}" onclick="pickAnswer(${i})">
+          <span class="answer-key">${String.fromCharCode(65+i)}</span>
           <span>${ans}</span>
         </button>
       `).join('')}
     </div>
+    <div id="explBox"></div>
+    <div class="quiz-action-row">
+      <button class="mini-btn ${saved ? 'active-save' : ''}" id="saveBtn" onclick="toggleSave(${q._poolIdx})">
+        <span id="saveIcon">${saved ? '★' : '☆'}</span>
+        <span>${saved ? 'Gespeichert' : 'Merken'}</span>
+      </button>
+      <button class="btn" id="nextBtn" onclick="nextQuestion()" style="display:none;">
+        ${idx === total-1 ? 'Ergebnis anzeigen →' : 'Nächste Frage →'}
+      </button>
+    </div>
   `;
-  document.getElementById('quizCounter').textContent = `Frage ${qIdx+1} / ${quizQuestions.length}`;
-  document.getElementById('quizScore').textContent = `Score: ${qScore} / ${qAnswered}`;
-  document.getElementById('quizProgress').style.width = `${(qIdx/quizQuestions.length)*100}%`;
+}
 
-  body.querySelectorAll('.answer').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const i = parseInt(btn.dataset.i);
-      const correctI = q.correct;
-      body.querySelectorAll('.answer').forEach(b => b.classList.add('disabled'));
-      if (i === correctI) {
-        btn.classList.add('correct');
-        qScore++;
-      } else {
-        btn.classList.add('wrong');
-        body.querySelector(`.answer[data-i="${correctI}"]`).classList.add('correct');
-      }
-      qAnswered++;
-      document.getElementById('quizScore').textContent = `Score: ${qScore} / ${qAnswered}`;
-      setTimeout(() => { qIdx++; renderQuiz();}, 1400);
-    });
+function topicDisplayName(t) {
+  const names = {wasser:'Wasser & Härte', elektro:'Elektro & Redox', organik:'Organik & Benennung', reaktionen:'Reaktionen', kunststoffe:'Kunststoffe'};
+  return names[t] || t;
+}
+
+function pickAnswer(i) {
+  const q = quizState.questions[quizState.currentIdx];
+  const correct = i === q.c;
+  if (correct) quizState.score++;
+
+  quizState.results.push({
+    poolIdx: q._poolIdx,
+    userIdx: i,
+    correct: correct
   });
-}
-function restartQuiz() {
-  qIdx = 0; qScore = 0; qAnswered = 0;
-  renderQuiz();
-}
-renderQuiz();
 
-// ═══════════════════════════════════════ KEY NAV
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight') reactNext();
-  if (e.key === 'ArrowLeft') reactPrev();
-});
+  // Visuelles Feedback
+  document.querySelectorAll('#answerBox .answer').forEach((btn, bi) => {
+    btn.classList.add('disabled');
+    if (bi === q.c) btn.classList.add('correct');
+    if (bi === i && !correct) btn.classList.add('wrong');
+  });
+
+  document.getElementById('explBox').innerHTML = `
+    <div class="quiz-explanation">
+      <strong>${correct ? '✓ Richtig!' : '✗ Falsch.'}</strong> ${q.e}
+    </div>
+  `;
+
+  document.getElementById('nextBtn').style.display = 'inline-block';
+  document.getElementById('quizScore').textContent = `Score: ${quizState.score} / ${quizState.currentIdx+1}`;
+}
+
+function nextQuestion() {
+  quizState.currentIdx++;
+  if (quizState.currentIdx >= quizState.questions.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quizLiveScreen').style.display = 'none';
+  const screen = document.getElementById('quizResultScreen');
+  screen.style.display = 'block';
+  const total = quizState.questions.length;
+  const score = quizState.score;
+  const pct = Math.round((score/total)*100);
+  const wrongCount = total - score;
+
+  let medal = '';
+  if (pct >= 90) medal = '🏆 Exzellent!';
+  else if (pct >= 75) medal = '🎯 Sehr gut!';
+  else if (pct >= 60) medal = '👍 Solide.';
+  else if (pct >= 40) medal = '📖 Noch üben.';
+  else medal = '💪 Dran bleiben.';
+
+  screen.innerHTML = `
+    <div class="quiz-result">
+      <div class="chapter-num">${medal}</div>
+      <div class="quiz-score">${score}<span> / ${total}</span></div>
+      <div style="color:var(--ink-dim);font-family:'JetBrains Mono',monospace;font-size:0.9rem;margin-top:0.5rem;">${pct}% richtig · ${wrongCount} falsch</div>
+    </div>
+    <div class="quiz-action-row" style="justify-content:center;margin-top:2rem;">
+      ${wrongCount > 0 ? `<button class="btn primary" onclick="showReview('wrong')">${wrongCount} Falsche ansehen</button>` : ''}
+      <button class="btn" onclick="showReview('all')">Alle Fragen ansehen</button>
+      <button class="btn" onclick="backToSetup()">Neues Quiz</button>
+    </div>
+    <div id="reviewBox" style="margin-top:2rem;"></div>
+  `;
+  screen.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function backToSetup() {
+  document.getElementById('quizResultScreen').style.display = 'none';
+  document.getElementById('quizLiveScreen').style.display = 'none';
+  document.getElementById('quizSetupScreen').style.display = 'block';
+}
+
+function abortQuiz() {
+  if (!confirm('Quiz wirklich abbrechen? Der Fortschritt geht verloren.')) return;
+  backToSetup();
+}
+
+function showReview(mode) {
+  const box = document.getElementById('reviewBox');
+  const results = mode === 'wrong' ? quizState.results.filter(r => !r.correct) : quizState.results;
+
+  if (results.length === 0) {
+    box.innerHTML = '<div class="saved-empty">Keine Fragen zum Anzeigen.</div>';
+    return;
+  }
+
+  let html = `<h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin:2rem 0 1rem;">${mode === 'wrong' ? 'Deine Falschantworten' : 'Alle Fragen im Überblick'}</h3>`;
+
+  results.forEach(r => {
+    const q = questionPool[r.poolIdx];
+    const saved = isSaved(r.poolIdx);
+    const correctClass = r.correct ? 'correct-r' : 'wrong';
+    const tag = r.correct ? '<span class="correct-tag">✓ richtig</span>' : '<span class="wrong-tag">✗ falsch</span>';
+    const hotBadge = q.hot ? '<span class="test-badge hot">Test</span>' : '';
+
+    html += `
+      <div class="review-item ${correctClass}">
+        <div class="review-meta">
+          <span>${topicDisplayName(q.topic)}</span>
+          ${tag}
+          ${hotBadge}
+          <button class="mini-btn ${saved ? 'active-save' : ''}" onclick="toggleSave(${r.poolIdx}); showReview('${mode}');" style="margin-left:auto;">
+            ${saved ? '★ Gemerkt' : '☆ Merken'}
+          </button>
+        </div>
+        <div class="review-q">${q.q}</div>
+        ${!r.correct ? `<div class="review-answer your-line wrong-it"><span class="label">Deine Antwort:</span><span>${q.a[r.userIdx]}</span></div>` : ''}
+        <div class="review-answer correct-line"><span class="label">Richtig:</span><span>${q.a[q.c]}</span></div>
+        <div class="review-expl">${q.e}</div>
+      </div>
+    `;
+  });
+
+  box.innerHTML = html;
+  box.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ═══════════════════════════════════════════════════════════
+// SAVED QUESTIONS (localStorage)
+// ═══════════════════════════════════════════════════════════
+function getSavedIdxs() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+function setSavedIdxs(arr) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+  } catch(e) { console.warn('LocalStorage fehlgeschlagen:', e); }
+}
+
+function isSaved(poolIdx) {
+  return getSavedIdxs().includes(poolIdx);
+}
+
+function toggleSave(poolIdx) {
+  const saved = getSavedIdxs();
+  const i = saved.indexOf(poolIdx);
+  if (i >= 0) saved.splice(i, 1);
+  else saved.push(poolIdx);
+  setSavedIdxs(saved);
+  renderSaved();
+
+  // Aktueller Quiz-Button aktualisieren
+  const btn = document.getElementById('saveBtn');
+  if (btn) {
+    const q = quizState.questions[quizState.currentIdx];
+    if (q && q._poolIdx === poolIdx) {
+      const nowSaved = isSaved(poolIdx);
+      btn.classList.toggle('active-save', nowSaved);
+      btn.innerHTML = `<span>${nowSaved ? '★' : '☆'}</span><span>${nowSaved ? 'Gespeichert' : 'Merken'}</span>`;
+    }
+  }
+}
+
+function renderSaved() {
+  const saved = getSavedIdxs();
+  document.getElementById('savedCount').textContent = `${saved.length} Frage${saved.length !== 1 ? 'n' : ''}`;
+  const list = document.getElementById('savedList');
+
+  if (saved.length === 0) {
+    list.innerHTML = '<div class="saved-empty">Noch keine Fragen gespeichert. Markiere Fragen im Quiz mit dem ☆ um sie hier zu sammeln.</div>';
+    return;
+  }
+
+  let html = '';
+  saved.forEach(poolIdx => {
+    const q = questionPool[poolIdx];
+    if (!q) return;
+    const hotBadge = q.hot ? '<span class="test-badge hot" style="margin:0;">Test</span>' : '';
+    html += `
+      <div class="saved-item">
+        <div class="saved-item-head">
+          <div>
+            <div class="saved-item-topic">${topicDisplayName(q.topic)} ${hotBadge}</div>
+            <div class="saved-item-q">${q.q}</div>
+          </div>
+          <button class="mini-btn danger" onclick="toggleSave(${poolIdx})" title="Entfernen">×</button>
+        </div>
+        <div class="saved-item-a">✓ ${q.a[q.c]}</div>
+        <div class="saved-item-expl">${q.e}</div>
+      </div>
+    `;
+  });
+  list.innerHTML = html;
+}
+
+function clearSaved() {
+  if (!confirm('Alle gespeicherten Fragen wirklich löschen?')) return;
+  setSavedIdxs([]);
+  renderSaved();
+}
+
+function printSaved() {
+  const saved = getSavedIdxs();
+  if (saved.length === 0) {
+    alert('Keine Fragen gespeichert — markiere zuerst welche im Quiz.');
+    return;
+  }
+  window.print();
+}
+
+// Init
+renderSaved();
 </script>
 </body>
 </html>
