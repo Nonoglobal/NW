@@ -351,7 +351,6 @@
     <a href="#teststoff">Teststoff</a>
     <a href="#wasser">Wasser</a>
     <a href="#elektro">Elektro</a>
-    <a href="#oxi">Oxidation</a>
     <a href="#organik">Organik</a>
     <a href="#benennung">Benennung</a>
     <a href="#reaktionen">Reaktionen</a>
@@ -419,391 +418,1173 @@
     <div class="test-legend-item"><span class="test-badge main">Wichtig</span> Grundlage, kommt fast sicher dran</div>
   </div>
 </section>
+<style>
+/* Skript vs. Erklärung */
+.skript-block {
+  background: linear-gradient(135deg, rgba(180,255,57,0.04), rgba(180,255,57,0.01));
+  border: 1px solid rgba(180,255,57,0.2);
+  border-radius: 10px;
+  padding: 2rem 2rem 1.8rem;
+  margin: 1.2rem 0 0.5rem;
+  position: relative;
+}
+.skript-block::before {
+  content: 'AUS DEM SKRIPT';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--acid);
+  background: var(--bg);
+  padding: 0.2rem 0.8rem;
+  letter-spacing: 0.15em;
+  border: 1px solid rgba(180,255,57,0.3);
+  border-radius: 100px;
+}
+.skript-block p { margin-bottom: 0.8rem; color: var(--ink); line-height: 1.7;}
+.skript-block p:last-child { margin-bottom: 0;}
+.skript-block ul { list-style: none; margin: 0.6rem 0;}
+.skript-block li {
+  padding-left: 1.3rem;
+  position: relative;
+  margin-bottom: 0.45rem;
+  color: var(--ink);
+  line-height: 1.55;
+}
+.skript-block li::before {
+  content: '●';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  color: var(--acid);
+  font-size: 0.55rem;
+}
+.skript-block strong { color: var(--acid); font-weight: 600;}
+.skript-block .sub-h {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 1.3rem 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px dashed rgba(180,255,57,0.2);
+}
+.skript-block .sub-h:first-child { margin-top: 0;}
+.skript-block .f-inline {
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(180,255,57,0.1);
+  color: var(--acid);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  font-size: 0.92em;
+}
 
+.explain-block {
+  background: linear-gradient(135deg, rgba(199,125,255,0.06), rgba(199,125,255,0.01));
+  border: 1px solid rgba(199,125,255,0.25);
+  border-left: 3px solid var(--violet);
+  border-radius: 10px;
+  padding: 2rem 2rem 1.8rem;
+  margin: 0.5rem 0 3rem;
+  position: relative;
+}
+.explain-block::before {
+  content: 'ERKLÄRUNG';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--violet);
+  background: var(--bg);
+  padding: 0.2rem 0.8rem;
+  letter-spacing: 0.15em;
+  border: 1px solid rgba(199,125,255,0.3);
+  border-radius: 100px;
+}
+.explain-block p { margin-bottom: 0.8rem; color: var(--ink-dim); line-height: 1.7;}
+.explain-block p:last-child { margin-bottom: 0;}
+.explain-block strong { color: var(--ink);}
+.explain-block ul { list-style: none; margin: 0.5rem 0;}
+.explain-block li {
+  padding-left: 1.2rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+.explain-block li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--violet);
+  font-weight: 600;
+}
+.explain-block .sub-h {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--violet);
+  margin: 1.2rem 0 0.5rem;
+}
+.explain-block .sub-h:first-child { margin-top: 0;}
+
+.topic-block {
+  margin: 2.5rem 0;
+}
+.topic-block > h3 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  letter-spacing: -0.01em;
+}
+.topic-block > .topic-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+</style>
+
+<!-- ═══════ 1. WASSER ═══════ -->
 <section class="chapter reveal" id="wasser">
   <div class="chapter-header">
-    <div class="chapter-num">01 / 07</div>
-    <h2 class="chapter-title">Wasser &amp; <em>Wasserhärte</em><span class="test-badge hot">Test</span></h2>
+    <div class="chapter-num">01 / 06 · Wasser-Block</div>
+    <h2 class="chapter-title"><em>Wasser</em><span class="test-badge hot">Test</span></h2>
   </div>
-  <p class="chapter-intro">
-    Wasser ist das wichtigste Dipolmolekül. Durch die Wasserstoffbrückenbindungen ergeben sich fast alle Besonderheiten: flüssig bei Raumtemperatur, Siedepunkt 100 °C, Anomalie (größte Dichte bei 4 °C), und das Volumen beim Frieren nimmt um ca. 10 % zu.
-  </p>
 
-  <div class="molecule-viewer">
-    <div class="viewer-header">
-      <div>
-        <div class="chapter-num">H₂O · Das Dipolmolekül</div>
-        <p style="font-family:'Fraunces',serif;font-size:1.6rem;margin-top:0.3rem;">Bindungswinkel <span style="color:var(--acid);">104,5°</span></p>
-      </div>
+  <!-- 1.1 Eigenschaften des Wassers -->
+  <div class="topic-block">
+    <div class="topic-num">1.1</div>
+    <h3>Wichtige Eigenschaften des Wassers</h3>
+
+    <div class="skript-block">
+      <ul>
+        <li>Wasser ist das wichtigste <strong>Dipolmolekül</strong></li>
+        <li>Wasser lagert sich orientiert an Ionen an</li>
+        <li>Wasser hat eine hohe Wärmekapazität</li>
+        <li>Wasser ist ein wichtiges polares Lösungsmittel</li>
+        <li>Wasser bildet Wasserstoffbrücken aus</li>
+      </ul>
+
+      <p class="sub-h">Die Wasserstoffbrückenbindungen sind dafür verantwortlich,</p>
+      <ul>
+        <li>dass Wasser bei Raumtemperatur flüssig ist</li>
+        <li>dass Wasser einen hohen Siedepunkt von <span class="f-inline">100 °C bei 1,013 bar</span> hat</li>
+        <li>dass Wasser beim Frieren durch Neuausrichtung der Brückenbindungen ca. <strong>10 % mehr Volumen</strong> hat</li>
+        <li>dass Wasser nicht beim Erstarren, sondern bei <strong>4 °C die größte Dichte</strong> hat</li>
+      </ul>
     </div>
-    <div class="molecule-canvas">
-      <svg viewBox="0 0 360 280" width="360">
-        <line x1="180" y1="140" x2="180" y2="200" stroke="#c77dff" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"><animate attributeName="opacity" values="0.2;0.9;0.2" dur="2s" repeatCount="indefinite"/></line>
-        <line x1="180" y1="90" x2="130" y2="130" class="bond"/>
-        <line x1="180" y1="90" x2="230" y2="130" class="bond"/>
-        <circle cx="180" cy="90" r="22" class="atom-o"/>
-        <text x="180" y="90" class="atom-label" fill="white">O</text>
-        <text x="200" y="70" class="atom-label" fill="#c77dff" style="font-size:9px;">δ−</text>
-        <circle cx="130" cy="130" r="14" class="atom-h"/><text x="130" y="130" class="atom-label" fill="black">H</text>
-        <circle cx="230" cy="130" r="14" class="atom-h"/><text x="230" y="130" class="atom-label" fill="black">H</text>
-        <text x="120" y="152" class="atom-label" fill="#c77dff" style="font-size:9px;">δ+</text>
-        <text x="240" y="152" class="atom-label" fill="#c77dff" style="font-size:9px;">δ+</text>
-        <line x1="180" y1="230" x2="135" y2="190" class="bond"/>
-        <line x1="180" y1="230" x2="225" y2="190" class="bond"/>
-        <circle cx="180" cy="230" r="22" class="atom-o"/>
-        <text x="180" y="230" class="atom-label" fill="white">O</text>
-        <circle cx="135" cy="190" r="14" class="atom-h"/><text x="135" y="190" class="atom-label" fill="black">H</text>
-        <circle cx="225" cy="190" r="14" class="atom-h"/><text x="225" y="190" class="atom-label" fill="black">H</text>
-        <text x="195" y="175" style="font-family:'JetBrains Mono',monospace;fill:#c77dff;font-size:10px;">H-Brücke</text>
-      </svg>
-    </div>
-    <div class="molecule-info">
-      <div class="info-pill"><div class="info-pill-label">Siedepunkt</div><div class="info-pill-value">100 °C</div></div>
-      <div class="info-pill"><div class="info-pill-label">Druck</div><div class="info-pill-value">1,013 bar</div></div>
-      <div class="info-pill"><div class="info-pill-label">Max. Dichte bei</div><div class="info-pill-value">4 °C</div></div>
-      <div class="info-pill"><div class="info-pill-label">Volumenzunahme</div><div class="info-pill-value">~10 %</div></div>
+
+    <div class="explain-block">
+      <p class="sub-h">Was heißt "Dipolmolekül" genau?</p>
+      <p>Das H₂O-Molekül ist <strong>gewinkelt</strong> (Bindungswinkel 104,5°). Der Sauerstoff zieht die Elektronen stärker an sich als die Wasserstoffe → am O entsteht eine leicht negative Ladung (δ−), an den H-Atomen leicht positive Ladungen (δ+). Diese Ladungstrennung macht Wasser zum Dipol — und damit zum guten Lösungsmittel für Salze.</p>
+
+      <p class="sub-h">Was sind Wasserstoffbrücken?</p>
+      <p>Die δ+ Wasserstoffe eines Moleküls ziehen die δ− Sauerstoffe anderer Moleküle an. Diese schwachen Anziehungen ("Brücken") halten Wasser zusammen. Ohne sie wäre Wasser bei Raumtemperatur ein Gas (vergleiche mit H₂S — gleiche Gruppe wie O, aber ohne H-Brücken → gasförmig bei Raumtemperatur).</p>
     </div>
   </div>
 
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-eyebrow">Eigenschaften</div>
-      <h3 class="card-title">Warum Wasser besonders ist</h3>
-      <div class="card-body"><ul><li>Wichtigstes Dipolmolekül</li><li>Lagert sich orientiert an Ionen an</li><li>Hohe Wärmekapazität</li><li>Wichtiges polares Lösungsmittel</li><li>Bildet Wasserstoffbrücken aus</li></ul></div>
+  <!-- 1.2 Verhalten beim Abkühlen -->
+  <div class="topic-block">
+    <div class="topic-num">1.2</div>
+    <h3>Verhalten des Wassers beim Abkühlen</h3>
+
+    <div class="skript-block">
+      <p>Bis <strong>4 °C</strong> rücken die Wassermoleküle näher aneinander. Dadurch nimmt die Dichte zu. Ab 4 °C bilden sich neue Wasserstoffbrückenbindungen aus. Dadurch benötigen die Moleküle mehr Platz und die Dichte nimmt wieder ab. Dieses Verhalten nennt man <strong>Anomalie des Wassers</strong>.</p>
+      <p>Ab 0 °C beginnt das Wasser zu frieren. Dabei bilden sich Kristalle mit einer Orientierung wie die Wasserstoffbrücken aus. Beim Frieren erhöht sich das Volumen um ca. 10 %. Bei noch tieferer Temperatur verringert sich das Volumen wieder.</p>
     </div>
-    <div class="card">
-      <div class="card-eyebrow">Anomalie</div>
-      <h3 class="card-title">Verhalten beim Abkühlen</h3>
-      <div class="card-body">Bis 4 °C rücken die Wassermoleküle näher aneinander → Dichte nimmt zu. Ab 4 °C bilden sich neue H-Brücken → mehr Platz nötig → Dichte nimmt <strong>wieder ab</strong>. Ab 0 °C Kristallbildung, Volumen steigt ~10 %.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Gesamthärte</div>
-      <h3 class="card-title">Summe aller Ca- und Mg-Verbindungen</h3>
-      <div class="card-body">Die Gesamthärte = Summe aller im Wasser gelösten Kalzium- und Magnesiumverbindungen.<br><br>Kalk: <span class="formula">CaCO₃</span> und <span class="formula">MgCO₃</span></div>
+
+    <div class="explain-block">
+      <p class="sub-h">Warum ist die Anomalie so wichtig?</p>
+      <p>Weil Eis auf Wasser schwimmt. Dadurch friert ein See im Winter von oben zu — am Grund bleibt flüssiges Wasser bei 4 °C, wo Fische und Pflanzen überleben können. Wenn Eis dichter als flüssiges Wasser wäre, würden Seen von unten zufrieren und alles darin sterben.</p>
+      <p>Der praktische Alltagseffekt: Wasserrohre platzen im Winter, weil das Wasser beim Gefrieren 10 % mehr Platz braucht.</p>
     </div>
   </div>
 
-  <div class="hardness-diagram">
-    <div class="hardness-side temp">
-      <div class="hardness-label">Temporäre Härte <span class="test-badge hot" style="margin-left:0.3rem;">Test</span></div>
-      <h3 class="hardness-title">Carbonathärte</h3>
-      <p style="color:var(--ink-dim);font-size:0.92rem;">Alle im Wasser gelösten Ca- und Mg-Hydrogencarbonate:</p>
-      <div class="formula-block">Ca(HCO₃)₂  —  Calciumhydrogencarbonat<br>Mg(HCO₃)₂  —  Magnesiumhydrogencarbonat<br><br>Ca(HCO₃)₂ ──60°──▶ CaCO₃ + H₂O + CO₂<br>               (Kesselstein / Kalkstein)</div>
-      <p style="color:var(--ink-dim);font-size:0.88rem;margin-top:1rem;"><strong style="color:var(--flame);">Folgen:</strong> erhöhter Energieverbrauch durch Kesselstein, Rohrverstopfung, Kesselexplosionen, Ablagerungen auf Geschirr und Wäsche.</p>
+  <!-- 1.3 Wasserhärte -->
+  <div class="topic-block">
+    <div class="topic-num">1.3</div>
+    <h3>Wasserhärte<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p class="sub-h">Gesamthärte</p>
+      <p>Die Gesamthärte ist die <strong>Summe aller im Wasser gelösten Kalzium- und Magnesiumverbindungen</strong>. Sie setzt sich zusammen aus <strong>Temporärer Härte (Carbonathärte)</strong> und <strong>Permanenter Härte (nicht Carbonathärte)</strong>.</p>
+
+      <p class="sub-h">Temporäre Härte</p>
+      <p>Alle im Wasser gelösten Ca- und Mg-<strong>Hydrogencarbonate</strong>:</p>
+      <ul>
+        <li>Calciumhydrogencarbonat <span class="f-inline">Ca(HCO₃)₂</span></li>
+        <li>Magnesiumhydrogencarbonat <span class="f-inline">Mg(HCO₃)₂</span></li>
+      </ul>
+      <p>Beim Erhitzen entsteht <strong>Kesselstein / Kalkstein</strong>.</p>
+
+      <p class="sub-h">Permanente Härte</p>
+      <p>Alle im Wasser gelösten Ca- und Mg-Verbindungen <em>außer</em> den Hydrogencarbonaten, z. B.:</p>
+      <ul>
+        <li>Calciumchlorid <span class="f-inline">CaCl₂</span></li>
+        <li>Magnesiumchlorid <span class="f-inline">MgCl₂</span></li>
+        <li>Magnesiumsulfat <span class="f-inline">MgSO₄</span></li>
+      </ul>
     </div>
-    <div class="hardness-side perm">
-      <div class="hardness-label">Permanente Härte <span class="test-badge hot" style="margin-left:0.3rem;">Test</span></div>
-      <h3 class="hardness-title">Nicht-Carbonathärte</h3>
-      <p style="color:var(--ink-dim);font-size:0.92rem;">Alle im Wasser gelösten Ca- und Mg-Verbindungen <em>außer</em> den Hydrogencarbonaten:</p>
-      <div class="formula-block">CaCl₂   —  Calciumchlorid<br>MgCl₂   —  Magnesiumchlorid<br>MgSO₄   —  Magnesiumsulfat</div>
+
+    <div class="explain-block">
+      <p class="sub-h">Merkregel</p>
+      <p><strong>Temporär</strong> = alles mit <strong>HCO₃</strong> (Hydrogencarbonat). <strong>Permanent</strong> = alles andere mit Ca oder Mg (Chloride, Sulfate etc.).</p>
+
+      <p class="sub-h">Warum heißt die eine "temporär"?</p>
+      <p>Weil sie beim Kochen verschwindet. Das gelöste Ca(HCO₃)₂ zerfällt bei ca. 60 °C zu festem CaCO₃ (Kalk), der sich absetzt:</p>
+      <p><span class="f-inline">Ca(HCO₃)₂ → CaCO₃↓ + H₂O + CO₂↑</span></p>
+      <p>CaCl₂ dagegen bleibt auch beim Kochen gelöst — die Härte ist "permanent".</p>
     </div>
   </div>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Enthärtungsmethoden <span class="test-badge hot">Test</span></h3>
+  <!-- 1.4 Folgen -->
+  <div class="topic-block">
+    <div class="topic-num">1.4</div>
+    <h3>Folgen der temporären Wasserhärte<span class="test-badge hot">Test</span></h3>
 
-  <div class="accordion">
-    <div class="accordion-item">
-      <div class="acc-header"><span>1. Ionentauscher (Kation- &amp; Anion)</span><span class="acc-icon">+</span></div>
-      <div class="acc-body">
-        <strong>Kationentauscher:</strong> gibt H⁺ ab, nimmt Ca²⁺/Mg²⁺ auf.<br>
-        <span class="formula">K·4H⁺ + Ca²⁺  →  K·Ca²⁺ + 2H⁺</span><br><br>
-        <strong>Anionentauscher:</strong> gibt OH⁻ ab, nimmt HCO₃⁻ auf.<br>
-        <span class="formula">A·OH⁻ + 2HCO₃⁻  →  A·2HCO₃⁻ + OH⁻</span><br><br>
-        Ist die Austauschkapazität erschöpft, muss der Ionentauscher regeneriert werden — das geht aber <strong>nur beim getrennten Ionentauscher</strong> (Mischbettionentauscher nicht regenerierbar).
-      </div>
+    <div class="skript-block">
+      <ul>
+        <li>Führt aufgrund des Kesselsteins zu <strong>erhöhtem Energieverbrauch</strong></li>
+        <li>Führt zu <strong>Rohrverstopfungen</strong></li>
+        <li>Es kann zu <strong>Kesselexplosionen</strong> kommen</li>
+        <li><strong>Ablagerungen</strong> am Geschirr und in der Wäsche</li>
+      </ul>
     </div>
-    <div class="accordion-item">
-      <div class="acc-header"><span>2. Destillation</span><span class="acc-icon">+</span></div>
-      <div class="acc-body">Wasser wird verdampft und kondensiert. Salze bleiben im Destillationsrest zurück. Sehr energieintensiv.</div>
+
+    <div class="explain-block">
+      <p class="sub-h">Warum erhöhter Energieverbrauch?</p>
+      <p>Kalkablagerungen im Wasserkocher oder Boiler isolieren das Heizelement. Die Wärme kommt schlechter ins Wasser → das Gerät muss länger heizen → mehr Strom/Gas.</p>
+
+      <p class="sub-h">Wie kommt's zur Kesselexplosion?</p>
+      <p>Wenn ein Heizkessel innen mit Kalkkruste zugesetzt ist, überhitzen die Metallwände (weil die Hitze nicht ins Wasser abgeleitet wird). Bei extremer Überhitzung kann der Kessel bersten — besonders gefährlich bei Dampfkesseln, wo sich dann schlagartig viel heißer Dampf freisetzt.</p>
     </div>
-    <div class="accordion-item">
-      <div class="acc-header"><span>3. Umkehr-Osmose</span><span class="acc-icon">+</span></div>
-      <div class="acc-body">Das Wasser wird durch eine halbdurchlässige Membran gepresst, Ionen werden zurückgehalten.</div>
+  </div>
+
+  <!-- 1.5 Enthärtung -->
+  <div class="topic-block">
+    <div class="topic-num">1.5</div>
+    <h3>Wasser-Enthärtungsmethoden<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p class="sub-h">1. Ionentauscher</p>
+      <ul>
+        <li><strong>a) Kationentauscher:</strong> gibt H⁺ ab und nimmt Ca²⁺/Mg²⁺ auf</li>
+        <li><strong>b) Anionentauscher:</strong> gibt OH⁻ ab und nimmt HCO₃⁻ auf</li>
+      </ul>
+      <p>Ist die Austauschkapazität erschöpft, muss der Ionentauscher regeneriert werden. Das ist aber <strong>nur möglich beim getrennten Ionentauscher</strong>.</p>
+
+      <p class="sub-h">2. Destillation</p>
+
+      <p class="sub-h">3. Umkehr-Osmose</p>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Wie funktioniert ein Ionentauscher?</p>
+      <p>Ein Ionentauscher besteht aus kleinen Kunststoffkügelchen (Harz), auf denen fest gebundene Ladungen sitzen. Fließt hartes Wasser durch:</p>
+      <ul>
+        <li>Der <strong>Kationentauscher</strong> hält Ca²⁺/Mg²⁺ fest und gibt dafür H⁺ ab</li>
+        <li>Der <strong>Anionentauscher</strong> hält HCO₃⁻ fest und gibt dafür OH⁻ ab</li>
+      </ul>
+      <p>Das abgegebene H⁺ und OH⁻ reagiert zu H₂O — übrig bleibt weiches Wasser.</p>
+
+      <p class="sub-h">Warum nur getrennter Ionentauscher regenerierbar?</p>
+      <p>Beim "Mischbett"-Tauscher sind Kationen- und Anionenharz vermischt. Zur Regeneration bräuchte man gleichzeitig Säure und Lauge — das neutralisiert sich aber gegenseitig. Beim getrennten Tauscher kann man jeden Behälter einzeln mit der passenden Lösung (Säure bzw. Lauge) durchspülen und so die Härte-Ionen wieder rauswaschen.</p>
+
+      <p class="sub-h">Destillation vs. Umkehr-Osmose</p>
+      <p><strong>Destillation:</strong> Wasser verdampfen + kondensieren. Salze bleiben zurück. Sehr reines Wasser, aber energieintensiv.</p>
+      <p><strong>Umkehr-Osmose:</strong> Wasser wird unter Druck durch eine Membran gepresst, die nur H₂O durchlässt. Wird auch zur Meerwasser-Entsalzung genutzt.</p>
     </div>
   </div>
 </section>
 
+<!-- ═══════ 2. ELEKTROCHEMIE ═══════ -->
 <section class="chapter reveal" id="elektro">
   <div class="chapter-header">
-    <div class="chapter-num">02 / 07</div>
-    <h2 class="chapter-title"><em>Elektro</em>chemie<span class="test-badge hot">Test</span></h2>
+    <div class="chapter-num">02 / 06 · Elektrochemie-Block</div>
+    <h2 class="chapter-title"><em>Elektrochemie</em><span class="test-badge hot">Test</span></h2>
   </div>
-  <p class="chapter-intro">
-    Die Elektrochemie untersucht die Wechselwirkung von elektrischen und chemischen Prozessen. Galvanische Elemente wandeln chemische in elektrische Energie um (z. B. Batterie). Bei der Elektrolyse ist es umgekehrt: durch Gleichstrom werden Reaktionen erzwungen.
-  </p>
 
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-eyebrow">Leiter 1. Klasse<span class="test-badge hot" style="margin-left:0.3rem;">Test</span></div>
-      <h3 class="card-title">Metalle · Halbmetalle · Kohlenstoff</h3>
-      <div class="card-body">Keine Veränderung beim Stromdurchgang. Stromleitung über freie Elektronen im Metallgitter.<br><br><strong>Temperatur:</strong> Je höher die Temperatur, desto <em>schlechter</em> leiten Metalle (Gitter schwingt stärker).</div>
+  <!-- 2.1 Grundlage -->
+  <div class="topic-block">
+    <div class="topic-num">2.1</div>
+    <h3>Elektrochemie — Grundlage</h3>
+
+    <div class="skript-block">
+      <p>Die Elektrochemie untersucht Zusammenhänge von elektrischen und chemischen Prozessen in der Natur. Wenn Metalle in Elektrolytlösungen eintauchen, dann baut sich eine Spannung auf. Spannungsquellen, die auf diesem Prinzip beruhen, nennt man <strong>galvanische Elemente</strong> (z. B. Batterie).</p>
+      <p>Die Elektrochemie untersucht die wechselweise Umwandlung von chemischer in elektrische Energie und umgekehrt. In galvanischen Elementen wird durch chemische Reaktionen, die von selbst ablaufen, <strong>Gleichstrom erzeugt</strong>.</p>
+      <p>Umgekehrter Fall: Bei der <strong>Elektrolyse</strong> werden Reaktionen durch Gleichstrom erzwungen.</p>
     </div>
-    <div class="card">
-      <div class="card-eyebrow">Leiter 2. Klasse<span class="test-badge hot" style="margin-left:0.3rem;">Test</span></div>
-      <h3 class="card-title">Ionenleiter</h3>
-      <div class="card-body">Salzlösungen, Salzschmelzen, Säuren, Basen. Stromleitung über <strong>bewegliche Ionen</strong> → chemische Veränderung.<br><br><strong>Temperatur:</strong> Höhere Temperatur → bessere Leitung. Keramiken werden ab ca. 800 °C zu Ionenleitern.</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Spannungsreihe<span class="test-badge main" style="margin-left:0.3rem;">Wichtig</span></div>
-      <h3 class="card-title">Normalpotenzial</h3>
-      <div class="card-body">Die Spannung eines Metalls in einmolarer Lösung seiner Ionen gegen die NHE (Normalwasserstoffelektrode).<br><br><strong>Unedle Metalle:</strong> lösen sich gerne auf.<br><strong>Edle Metalle:</strong> scheiden ihre Ionen elementar ab.</div>
+
+    <div class="explain-block">
+      <p><strong>Galvanisches Element = Batterie.</strong> Chemische Reaktion läuft freiwillig ab → es entsteht Strom.</p>
+      <p><strong>Elektrolyse = Umkehrung.</strong> Strom zwingt eine Reaktion, die von selbst nicht ablaufen würde (z. B. Zerlegung von Wasser in H₂ und O₂, Gewinnung von Natrium aus NaCl).</p>
     </div>
   </div>
 
-  <div class="galvanic-cell">
-    <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:1rem;">Daniell-Element (Zn/Cu) <span class="test-badge main">Wichtig</span></h3>
-    <p style="color:var(--ink-dim);margin-bottom:1.5rem;">Ein unedles Metall (Zn) und ein edles Metall (Cu), beide in ihrer Ionen-Lösung. Spannung ≈ 1,1 V.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:1.5rem;">
-      <div style="background:var(--bg-card);padding:1.5rem;border-radius:8px;border-left:3px solid var(--rose);">
-        <div class="card-eyebrow" style="color:var(--rose);">Anode · unedel</div>
-        <h4 style="font-family:'Fraunces',serif;font-size:1.3rem;">Zink in ZnSO₄</h4>
-        <div class="formula-block" style="margin-top:1rem;">Zn → Zn²⁺ + 2e⁻<br>E₀ = −0,76 V</div>
-      </div>
-      <div style="background:var(--bg-card);padding:1.5rem;border-radius:8px;border-left:3px solid var(--gold);">
-        <div class="card-eyebrow" style="color:var(--gold);">Kathode · edel</div>
-        <h4 style="font-family:'Fraunces',serif;font-size:1.3rem;">Kupfer in CuSO₄</h4>
-        <div class="formula-block" style="margin-top:1rem;">Cu²⁺ + 2e⁻ → Cu<br>E₀ = +0,34 V</div>
-      </div>
+  <!-- 2.2 Elektrische Leiter -->
+  <div class="topic-block">
+    <div class="topic-num">2.2</div>
+    <h3>Elektrische Leiter<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p>Metalle, einige Halbmetalle, Kohlenstoff, Salzlösungen, Lösungen von Säuren und Basen und Salzschmelzen leiten den elektrischen Strom. Je nach Verhalten beim Stromdurchgang unterscheidet man zwischen zwei Arten von Leitern:</p>
+
+      <p class="sub-h">1. Leiter 1. Klasse</p>
+      <p>Dazu zählen <strong>Metalle, Halbmetalle und Kohlenstoff</strong>. Es gibt <strong>keine Veränderung</strong> beim Stromdurchgang.</p>
+
+      <p class="sub-h">2. Leiter 2. Klasse (Ionenleiter)</p>
+      <p>Es kommt zur <strong>Veränderung</strong> beim Stromdurchgang. Dazu zählen die <strong>Salzlösungen, Salzschmelzen und Lösungen von Säuren und Basen</strong>. Die Stromleitung erfolgt über bewegliche Ionen. Das bedeutet, dass auch Keramiken bei sehr hohen Temperaturen Ionenleiter werden.</p>
+
+      <p class="sub-h">3. Temperaturabhängigkeit bei der Stromleitung</p>
+      <p>Je höher die Temperatur, desto <strong>schlechter</strong> leiten Metalle den Strom, da sich die Metallgitter immer schneller zu bewegen beginnen und die Elektronen schwerer an den Atomrümpfen vorbeikommen.</p>
+      <p>Leiter 2. Klasse leiten bei höherer Temperatur den Strom <strong>besser</strong>, da sich die Ionen schneller bewegen.</p>
+      <p>Bei Keramiken werden ab etwa <strong>800 °C</strong> Ionen aufgrund der Gitterschwingungen aus ihren Gitterplätzen gerissen. Diese springen dann über freie Gitterplätze weiter und leiten so den Strom. So können selbst Isolatoren zu Stromleitern werden.</p>
     </div>
-    <div style="text-align:center;padding:1.5rem;background:rgba(180,255,57,0.05);border-radius:8px;">
-      <div class="card-eyebrow">Zellspannung</div>
-      <div style="font-family:'Fraunces',serif;font-size:3rem;color:var(--acid);font-weight:600;">U = 1,1 V</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--ink-dim);margin-top:0.5rem;">0,34 − (−0,76) = 1,10 V</div>
+
+    <div class="explain-block">
+      <p class="sub-h">Leiter 1. Klasse vs. 2. Klasse — der Unterschied</p>
+      <ul>
+        <li><strong>1. Klasse:</strong> Stromleitung über <strong>freie Elektronen</strong>. Metalle haben ein "Elektronengas" — Elektronen können sich frei bewegen. Beim Stromfluss ändert sich nichts am Metall.</li>
+        <li><strong>2. Klasse:</strong> Stromleitung über <strong>bewegliche Ionen</strong>. Weil Ionen die Ladung tragen, wandern Stoffe tatsächlich durchs Medium → chemische Veränderung (= Elektrolyse).</li>
+      </ul>
+
+      <p class="sub-h">Merkhilfe zur Temperatur</p>
+      <p><strong>Metalle:</strong> warm → schlechter. Die Atomrümpfe zittern mehr → Elektronen stoßen ständig dagegen.</p>
+      <p><strong>Ionenleiter:</strong> warm → besser. Ionen brauchen Energie zum Wandern — mehr Wärme, mehr Bewegung.</p>
     </div>
   </div>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Batterien &amp; Brennstoffzellen</h3>
-  <div class="battery-select">
-    <button class="bat-btn active" data-bat="leclanche"><div class="bat-btn-short">Zink-Kohle</div><div class="bat-btn-name">Leclanché</div></button>
-    <button class="bat-btn" data-bat="alkali"><div class="bat-btn-short">Zn/Braunstein</div><div class="bat-btn-name">Alkalisch</div></button>
-    <button class="bat-btn" data-bat="afc"><div class="bat-btn-short">Brennstoffzelle</div><div class="bat-btn-name">AFC</div></button>
-    <button class="bat-btn" data-bat="pemfc"><div class="bat-btn-short">Brennstoffzelle</div><div class="bat-btn-name">PEMFC</div></button>
-    <button class="bat-btn" data-bat="pafc"><div class="bat-btn-short">Brennstoffzelle</div><div class="bat-btn-name">PAFC</div></button>
-    <button class="bat-btn" data-bat="mcfc"><div class="bat-btn-short">Brennstoffzelle</div><div class="bat-btn-name">MCFC</div></button>
-    <button class="bat-btn" data-bat="sofc"><div class="bat-btn-short">Brennstoffzelle</div><div class="bat-btn-name">SOFC</div></button>
+  <!-- 2.3 Spannungsreihe -->
+  <div class="topic-block">
+    <div class="topic-num">2.3</div>
+    <h3>Die elektrochemische Spannungsreihe</h3>
+
+    <div class="skript-block">
+      <p>Taucht man ein Metall in eine Lösung seiner Ionen, so baut sich eine Spannung auf.</p>
+      <p>Die Spannung, die ein Metall in einer einmolaren Lösung seiner Ionen gegen die <strong>Normalwasserstoffelektrode (NHE)</strong> zeigt, wird <strong>Normalpotenzial</strong> oder Normalspannung genannt.</p>
+      <p>Aufgrund des hohen Lösungsdruckes <strong>lösen sich unedle Metalle</strong> gerne auf. Bei <strong>edlen Metallen</strong> ist es genau umgekehrt: sie <strong>scheiden ihre Ionen elementar</strong> auf dem Metall ab.</p>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Was heißt "einmolare Lösung"?</p>
+      <p>1 mol des Metall-Ions pro Liter Wasser — eine genormte Messbedingung, damit alle Metalle fair verglichen werden können.</p>
+
+      <p class="sub-h">Die NHE als Nullpunkt</p>
+      <p>Die Normalwasserstoffelektrode hat per Definition 0 V. Alle anderen Metalle werden dagegen gemessen:</p>
+      <ul>
+        <li>Negatives Potenzial → unedler als Wasserstoff (z. B. Zn: −0,76 V)</li>
+        <li>Positives Potenzial → edler als Wasserstoff (z. B. Cu: +0,34 V)</li>
+      </ul>
+
+      <p class="sub-h">Merksatz</p>
+      <p><strong>Unedel = will weg (in Lösung). Edel = will zurück (ans Metall).</strong></p>
+    </div>
   </div>
-  <div class="bat-details" id="batDetails"></div>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Korrosion &amp; Schutz <span class="test-badge hot">Test</span></h3>
-  <p style="color:var(--ink-dim);margin-bottom:1.5rem;">Korrosion = meist unerwünschter Materialverlust durch Oxidation von unedlen Metallen bei Anwesenheit von Feuchtigkeit und Sauerstoff.</p>
+  <!-- 2.4 Oxidation/Reduktion -->
+  <div class="topic-block">
+    <div class="topic-num">2.4</div>
+    <h3>Oxidation und Reduktion<span class="test-badge hot">Test</span></h3>
 
-  <div class="card-grid">
-    <div class="card"><div class="card-eyebrow">Korrosionsart 1</div><h3 class="card-title">Oberflächenkorrosion</h3><div class="card-body">Materialverlust an allen Stellen gleichmäßig. Beispiele: Bauxit <span class="formula">Al₂O₃</span>, Eisenoxid <span class="formula">Fe₂O₃</span>.</div></div>
-    <div class="card"><div class="card-eyebrow">Korrosionsart 2</div><h3 class="card-title">Riss- &amp; Lochfraßkorrosion</h3><div class="card-body">Risskorrosion besonders gefährlich, da oft unsichtbar → unvorhersehbarer Bruch möglich. Fehlersuche mit Ultraschall oder Röntgen.</div></div>
-    <div class="card"><div class="card-eyebrow">Korrosionsart 3</div><h3 class="card-title">Kontaktkorrosion</h3><div class="card-body">Tritt an der Kontaktstelle zweier unterschiedlich edler Metalle auf.</div></div>
-    <div class="card"><div class="card-eyebrow">Schutz passiv</div><h3 class="card-title">Beschichtung</h3><div class="card-body">Oberfläche wird durch Passivierungsmittel geschützt (Öl, Beizmittel, Beschichtung) → verhindert Zutritt von Wasser &amp; Sauerstoff.</div></div>
-    <div class="card"><div class="card-eyebrow">Schutz aktiv (a)</div><h3 class="card-title">Opferanode</h3><div class="card-body">Bei starker Korrosionsgefahr. Muss elektrisch leitend verbunden und im selben Medium sein. Die Opferanode löst sich auf → Werkstück <strong>kathodisch geschützt</strong>.</div></div>
-    <div class="card"><div class="card-eyebrow">Schutz aktiv (b)</div><h3 class="card-title">Gleichspannungsquelle</h3><div class="card-body">Für unterirdische Rohrleitungen. Das Eisenrohr wird als <strong>Kathode</strong> angeschlossen, ein nicht-auflösendes Metall als Anode.</div></div>
+    <div class="skript-block">
+      <p class="sub-h">Oxidation</p>
+      <p><strong>Alte Definition:</strong> Bei einer Reaktion wird Sauerstoff aufgenommen.</p>
+      <p><strong>Neue Definition:</strong> Bei einer chemischen Teilreaktion werden <strong>Elektronen abgegeben</strong>.</p>
+
+      <p class="sub-h">Reduktion</p>
+      <p><strong>Alte Definition:</strong> Bei einer chemischen Reaktion wird Sauerstoff abgegeben.</p>
+      <p><strong>Neue Definition:</strong> Bei einer chemischen Teilreaktion werden <strong>Elektronen aufgenommen</strong>.</p>
+
+      <p>Reduktion und Oxidation laufen immer gleichzeitig ab. Daher spricht man von <strong>Redox-Reaktion</strong>.</p>
+
+      <p>Bei einer Redox-Reaktion wirkt der Partner, der oxidiert wird, reduzierend auf den anderen Partner und wird als <strong>Reduktionsmittel</strong> bezeichnet.</p>
+      <p>Das <strong>unedlere Metall wird oxidiert</strong>.</p>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Merkhilfe: "OilRig"</p>
+      <p><strong>O</strong>xidation <strong>i</strong>s <strong>l</strong>oss, <strong>R</strong>eduction <strong>i</strong>s <strong>g</strong>ain (of electrons).</p>
+      <p>Also: Oxidation = Elektronen verlieren. Reduktion = Elektronen gewinnen.</p>
+
+      <p class="sub-h">Warum immer beides gleichzeitig?</p>
+      <p>Elektronen verschwinden nicht einfach. Wenn eins Atom sie abgibt, muss ein anderes sie aufnehmen. Darum läuft in jeder "Redox"-Reaktion gleichzeitig eine Oxidation und eine Reduktion — als zwei Teilreaktionen.</p>
+
+      <p class="sub-h">Das Reduktionsmittel — kleiner Brainbender</p>
+      <p>Das <strong>Reduktions</strong>mittel wird selbst <strong>oxidiert</strong>. Klingt widersprüchlich, ist aber logisch: Es <em>reduziert den anderen</em>, indem es ihm Elektronen liefert — und verliert dabei selbst Elektronen (= wird oxidiert).</p>
+      <p>Umgekehrt: Das <strong>Oxidations</strong>mittel wird selbst <strong>reduziert</strong>.</p>
+    </div>
+  </div>
+
+  <!-- 2.5 Oxidationszahlen -->
+  <div class="topic-block">
+    <div class="topic-num">2.5</div>
+    <h3>Oxidationszahlen<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p>Die Oxidationszahl ist eine fiktive (scheinbare) elektrische Ladung eines Atoms in einer Verbindung oder einem Element. Die Oxidationszahl wird immer in <strong>römischen Zahlen direkt über das Atom</strong> geschrieben.</p>
+
+      <p class="sub-h">Die 8 Regeln</p>
+      <ul>
+        <li><strong>1.</strong> Ein einzelnes Atom oder ein ganzes Molekül hat in Summe immer die Oxidationszahl <strong>0</strong>.</li>
+        <li><strong>2.</strong> Sauerstoff hat in den meisten Verbindungen die Oxidationszahl <strong>−II</strong>, außer in den Peroxiden (−I), z. B. Wasserstoffperoxid.</li>
+        <li><strong>3.</strong> Wasserstoff hat immer die Oxidationszahl <strong>+I</strong>, außer in den Metallhydriden (−I), z. B. Nickelmetallhydrid.</li>
+        <li><strong>4.</strong> Die Oxidationszahl eines <strong>einatomigen Ions</strong> ist gleich seiner Ladung.</li>
+        <li><strong>5.</strong> Die Summe der Oxidationszahlen eines <strong>mehratomigen Ions</strong> ist gleich seiner Ladung.</li>
+        <li><strong>6.</strong> Die <strong>Halogene</strong> haben meistens die Oxidationszahl −I (7. Gruppe).</li>
+        <li><strong>7.</strong> Die <strong>Alkalimetalle</strong> haben immer die Oxidationszahl +I (Gruppe 1).</li>
+        <li><strong>8.</strong> Die <strong>Erdalkalimetalle</strong> haben immer die Oxidationszahl +II (Gruppe 2).</li>
+      </ul>
+      <p>Bei einer <strong>Oxidation nimmt die Oxidationszahl zu</strong>, bei einer <strong>Reduktion nimmt sie ab</strong>.</p>
+      <p>Die häufigste und stabilste Oxidationszahl findet man im Periodensystem rot dargestellt. Wenige Elemente haben zwei gleich stabile Oxidationszahlen (z. B. C: +4 und −4).</p>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">So bestimmst du Oxi-Zahlen Schritt für Schritt</p>
+      <p><strong>Beispiel: H₂SO₄</strong></p>
+      <ul>
+        <li>H hat +I (Regel 3) → 2 × (+I) = +2</li>
+        <li>O hat −II (Regel 2) → 4 × (−II) = −8</li>
+        <li>Summe muss 0 sein (Regel 1): +2 + S + (−8) = 0 → <strong>S = +VI</strong></li>
+      </ul>
+
+      <p><strong>Beispiel: KMnO₄</strong></p>
+      <ul>
+        <li>K = Alkalimetall → +I (Regel 7)</li>
+        <li>4 × O = 4 × (−II) = −8</li>
+        <li>Summe 0: +I + Mn + (−8) = 0 → <strong>Mn = +VII</strong></li>
+      </ul>
+
+      <p class="sub-h">Vorgehensweise-Trick</p>
+      <p>Fang mit den sicheren Atomen an (Alkali, Erdalkali, H, O, Halogene), dann rechne die unbekannte Oxi-Zahl aus der Summenregel aus.</p>
+    </div>
+  </div>
+
+  <!-- 2.6 Korrosion -->
+  <div class="topic-block">
+    <div class="topic-num">2.6</div>
+    <h3>Korrosion<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p>Korrosion ist ein meist unerwünschter <strong>Materialverlust durch Oxidation von unedlen Metallen</strong> bei Anwesenheit von <strong>Feuchtigkeit und Sauerstoff</strong>.</p>
+
+      <p class="sub-h">1. Oberflächenkorrosion</p>
+      <p>Der Materialverlust erfolgt an allen Stellen gleichmäßig. Z. B. Bauxit, Eisenoxid.</p>
+
+      <p class="sub-h">2. Lokale Korrosion</p>
+      <p><strong>a) Risskorrosion:</strong> Die Risskorrosion ist die unangenehmere Art, da sie meistens nicht sichtbar ist und zum unvorhersehbaren Bruch des Werkstückes führen kann.</p>
+      <p><strong>b) Lochfraßkorrosion</strong></p>
+      <p>Fehlersuche mit <strong>Ultraschall oder Röntgenmethoden</strong>.</p>
+
+      <p class="sub-h">3. Kontaktkorrosion</p>
+      <p>Diese Korrosion tritt an der Kontaktstelle <strong>zweier unterschiedlich edler Metalle</strong> auf.</p>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Warum rostet Eisen, aber Gold nicht?</p>
+      <p>Korrosion ist immer eine Oxidation. Nur unedle Metalle geben bereitwillig Elektronen ab — edle Metalle (Gold, Platin) "wehren sich" und korrodieren deshalb fast gar nicht.</p>
+
+      <p class="sub-h">Warum Risskorrosion so gefährlich?</p>
+      <p>Die Risse wachsen im Inneren, unsichtbar von außen. Ein kleiner Riss kann unter Belastung plötzlich das ganze Werkstück durchtrennen — deshalb werden Flugzeugteile, Brücken, Druckbehälter regelmäßig mit Ultraschall oder Röntgen geprüft.</p>
+
+      <p class="sub-h">Kontaktkorrosion — praktisches Beispiel</p>
+      <p>Wenn ein Kupferrohr an ein Stahlrohr angeschlossen wird, korrodiert der Stahl viel schneller als sonst. Zwischen den verschieden edlen Metallen entsteht eine Mini-Batterie (wie das Daniell-Element!) — und das unedlere (Stahl) löst sich auf. Darum immer gleiche oder verträgliche Materialien verbinden.</p>
+    </div>
+  </div>
+
+  <!-- 2.7 Korrosionsschutz -->
+  <div class="topic-block">
+    <div class="topic-num">2.7</div>
+    <h3>Korrosionsschutz<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p class="sub-h">1. Passiver Korrosionsschutz</p>
+      <p>Beim passiven Korrosionsschutz wird die Oberfläche eines Werkstückes durch <strong>Passivierungsmittel</strong> geschützt. Das Passivierungsmittel verhindert den Zutritt von Wasser und Sauerstoff (z. B. Öl, Beizmittel, Beschichtung).</p>
+
+      <p class="sub-h">2. Aktiver Korrosionsschutz</p>
+      <p><strong>a) Opferanode:</strong> Die Opferanode wird verwendet, wenn mit sehr starker Korrosion zu rechnen ist.</p>
+      <ul>
+        <li>Die Opferanode muss mit dem Werkstück, das geschützt werden soll, <strong>elektrisch leitend verbunden</strong> sein.</li>
+        <li>Die Opferanode muss ins <strong>selbe Medium eintauchen</strong> wie das Werkstück.</li>
+      </ul>
+      <p>Bei korrosivem Angriff löst sich <strong>nur die Opferanode auf</strong>. Das Werkstück ist <strong>kathodisch geschützt</strong>.</p>
+      <p><strong>b) Gleichspannungsquelle:</strong> Bei Rohrleitungen, die in der Erde vergraben sind, verwendet man oft eine Gleichspannungsquelle. Dabei wird das Eisenrohr als <strong>Kathode</strong> und ein sich nicht auflösendes Metall als <strong>Anode</strong> angeschlossen.</p>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Passiv vs. aktiv — einfach erklärt</p>
+      <p><strong>Passiv:</strong> Barriere bauen — verhindern, dass Wasser und Sauerstoff an das Metall kommen. Wie eine Regenjacke.</p>
+      <p><strong>Aktiv:</strong> Die Elektrochemie nutzen, um das Werkstück zur <strong>Kathode</strong> zu machen. Kathoden werden NICHT oxidiert → kein Rosten.</p>
+
+      <p class="sub-h">Opferanode am Beispiel</p>
+      <p>Schiffsrumpf aus Stahl → daran werden Zinkklötze montiert. Zink ist unedler als Stahl → löst sich zuerst auf ("opfert sich"). Solange noch Zink da ist, ist der Stahl geschützt. Die Klötze werden regelmäßig getauscht.</p>
+
+      <p class="sub-h">Gleichspannungsquelle — warum Kathode?</p>
+      <p>Indem man das Eisenrohr elektrisch <strong>negativ</strong> macht (= Kathode), zwingt man ihm die Rolle des Elektronen-Empfängers auf. Eine Kathode kann nicht gleichzeitig oxidiert werden → keine Korrosion.</p>
+    </div>
   </div>
 </section>
 
-<section class="chapter reveal" id="oxi">
-  <div class="chapter-header">
-    <div class="chapter-num">03 / 07</div>
-    <h2 class="chapter-title"><em>Oxidation</em>, Reduktion &amp; Oxidationszahlen<span class="test-badge hot">Test</span></h2>
-  </div>
-  <p class="chapter-intro">
-    Reduktion und Oxidation laufen immer gleichzeitig ab → <strong>Redox-Reaktion</strong>. Neue Definition: Oxidation = Elektronen abgeben, Reduktion = Elektronen aufnehmen.
-  </p>
-
-  <div class="card-grid">
-    <div class="card"><div class="card-eyebrow">Oxidation</div><h3 class="card-title">Alt &amp; Neu</h3><div class="card-body"><strong>Alt:</strong> Sauerstoff wird aufgenommen.<br><strong>Neu:</strong> Elektronen werden <em>abgegeben</em>.<br><br>Oxidationszahl nimmt <strong>zu</strong>.</div></div>
-    <div class="card"><div class="card-eyebrow">Reduktion</div><h3 class="card-title">Alt &amp; Neu</h3><div class="card-body"><strong>Alt:</strong> Sauerstoff wird abgegeben.<br><strong>Neu:</strong> Elektronen werden <em>aufgenommen</em>.<br><br>Oxidationszahl nimmt <strong>ab</strong>.</div></div>
-    <div class="card"><div class="card-eyebrow">Reduktionsmittel</div><h3 class="card-title">Partner der Oxidation</h3><div class="card-body">Der Partner, der oxidiert wird, wirkt <em>reduzierend</em> auf den anderen → er ist das <strong>Reduktionsmittel</strong>.</div></div>
-  </div>
-
-  <div class="formula-block">Beispiel:  Cu²⁺ + Fe  →  Cu + Fe²⁺<br>Reduktion: Cu²⁺ + 2e⁻ → Cu<br>Oxidation: Fe → Fe²⁺ + 2e⁻</div>
-
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Die 8 Regeln der Oxidationszahlen <span class="test-badge hot">Test</span></h3>
-
-  <div class="card-grid">
-    <div class="card"><div class="card-eyebrow">Regel 1</div><div class="card-body">Einzelnes Atom oder ganzes Molekül → Oxi-Zahl in Summe <strong>0</strong>.</div></div>
-    <div class="card"><div class="card-eyebrow">Regel 2</div><div class="card-body"><strong>Sauerstoff</strong> hat meist −II, außer in Peroxiden (−I), z. B. <span class="formula">H₂O₂</span>.</div></div>
-    <div class="card"><div class="card-eyebrow">Regel 3</div><div class="card-body"><strong>Wasserstoff</strong> hat immer +I, außer in Metallhydriden (−I), z. B. <span class="formula">NiH₂</span>.</div></div>
-    <div class="card"><div class="card-eyebrow">Regel 4</div><div class="card-body">Oxi-Zahl eines <strong>einatomigen Ions</strong> = seine Ladung.</div></div>
-    <div class="card"><div class="card-eyebrow">Regel 5</div><div class="card-body"><strong>Summe</strong> der Oxi-Zahlen eines mehratomigen Ions = seine Ladung.</div></div>
-    <div class="card"><div class="card-eyebrow">Regel 6</div><div class="card-body"><strong>Halogene</strong> (Gruppe 7) meistens −I.</div></div>
-    <div class="card"><div class="card-eyebrow">Regel 7</div><div class="card-body"><strong>Alkalimetalle</strong> (Gruppe 1) immer +I.</div></div>
-    <div class="card"><div class="card-eyebrow">Regel 8</div><div class="card-body"><strong>Erdalkalimetalle</strong> (Gruppe 2) immer +II.</div></div>
-  </div>
-  <p style="color:var(--ink-dim);margin-top:1rem;">Die Oxi-Zahlen werden in <strong>römischen Zahlen</strong> direkt über das Atom geschrieben. Die häufigste und stabilste Oxi-Zahl findet man im Periodensystem rot dargestellt.</p>
-</section>
-
+<!-- ═══════ 3. ORGANISCHE CHEMIE — GRUNDLAGEN ═══════ -->
 <section class="chapter reveal" id="organik">
   <div class="chapter-header">
-    <div class="chapter-num">04 / 07</div>
-    <h2 class="chapter-title">Organische <em>Chemie</em><span class="test-badge main">Wichtig</span></h2>
+    <div class="chapter-num">03 / 06 · Organik-Grundlagen</div>
+    <h2 class="chapter-title">Organische <em>Chemie</em></h2>
   </div>
-  <p class="chapter-intro">
-    Die Chemie des Kohlenstoffs — außer <span class="formula">CO</span>, <span class="formula">CO₂</span>, <span class="formula">H₂CO₃</span>, Carbonaten (<span class="formula">CaCO₃</span>) und Carbiden (<span class="formula">CaC₂</span>). Kohlenstoff kann sich quasi unendlich oft mit sich selbst verbinden. Jedes der 4 Valenzelektronen hat die gleiche Wertigkeit.
-  </p>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:1rem;font-weight:600;">Homologe Reihe der Alkane <span class="test-badge hot">Test</span></h3>
-  <p style="color:var(--ink-dim);margin-bottom:1rem;">Klicke eine Zahl für Strukturformel &amp; Summenformel. Endung <span style="color:var(--acid);">-an</span> = Einfachbindung, <span style="color:var(--acid);">-en</span> = Doppelbindung, <span style="color:var(--acid);">-in</span> = Dreifachbindung.</p>
+  <!-- 3.1 Organische Chemie -->
+  <div class="topic-block">
+    <div class="topic-num">3.1</div>
+    <h3>Was ist organische Chemie?</h3>
 
-  <div class="homolog-table" id="homologTable"></div>
-  <div class="molecule-viewer" id="homologDetail" style="display:none;">
-    <div class="viewer-header">
-      <div><div class="chapter-num" id="hdSubtitle">Alkan</div><p id="hdName" style="font-family:'Fraunces',serif;font-size:1.8rem;margin-top:0.3rem;"></p></div>
-      <div id="hdFormula" style="font-family:'JetBrains Mono',monospace;color:var(--acid);font-size:1.3rem;"></div>
+    <div class="skript-block">
+      <p>Die organische Chemie ist die <strong>Chemie des Kohlenstoffs</strong>. Die Besonderheit des Kohlenstoffs ist, dass er sich <strong>quasi unendlich oft mit sich selbst verbinden</strong> kann.</p>
+      <p>Organische Chemie ist die Chemie der Kohlenstoffverbindungen <strong>außer:</strong></p>
+      <ul>
+        <li>CO, CO₂, H₂CO₃</li>
+        <li>Salze der Kohlensäure [<strong>Carbonate</strong>, z. B. CaCO₃ (Kalk)]</li>
+        <li><strong>Carbide</strong> [Kohlenstoffverbindungen mit Metallen, z. B. CaC₂]</li>
+      </ul>
     </div>
-    <div class="molecule-canvas" id="hdCanvas"></div>
-  </div>
 
-  <div class="card-grid" style="margin-top:2rem;">
-    <div class="card"><div class="card-eyebrow">Aliphatisch</div><h3 class="card-title">Geradlinige KW</h3><div class="card-body">Offene C-Ketten. Stammname gibt die Anzahl der C-Atome an (Meth-, Eth-, Prop-, But-, …).</div></div>
-    <div class="card"><div class="card-eyebrow">Zyklisch</div><h3 class="card-title">Ring-KW</h3><div class="card-body">Geschlossene Ringe. In diese Kohlenstoffringe können Fremdatome wie <strong>Sauerstoff, Stickstoff oder Schwefel</strong> eingebaut werden.</div></div>
-    <div class="card"><div class="card-eyebrow">Aromatisch</div><h3 class="card-title">Benzol C₆H₆</h3><div class="card-body">Planares Hexagon, Kantenlänge 140 pm. Delokalisierte π-Orbitalwolke (Mesomerie). Sehr gutes aprotisches Lösungsmittel, aber stark kanzerogen → Ersatzstoff: <strong>Toluol</strong>.</div></div>
-  </div>
-
-  <div class="molecule-viewer">
-    <div class="viewer-header">
-      <div><div class="chapter-num">Benzolring</div><p style="font-family:'Fraunces',serif;font-size:1.5rem;margin-top:0.3rem;">Delokalisierte π-Elektronen</p></div>
-      <div style="font-family:'JetBrains Mono',monospace;color:var(--acid);font-size:1.3rem;">C₆H₆</div>
-    </div>
-    <div class="molecule-canvas">
-      <svg viewBox="0 0 300 260" width="280">
-        <ellipse cx="150" cy="130" rx="70" ry="28" fill="none" stroke="#b4ff39" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"><animateTransform attributeName="transform" type="rotate" from="0 150 130" to="360 150 130" dur="15s" repeatCount="indefinite"/></ellipse>
-        <ellipse cx="150" cy="130" rx="55" ry="20" fill="rgba(180,255,57,0.1)"/>
-        <polygon points="150,70 210,105 210,175 150,210 90,175 90,105" fill="none" stroke="#e8ede9" stroke-width="2"/>
-        <polygon points="150,85 195,110 195,170 150,195 105,170 105,110" fill="none" stroke="#8a9590" stroke-width="1.5" stroke-dasharray="4 4"/>
-        <g style="font-family:'JetBrains Mono',monospace;font-size:11px;fill:#8a9590;">
-          <text x="150" y="58" text-anchor="middle">H</text><text x="226" y="108" text-anchor="middle">H</text><text x="226" y="180" text-anchor="middle">H</text>
-          <text x="150" y="230" text-anchor="middle">H</text><text x="74" y="180" text-anchor="middle">H</text><text x="74" y="108" text-anchor="middle">H</text>
-        </g>
-      </svg>
+    <div class="explain-block">
+      <p>Kohlenstoff hat 4 Valenzelektronen (Außenelektronen). Damit kann er 4 Bindungen gleichzeitig eingehen — mit anderen C-Atomen, mit H, O, N, S, Halogenen. Ketten, Verzweigungen, Ringe — alles möglich. Darum gibt es Millionen organischer Verbindungen, während die anorganische Chemie mit viel weniger auskommt.</p>
+      <p>Die Ausnahmen (CO, CO₂ etc.) sind zwar auch Kohlenstoffverbindungen, werden aber traditionell der anorganischen Chemie zugerechnet.</p>
     </div>
   </div>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1rem;font-weight:600;">Funktionelle Gruppen <span class="test-badge hot">Test</span></h3>
-  <p style="color:var(--ink-dim);margin-bottom:1.5rem;">Wichtig: <strong>Immer, wenn am Kohlenstoff nur ein Strich hängt, bedeutet das eine Wasserstoffbindung.</strong> Kohlenstoff muss immer 4 Bindungen machen.</p>
+  <!-- 3.2 Aliphatisch/Homologe Reihe -->
+  <div class="topic-block">
+    <div class="topic-num">3.2</div>
+    <h3>Aliphatische Kohlenwasserstoffe (geradlinige KW)</h3>
 
-  <div class="func-groups-wheel">
-    <div class="func-group"><div class="func-symbol">−X</div><div class="func-name">a) Halogene</div><div class="func-note">F, Cl, Br, I — Salzbildner</div><div class="func-suffix">Vorsilbe: Fluor-/Chlor-/Brom-/Iod-</div></div>
-    <div class="func-group"><div class="func-symbol">R−OH</div><div class="func-name">b) Alkohole</div><div class="func-note">R = Kohlenwasserstoffrest</div><div class="func-suffix">Vorsilbe: Hydroxy- · Endung: -ol</div></div>
-    <div class="func-group"><div class="func-symbol">R−COOH</div><div class="func-name">c) Carbonsäuren</div><div class="func-note">Säuregruppe am Kettenende</div><div class="func-suffix">Endung: -säure</div></div>
-    <div class="func-group"><div class="func-symbol">R₁−COO−R₂</div><div class="func-name">d) Ester</div><div class="func-note">Säure + Alkohol → Ester + H₂O</div><div class="func-suffix">Veresterung</div></div>
-    <div class="func-group"><div class="func-symbol">R−</div><div class="func-name">e) Alkyl-Gruppen</div><div class="func-note">Methyl-, Ethyl-, Propyl-, …</div><div class="func-suffix">Vorsilbe</div></div>
-    <div class="func-group"><div class="func-symbol">R−COH</div><div class="func-name">f) Aldehyde</div><div class="func-note">Methanal = Formaldehyd</div><div class="func-suffix">Endung: -al</div></div>
-    <div class="func-group"><div class="func-symbol">R−NO₂</div><div class="func-name">g) Nitrogruppe</div><div class="func-note">z. B. Nitromethan</div><div class="func-suffix">Vorsilbe: Nitro-</div></div>
-    <div class="func-group"><div class="func-symbol">R−NH₂</div><div class="func-name">h) Amine</div><div class="func-note">z. B. Aminomethan</div><div class="func-suffix">Vorsilbe: Amino-</div></div>
+    <div class="skript-block">
+      <p>Jedes der 4 Valenzelektronen des Kohlenstoffs hat die gleiche Wertigkeit.</p>
+      <p>Der <strong>Stammname</strong> gibt Auskunft darüber, wie viele Kohlenstoffatome miteinander verknüpft sind. Die Zahlwörter lauten (<strong>homologe Reihe</strong>):</p>
+      <ul>
+        <li><strong>1</strong> — Meth-</li>
+        <li><strong>2</strong> — Eth-</li>
+        <li><strong>3</strong> — Prop-</li>
+        <li><strong>4</strong> — But-</li>
+        <li><strong>5</strong> — Pent-</li>
+        <li><strong>6</strong> — Hex-</li>
+        <li><strong>7</strong> — Hept-</li>
+        <li><strong>8</strong> — Oct-</li>
+        <li><strong>9</strong> — Non-</li>
+        <li><strong>10</strong> — Dec-</li>
+      </ul>
+
+      <p class="sub-h">Endungen</p>
+      <p>Die Endung gibt an, wie die Kohlenstoffatome miteinander verbunden sind:</p>
+      <ul>
+        <li><strong>-an</strong> — Einfachbindung</li>
+        <li><strong>-en</strong> — Doppelbindung</li>
+        <li><strong>-in</strong> — Dreifachbindung</li>
+      </ul>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Gesättigt vs. ungesättigt</p>
+      <ul>
+        <li><strong>Gesättigt</strong> (Endung -an → Alkane): nur Einfachbindungen, maximale Anzahl H-Atome</li>
+        <li><strong>Ungesättigt</strong> (-en → Alkene, -in → Alkine): enthalten Doppel- bzw. Dreifachbindungen, weniger H-Atome</li>
+      </ul>
+      <p>Ungesättigte Verbindungen sind reaktionsfreudiger — die Mehrfachbindungen können leicht aufbrechen und neue Atome aufnehmen.</p>
+
+      <p class="sub-h">Eselsbrücke für die Namen</p>
+      <p>Ab 5 helfen die Zahlen: <strong>Pent</strong>agon (5), <strong>Hex</strong>agon (6), Hept- (7), <strong>Okt</strong>ober (8 im alten Kalender), <strong>Non</strong>a (9 auf Latein), <strong>Dez</strong>ember (10 im alten Kalender).</p>
+    </div>
+
+    <h4 style="font-family:'Fraunces',serif;font-size:1.3rem;margin:2rem 0 1rem;">Interaktive Homologe Reihe</h4>
+    <p style="color:var(--ink-dim);margin-bottom:1rem;">Klick auf eine Zahl, um Strukturformel und Summenformel zu sehen.</p>
+    <div class="homolog-table" id="homologTable"></div>
+    <div class="molecule-viewer" id="homologDetail" style="display:none;">
+      <div class="viewer-header">
+        <div><div class="chapter-num" id="hdSubtitle">Alkan</div><p id="hdName" style="font-family:'Fraunces',serif;font-size:1.8rem;margin-top:0.3rem;"></p></div>
+        <div id="hdFormula" style="font-family:'JetBrains Mono',monospace;color:var(--acid);font-size:1.3rem;"></div>
+      </div>
+      <div class="molecule-canvas" id="hdCanvas"></div>
+    </div>
+  </div>
+
+  <!-- 3.3 Benzol (aus Skript) -->
+  <div class="topic-block">
+    <div class="topic-num">3.3</div>
+    <h3>Aromatische Kohlenwasserstoffe (Benzol)</h3>
+
+    <div class="skript-block">
+      <p>Benzol ist ein sehr gutes <strong>aprotisches Lösungsmittel</strong>. Aufgrund der starken <strong>Kanzerogenität</strong> wird ein Ersatzstoff verwendet: <strong>Toluol</strong>.</p>
+    </div>
+
+    <div class="explain-block">
+      <p>Benzol ist ein flacher Ring aus 6 C-Atomen mit der Formel C₆H₆. Die Elektronen der Doppelbindungen sind über den ganzen Ring "verschmiert" (delokalisiert) — darum ist Benzol extrem stabil und hat besondere Eigenschaften. "Aprotisch" heißt, dass es keine H-Atome abgibt (keine Säure) und auch keine aufnimmt.</p>
+      <p><strong>Kanzerogen</strong> = krebserregend. Schon kleine Mengen Benzol können Leukämie auslösen. Toluol (= Methylbenzol) hat ähnliche Lösungseigenschaften, ist aber viel weniger gefährlich.</p>
+    </div>
   </div>
 </section>
 
+<!-- ═══════ 4. EINFACHE BENENNUNG ═══════ -->
 <section class="chapter reveal" id="benennung">
   <div class="chapter-header">
-    <div class="chapter-num">05 / 07</div>
+    <div class="chapter-num">04 / 06 · Benennung</div>
     <h2 class="chapter-title">Einfache <em>Benennung</em><span class="test-badge hot">Test</span></h2>
   </div>
-  <p class="chapter-intro">
-    Regel: <strong>Vorsilben − Stamm − Endungen.</strong> Der Stamm gibt die Anzahl der C-Atome in der längsten Kette an. Endungen: −an (einfach), −en (doppel), −in (dreifach), −säure, −ol, −al.
-  </p>
 
-  <div class="formula-block">
-Aufbau: [Vorsilben] + [Stamm] + [Endungen]<br><br>
-Beispiele aus dem Skript:<br>
-→ 2,3-cis-dihydroxy-6-Nitro-6-Amino-6-Fluor-hex-2-en-4-in-säure<br>
-→ 1-Hydroxy-2,3-cis-di-Amino-but-2-en<br>
-→ 3-Hydroxy-propansäure<br>
-→ 6,6-di-Fluor-hept-2,4-di-in-säure<br>
-→ 4,5-trans-di-Methyl-7,7,7-tri-Hydroxy-hept-2-in-4-en-säure<br>
-→ 2,3-trans-di-Nitro-pent-2-en-5-al-säure
+  <!-- 4.1 Funktionelle Gruppen -->
+  <div class="topic-block">
+    <div class="topic-num">4.1</div>
+    <h3>Funktionelle Gruppen<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p><strong>Immer, wenn am Kohlenstoff nur ein Strich hängt, bedeutet das eine Wasserstoffbindung!</strong> Der Kohlenstoff muss aufgrund seiner 4 Valenzelektronen immer <strong>4 Bindungen</strong> machen.</p>
+
+      <p class="sub-h">a) Halogene</p>
+      <p>Bei der Benennung der Kohlenwasserstoffmoleküle mit Halogenen als funktionelle Gruppe werden die Halogene immer als <strong>Vorsilbe</strong> verwendet: <strong>Fluor-, Chlor-, Brom-</strong> und <strong>Iod-</strong>.</p>
+
+      <p class="sub-h">b) Alkohole</p>
+      <p>Allgemeine Form: <strong>R-OH</strong>. Das R steht für einen x-beliebigen Kohlenwasserstoffrest.</p>
+      <ul>
+        <li>Benennung als Vorsilbe: <strong>Hydroxy-</strong></li>
+        <li>Benennung als Endung: <strong>-ol</strong></li>
+      </ul>
+      <p>Beispiele: <strong>Methanol</strong> oder Hydroxymethan, <strong>Ethanol</strong> oder Hydroxyethan.</p>
+
+      <p class="sub-h">c) Carbonsäuren</p>
+      <p>Benennung immer als Endsilbe: <strong>-säure</strong>.</p>
+
+      <p class="sub-h">d) Ester</p>
+      <p>Allgemeine Form: <strong>R₁-COO-R₂</strong>.</p>
+
+      <p class="sub-h">e) Alkyl-Gruppen</p>
+      <p>Methyl-, Ethyl-, Propyl- usw. als Vorsilbe.</p>
+
+      <p class="sub-h">f) Aldehyde</p>
+      <p>Allgemeine Form: <strong>R-COH</strong>. Endung: <strong>-al</strong>. Beispiel: Methanal = Formaldehyd.</p>
+
+      <p class="sub-h">g) Nitrogruppe</p>
+      <p>Allgemeine Form: <strong>R-NO₂</strong>. Vorsilbe: <strong>Nitro-</strong>.</p>
+
+      <p class="sub-h">h) Amine</p>
+      <p>Allgemeine Form: <strong>R-NH₂</strong>. Vorsilbe: <strong>Amino-</strong>.</p>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Die "Strich-Regel" entschlüsselt</p>
+      <p>In Strukturformeln werden H-Atome oft weggelassen, um die Darstellung einfacher zu machen. Wenn an einem C-Atom also nur 2 oder 3 Striche gezeichnet sind, bedeutet das: die fehlenden Bindungen gehen zu H-Atomen. Weil C <strong>immer</strong> 4 Bindungen macht.</p>
+
+      <p class="sub-h">Vorsilbe vs. Endung — wann was?</p>
+      <p>Wenn eine funktionelle Gruppe die <em>wichtigste</em> im Molekül ist, kommt sie als Endung (z. B. -ol, -säure, -al). Gibt es mehrere funktionelle Gruppen, bekommt nur die "wichtigste" die Endung, die anderen werden als Vorsilben (Hydroxy-, Amino- usw.) angehängt.</p>
+      <p>Rangfolge (von wichtig zu weniger wichtig): Carbonsäure > Aldehyd > Alkohol > Amin > Halogen.</p>
+
+      <p class="sub-h">Übersichts-Tabelle</p>
+      <ul>
+        <li><strong>-X</strong> (F, Cl, Br, I) → Vorsilbe: Fluor-/Chlor-/Brom-/Iod-</li>
+        <li><strong>-OH</strong> → Vorsilbe Hydroxy- / Endung -ol</li>
+        <li><strong>-COOH</strong> → Endung -säure</li>
+        <li><strong>-COO-</strong> → Ester (Säure + Alkohol)</li>
+        <li><strong>-COH</strong> → Endung -al (Aldehyd)</li>
+        <li><strong>-NO₂</strong> → Vorsilbe Nitro-</li>
+        <li><strong>-NH₂</strong> → Vorsilbe Amino-</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="note">
-    <strong>cis / trans</strong> — Bei Doppelbindungen gibt es die räumliche Anordnung cis (Substituenten auf derselben Seite) und trans (gegenüber).<br>
-    <em>Ergänzung (nicht im Skript, recherchiert):</em> In der modernen IUPAC-Nomenklatur werden cis/trans oft durch (Z) bzw. (E) ersetzt — Z für „zusammen", E für „entgegen".
-  </div>
+  <!-- 4.2 Namensaufbau -->
+  <div class="topic-block">
+    <div class="topic-num">4.2</div>
+    <h3>Namensaufbau — Vorsilben, Stamm, Endungen</h3>
 
-  <div class="nomen-builder">
-    <div class="chapter-num" style="margin-bottom:0.5rem;">Benennungs-Sandbox</div>
-    <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin-bottom:1.5rem;">Bau dir deinen Namen zusammen</h3>
-    <div class="nomen-result" id="nomenResult"><span class="empty">Stell die Regler ein…</span></div>
-    <div class="nomen-controls">
-      <div class="nomen-slider"><label>C-Anzahl (Stamm)<span class="nomen-value" id="vCAtoms">3</span></label><input type="range" id="cAtoms" min="1" max="10" value="3"></div>
-      <div class="nomen-slider"><label>Bindungstyp</label><select id="bondType"><option value="an">-an (Einfach)</option><option value="en">-en (Doppel)</option><option value="in">-in (Dreifach)</option></select></div>
-      <div class="nomen-slider"><label>Funktionelle Endung</label><select id="funcEnd"><option value="">(keine)</option><option value="ol">-ol (Alkohol)</option><option value="säure">-säure (Carbonsäure)</option><option value="al">-al (Aldehyd)</option></select></div>
-      <div class="nomen-slider"><label>Vorsilbe</label><select id="prefix"><option value="">(keine)</option><option value="Hydroxy-">Hydroxy-</option><option value="Amino-">Amino-</option><option value="Nitro-">Nitro-</option><option value="Fluor-">Fluor-</option><option value="Chlor-">Chlor-</option><option value="Brom-">Brom-</option><option value="Iod-">Iod-</option></select></div>
+    <div class="skript-block">
+      <p>Die Namen werden gebildet aus: <strong>Vorsilben − Stamm − Endungen</strong>.</p>
+      <p>Im Skript werden folgende Beispiele gezeigt:</p>
+      <ul>
+        <li>2,3-cis-dihydroxy-6-Nitro-6-Amino-6-Fluor-hex-2-en-4-in-säure</li>
+        <li>1-Hydroxy-2,3-cis-di-Amino-but-2-en</li>
+        <li>3-Hydroxy-propansäure</li>
+        <li>6,6-di-Fluor-hept-2,4-di-in-säure</li>
+        <li>4,5-trans-di-Methyl-7,7,7-tri-Hydroxy-hept-2-in-4-en-säure</li>
+        <li>2,3-trans-di-Nitro-pent-2-en-5-al-säure</li>
+      </ul>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Wie zerlegt man so einen Namen?</p>
+      <p>Beispiel: <strong>3-Hydroxy-propansäure</strong></p>
+      <ul>
+        <li><strong>3-Hydroxy-</strong> → am 3. C-Atom hängt eine OH-Gruppe</li>
+        <li><strong>propan-</strong> → 3 C-Atome, alle mit Einfachbindungen</li>
+        <li><strong>-säure</strong> → am Ende (C1) hängt eine -COOH-Gruppe</li>
+      </ul>
+      <p>Ergebnis: HOCH₂-CH₂-COOH (Milchsäure? Nein, eigentlich 3-Hydroxypropansäure bzw. Hydracrylsäure.)</p>
+
+      <p class="sub-h">Die Zahlen vor den Vorsilben</p>
+      <p>Die Zahl zeigt an, an welchem C-Atom in der Kette die Gruppe sitzt. Nummeriert wird so, dass die wichtigste Gruppe (Säure, Aldehyd, Alkohol) möglichst kleine Nummer bekommt.</p>
+
+      <p class="sub-h">di-, tri-, tetra-</p>
+      <p>Zahlwörter für mehrfaches Vorkommen: <strong>di-</strong> (2×), <strong>tri-</strong> (3×), <strong>tetra-</strong> (4×). Beispiel: "2,3-di-Amino-" bedeutet zwei Aminogruppen, an den C-Atomen 2 und 3.</p>
+
+      <p class="sub-h">cis / trans</p>
+      <p>Bei Doppelbindungen gibt es zwei räumliche Anordnungen:</p>
+      <ul>
+        <li><strong>cis</strong> — Substituenten auf derselben Seite der Doppelbindung</li>
+        <li><strong>trans</strong> — Substituenten auf gegenüberliegenden Seiten</li>
+      </ul>
+
+      <p class="sub-h">Endungen kombinieren</p>
+      <p>Ein Molekül kann mehrere Endungen haben: <strong>-en-in-säure</strong> heißt "enthält Doppel- und Dreifachbindung und ist eine Carbonsäure". Die Zahlen davor (z. B. "-hept-2-en-4-in-säure") zeigen die Positionen an.</p>
+    </div>
+
+    <h4 style="font-family:'Fraunces',serif;font-size:1.3rem;margin:2rem 0 1rem;">Namensbauer — Interaktiv</h4>
+    <div class="nomen-builder">
+      <div class="nomen-result" id="nomenResult"><span class="empty">Stell die Regler ein…</span></div>
+      <div class="nomen-controls">
+        <div class="nomen-slider"><label>C-Anzahl (Stamm)<span class="nomen-value" id="vCAtoms">3</span></label><input type="range" id="cAtoms" min="1" max="10" value="3"></div>
+        <div class="nomen-slider"><label>Bindungstyp</label><select id="bondType"><option value="an">-an (Einfach)</option><option value="en">-en (Doppel)</option><option value="in">-in (Dreifach)</option></select></div>
+        <div class="nomen-slider"><label>Funktionelle Endung</label><select id="funcEnd"><option value="">(keine)</option><option value="ol">-ol (Alkohol)</option><option value="säure">-säure (Carbonsäure)</option><option value="al">-al (Aldehyd)</option></select></div>
+        <div class="nomen-slider"><label>Vorsilbe</label><select id="prefix"><option value="">(keine)</option><option value="Hydroxy-">Hydroxy-</option><option value="Amino-">Amino-</option><option value="Nitro-">Nitro-</option><option value="Fluor-">Fluor-</option><option value="Chlor-">Chlor-</option><option value="Brom-">Brom-</option><option value="Iod-">Iod-</option></select></div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ═══════ 5. REAKTIONEN ═══════ -->
 <section class="chapter reveal" id="reaktionen">
   <div class="chapter-header">
-    <div class="chapter-num">06 / 07</div>
+    <div class="chapter-num">05 / 06 · Reaktionen</div>
     <h2 class="chapter-title">Reaktionen der <em>Alkane, Alkene, Alkine</em><span class="test-badge hot">Test</span></h2>
   </div>
-  <p class="chapter-intro">
-    Alkane sind <em>gesättigt</em>, Alkene &amp; Alkine <em>ungesättigt</em> (Doppel- bzw. Dreifachbindung). Daraus ergeben sich ganz unterschiedliche Reaktionstypen.
-  </p>
 
-  <div class="reaction-container">
-    <div class="chapter-num">Alkane · Reaktion 1 <span class="test-badge hot">Test</span></div>
-    <h3 style="font-family:'Fraunces',serif;font-size:1.6rem;margin:0.3rem 0 1rem;">Verbrennung (Reaktion mit O₂)</h3>
-    <p style="color:var(--ink-dim);margin-bottom:1rem;">Bei <strong>vollständiger Verbrennung</strong> entstehen immer CO₂ und H₂O. Beispiel: Wie viel g CO₂ pro km bei 5,2 L Diesel/100 km (C₁₈H₃₈)? Dichte Diesel 0,93 g/mL.</p>
+  <!-- 5.1 Reaktionen der Alkane -->
+  <div class="topic-block">
+    <div class="topic-num">5.1</div>
+    <h3>Reaktionen der Alkane<span class="test-badge hot">Test</span></h3>
 
-    <div class="reaction-stage">
-      <div class="react-step active"><div class="step-label">Schritt 1 · Reaktionsgleichung</div><div class="step-equation">C₁₈H₃₈ + 27½ O₂ <span class="arrow">→</span> 18 CO₂ <span class="plus">+</span> 19 H₂O</div><p class="step-desc">Alkan-Verbrennung erzeugt CO₂ und Wasser.</p></div>
-      <div class="react-step"><div class="step-label">Schritt 2 · Diesel-Masse</div><div class="step-equation">5,2 L × 0,93 g/mL = <span style="color:var(--acid);">4836 g Diesel</span></div><p class="step-desc">Volumen × Dichte = Masse des Kraftstoffs pro 100 km.</p></div>
-      <div class="react-step"><div class="step-label">Schritt 3 · Molare Masse C₁₈H₃₈</div><div class="step-equation">18 × 12,011 + 38 × 1,00794 ≈ <span style="color:var(--acid);">254,5 g/mol</span></div><p class="step-desc">Summe der Atommassen.</p></div>
-      <div class="react-step"><div class="step-label">Schritt 4 · Stoffmenge Diesel</div><div class="step-equation">n = m / M = 4836 / 254,5 = <span style="color:var(--acid);">19 mol</span></div></div>
-      <div class="react-step"><div class="step-label">Schritt 5 · Stoffmenge CO₂</div><div class="step-equation">19 × 18 = <span style="color:var(--acid);">342 mol CO₂</span></div><p class="step-desc">Pro Mol C₁₈H₃₈ entstehen 18 Mol CO₂.</p></div>
-      <div class="react-step"><div class="step-label">Schritt 6 · Masse CO₂</div><div class="step-equation">342 × 44 g = <span style="color:var(--acid);">15 048 g CO₂</span></div><p class="step-desc">M(CO₂) = 44 g/mol</p></div>
-      <div class="react-step"><div class="step-label">Schritt 7 · Pro Kilometer</div><div class="step-equation">15 048 / 100 = <span style="color:var(--acid);font-size:1.8rem;">150,5 g CO₂ / km</span></div><p class="step-desc">~150 g CO₂ pro km.</p></div>
+    <div class="skript-block">
+      <p class="sub-h">1. Verbrennung (Reaktion mit O₂)</p>
+      <p>Die wichtigste Reaktion der Alkane ist die Oxidation (Verbrennung) mit Sauerstoff. Bei einer <strong>vollständigen Verbrennung</strong> entsteht immer <strong>CO₂ und H₂O</strong>.</p>
+      <p><strong>Skript-Beispiel:</strong> Wie viel g CO₂ stößt ein PKW pro Kilometer aus, wenn der durchschnittliche Verbrauch bei <strong>5,2 L Diesel/100 km (C₁₈H₃₈)</strong> liegt? Dichte von Diesel = <strong>0,93 g/mL</strong>.</p>
+
+      <p class="sub-h">2. Substitutionsreaktion (Austauschreaktion)</p>
+      <p>Reaktion mit: <strong>F, Cl, Br, I</strong>.</p>
+      <p>Unter einer Substitutionsreaktion versteht man den <strong>Austausch von einem Atom oder einer Atomgruppe</strong>. Das <strong>Kohlenstoffgerüst bleibt dabei unverändert</strong>.</p>
+      <p>Z. B. direkte Chlorierung von Methan: <span class="f-inline">CH₄ + Cl₂ → CH₃Cl + HCl</span></p>
+      <p><strong>4 Schritte bis zum Tetrachlormethan</strong>.</p>
+
+      <p class="sub-h">3. Cracken</p>
+      <p>Aus langen Alkanen können durch Crackreaktionen <strong>kurzkettige Alkene oder Alkine</strong> erzeugt werden (benzinähnlich).</p>
     </div>
 
-    <div class="reaction-controls">
-      <button class="btn" onclick="reactPrev()">← Zurück</button>
-      <button class="btn primary" onclick="reactNext()">Nächster Schritt →</button>
-      <button class="btn" onclick="reactReset()">Reset</button>
+    <div class="explain-block">
+      <p class="sub-h">Die Diesel-Rechnung Schritt für Schritt</p>
+      <p><strong>Reaktionsgleichung:</strong> C₁₈H₃₈ + 27,5 O₂ → 18 CO₂ + 19 H₂O</p>
+      <ul>
+        <li>Diesel-Masse pro 100 km: 5,2 L × 0,93 g/mL × 1000 = <strong>4836 g</strong></li>
+        <li>Molmasse C₁₈H₃₈: 18 × 12 + 38 × 1 ≈ <strong>254 g/mol</strong></li>
+        <li>Stoffmenge Diesel: 4836 / 254 ≈ <strong>19 mol</strong></li>
+        <li>Stoffmenge CO₂: 19 × 18 = <strong>342 mol</strong> (aus 1 Diesel → 18 CO₂)</li>
+        <li>Masse CO₂: 342 × 44 g/mol ≈ <strong>15 048 g pro 100 km</strong></li>
+        <li>Pro km: <strong>~150 g CO₂</strong></li>
+      </ul>
+
+      <p class="sub-h">Warum 4 Schritte bei der Chlorierung?</p>
+      <p>Methan (CH₄) hat 4 H-Atome, die nacheinander gegen Cl getauscht werden können:</p>
+      <ul>
+        <li>Schritt 1: CH₄ → CH₃Cl (Monochlormethan)</li>
+        <li>Schritt 2: CH₃Cl → CH₂Cl₂ (Dichlormethan)</li>
+        <li>Schritt 3: CH₂Cl₂ → CHCl₃ (Trichlormethan / Chloroform)</li>
+        <li>Schritt 4: CHCl₃ → CCl₄ (Tetrachlormethan)</li>
+      </ul>
+
+      <p class="sub-h">Cracken — warum macht man das?</p>
+      <p>Rohöl enthält viele lange Alkane, die zu dickflüssig für Motoren sind. Beim Cracken werden die Ketten aufgebrochen → leicht entzündliche kurzkettige Moleküle, die als Benzin verwendbar sind.</p>
+    </div>
+
+    <h4 style="font-family:'Fraunces',serif;font-size:1.3rem;margin:2rem 0 1rem;">Verbrennungs-Rechnung · Interaktiv</h4>
+    <div class="reaction-container">
+      <div class="reaction-stage">
+        <div class="react-step active"><div class="step-label">Schritt 1 · Reaktionsgleichung</div><div class="step-equation">C₁₈H₃₈ + 27½ O₂ <span class="arrow">→</span> 18 CO₂ <span class="plus">+</span> 19 H₂O</div></div>
+        <div class="react-step"><div class="step-label">Schritt 2 · Diesel-Masse</div><div class="step-equation">5,2 L × 0,93 g/mL = <span style="color:var(--acid);">4836 g</span></div></div>
+        <div class="react-step"><div class="step-label">Schritt 3 · Molmasse</div><div class="step-equation">18 × 12 + 38 × 1 ≈ <span style="color:var(--acid);">254 g/mol</span></div></div>
+        <div class="react-step"><div class="step-label">Schritt 4 · Stoffmenge Diesel</div><div class="step-equation">n = 4836 / 254 = <span style="color:var(--acid);">19 mol</span></div></div>
+        <div class="react-step"><div class="step-label">Schritt 5 · Stoffmenge CO₂</div><div class="step-equation">19 × 18 = <span style="color:var(--acid);">342 mol</span></div></div>
+        <div class="react-step"><div class="step-label">Schritt 6 · Masse CO₂</div><div class="step-equation">342 × 44 g = <span style="color:var(--acid);">15 048 g</span></div></div>
+        <div class="react-step"><div class="step-label">Schritt 7 · Pro km</div><div class="step-equation">15 048 / 100 = <span style="color:var(--acid);font-size:1.6rem;">150,5 g CO₂ / km</span></div></div>
+      </div>
+      <div class="reaction-controls">
+        <button class="btn" onclick="reactPrev()">← Zurück</button>
+        <button class="btn primary" onclick="reactNext()">Nächster Schritt →</button>
+        <button class="btn" onclick="reactReset()">Reset</button>
+      </div>
     </div>
   </div>
 
-  <div class="card-grid">
-    <div class="card"><div class="card-eyebrow">Alkane · Reaktion 2</div><h3 class="card-title">Substitution</h3><div class="card-body">Austausch von einem Atom/Atomgruppe — <strong>Kohlenstoffgerüst bleibt unverändert</strong>. Reaktion mit F, Cl, Br, I.<br><br><span class="formula">CH₄ + Cl₂ → CH₃Cl + HCl</span><br><br>4 Schritte bis zum Tetrachlormethan.</div></div>
-    <div class="card"><div class="card-eyebrow">Alkane · Reaktion 3</div><h3 class="card-title">Cracken</h3><div class="card-body">Aus langen Alkanen entstehen durch Crackreaktionen kurzkettige <strong>Alkene</strong> oder <strong>Alkine</strong> (benzinähnlich).</div></div>
-    <div class="card"><div class="card-eyebrow">Alkene/Alkine · 1</div><h3 class="card-title">Eliminierung</h3><div class="card-body">Von 2 benachbarten C-Atomen werden Atome/Gruppen entfernt → Doppelbindung entsteht. z. B. H und Cl → HCl.</div></div>
-    <div class="card"><div class="card-eyebrow">Alkene/Alkine · 2</div><h3 class="card-title">Addition</h3><div class="card-body">Umkehr der Eliminierung. Atome werden an die Doppel-/Dreifachbindung geknüpft.<br><br>Dreifach → Doppel → Einfachbindung. z. B. <strong>Halogenierung</strong>.</div></div>
-    <div class="card"><div class="card-eyebrow">Alkene/Alkine · 3</div><h3 class="card-title">Polymerisation</h3><div class="card-body">Aus kleinen ungesättigten Molekülen entstehen lange gesättigte <strong>Polymere</strong>. Start durch <strong>Radikale</strong>. Abbruch, wenn zwei Radikale aufeinander treffen.</div></div>
+  <!-- 5.2 Reaktionen der Alkene und Alkine -->
+  <div class="topic-block">
+    <div class="topic-num">5.2</div>
+    <h3>Reaktionen der Alkene und Alkine<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p>Ungesättigte Kohlenwasserstoffe. Die Einführung einer Doppel- oder Dreifachbindung gelingt auf unterschiedliche Weise.</p>
+
+      <p class="sub-h">1. Cracken</p>
+      <p>(siehe vorher bei Alkanen)</p>
+
+      <p class="sub-h">2. Eliminierungsreaktion</p>
+      <p>Die gezielte Einführung einer Doppelbindung erfolgt durch die Eliminierungsreaktion. Eliminierungsreaktionen sind Reaktionen, bei denen <strong>von 2 benachbarten C-Atomen</strong> Atome oder Atomgruppen <strong>entfernt werden</strong>, ohne dass zusätzlich neue Atome eingeführt werden.</p>
+
+      <p class="sub-h">3. Additionsreaktion</p>
+      <p>Die Additionsreaktion ist die <strong>umgekehrte Eliminierungsreaktion</strong>. An eine Doppel- oder Dreifachbindung werden Atome oder Atomgruppen mit der Kohlenstoffkette verknüpft, ohne dass andere Atome abgespalten werden. Aus einer <strong>Dreifachbindung wird eine Doppelbindung</strong>, aus einer <strong>Doppelbindung wird eine Einfachbindung</strong>.</p>
+      <p><strong>a) Halogenierung</strong> (Cl₂ bzw. F₂, Br₂, I₂)</p>
+
+      <p class="sub-h">4. Polymerisation</p>
+      <p>Aus kleinen ungesättigten Molekülen können durch Polymerisationsreaktionen lange, gesättigte <strong>Polymere</strong> erzeugt werden. Der Start der Polymerisation erfolgt durch <strong>Fremdatome, die Radikale sind</strong>. Bis zum Reaktionsabbruch, wenn zwei Radikale aufeinander treffen.</p>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Eliminierung ↔ Addition — zwei Richtungen</p>
+      <p><strong>Eliminierung</strong>: Atome werden weggenommen, Doppelbindung entsteht (C-C → C=C).</p>
+      <p><strong>Addition</strong>: Atome werden drangehängt, Doppelbindung verschwindet (C=C → C-C).</p>
+
+      <p class="sub-h">Warum reagieren Alkene/Alkine so leicht?</p>
+      <p>Die zusätzliche(n) Bindung(en) in Doppel- und Dreifachbindungen (die π-Bindungen) sind schwächer als normale Einfachbindungen. Sie brechen leicht auf, wodurch neue Atome angebunden werden können. Darum sind ungesättigte Verbindungen chemisch "scharf geladen" und reaktiv.</p>
+
+      <p class="sub-h">Polymerisation am Beispiel Ethylen → PE</p>
+      <ul>
+        <li><strong>Start:</strong> Ein Radikal (z. B. aus einem Peroxid) greift das erste Ethylen an → bricht die Doppelbindung auf → es entsteht ein neues, größeres Radikal</li>
+        <li><strong>Kettenwachstum:</strong> Dieses Radikal greift das nächste Ethylen an, dann das nächste, dann das nächste … bis zu ~100.000 Einheiten!</li>
+        <li><strong>Abbruch:</strong> Wenn zwei Radikal-Enden aufeinander treffen und sich verbinden, ist Schluss</li>
+      </ul>
+      <p>So entstehen aus dem Gas Ethylen die festen PE-Ketten.</p>
+    </div>
   </div>
 </section>
 
+<!-- ═══════ 6. KUNSTSTOFFE ═══════ -->
 <section class="chapter reveal" id="kunststoffe">
   <div class="chapter-header">
-    <div class="chapter-num">07 / 07</div>
+    <div class="chapter-num">06 / 06 · Kunststoffe</div>
     <h2 class="chapter-title"><em>Kunststoffe</em><span class="test-badge hot">Test</span></h2>
   </div>
-  <p class="chapter-intro">Kunststoffe können auf <strong>3 Arten</strong> hergestellt werden: Polymerisation, Polykondensation, Polyaddition.</p>
 
-  <div class="card-grid">
-    <div class="card"><div class="card-eyebrow">Methode I</div><h3 class="card-title">Polymerisation</h3><div class="card-body">Kleine ungesättigte Moleküle werden durch Radikale verknüpft. <strong>Keine Abspaltung</strong>.</div></div>
-    <div class="card"><div class="card-eyebrow">Methode II</div><h3 class="card-title">Polykondensation</h3><div class="card-body">Makromoleküle aus zwei reaktiven Gruppen. <strong>Kleine Moleküle werden abgespalten</strong> (meist Wasser).</div></div>
-    <div class="card"><div class="card-eyebrow">Methode III</div><h3 class="card-title">Polyaddition</h3><div class="card-body">Makromoleküle durch Umlagerung von Atomen — <strong>ohne Abspaltung</strong>. Beispiele: Polyurethane, Polyharnstoff (Nylon).</div></div>
+  <!-- 6.1 Überblick -->
+  <div class="topic-block">
+    <div class="topic-num">6.1</div>
+    <h3>3 Herstellungsarten</h3>
+
+    <div class="skript-block">
+      <p>Kunststoffe können auf <strong>3 Arten</strong> hergestellt werden:</p>
+      <ul>
+        <li><strong>I. Polymerisation</strong></li>
+        <li><strong>II. Polykondensation</strong></li>
+        <li><strong>III. Polyaddition</strong></li>
+      </ul>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Die Unterschiede auf einen Blick</p>
+      <ul>
+        <li><strong>Polymerisation:</strong> Ungesättigte Moleküle werden durch Radikale verknüpft. Nichts wird abgespalten.</li>
+        <li><strong>Polykondensation:</strong> Monomere mit 2 reaktiven Gruppen verbinden sich — kleine Moleküle (meist H₂O) werden dabei frei.</li>
+        <li><strong>Polyaddition:</strong> Atome werden umgelagert, Ketten bilden sich — auch hier wird nichts abgespalten.</li>
+      </ul>
+      <p><strong>Merkhilfe:</strong> Nur bei Poly<strong>KONDENSATION</strong> kondensiert etwas (Wasser).</p>
+    </div>
   </div>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Die 5 großen Polymerisate <span class="test-badge hot">Test</span></h3>
+  <!-- 6.2 Polymerisation: a) PE -->
+  <div class="topic-block">
+    <div class="topic-num">6.2</div>
+    <h3>I. Polymerisation — a) Polyethylen (PE)<span class="test-badge hot">Test</span></h3>
 
-  <div class="accordion">
-    <div class="accordion-item"><div class="acc-header"><span>a) Polyethylen (PE)</span><span class="acc-icon">+</span></div><div class="acc-body"><strong>Monomer:</strong> Ethylen (C₂H₄) · <strong>Polymer:</strong> Kette bis n = 100.000<br><br><strong>LDPE:</strong> ρ = 0,92 g/cm³ — weich, flexibel, bis 3000 bar.<br><strong>HDPE:</strong> ρ = 0,98–1,12 g/cm³ — hart, spröde, 1–100 bar.<br><br><strong>+</strong> gut färbbar, gut schweißbar, spanabhebend<br><strong>−</strong> kaum klebbar, hoher Wärmeausdehnungskoeffizient<br><strong>Verwendung:</strong> Abdeckungen, Schläuche, Folien, Verpackung, Maschinenteile.</div></div>
-    <div class="accordion-item"><div class="acc-header"><span>b) Polypropylen (PP)</span><span class="acc-icon">+</span></div><div class="acc-body"><strong>Monomer:</strong> Propylen<br>Eigenschaften &amp; Verwendung ähnlich PE.</div></div>
-    <div class="accordion-item"><div class="acc-header"><span>c) Polyvinylchlorid (PVC)</span><span class="acc-icon">+</span></div><div class="acc-body"><strong>Monomer:</strong> Vinylchlorid<br><br><strong>Begründung:</strong> Schmelzflusselektrolyse von NaCl (ca. 750 °C). 2 NaCl → 2 Na + Cl₂↑ · 2 Na + 2 H₂O → 2 NaOH + H₂↑. Viel Chlor → Verwendung in PVC.<br><br><strong>Vorteile:</strong> lebensmittelecht, kostengünstig, spanabhebend, sehr gut färbbar, Hart- und Weich-PVC.<br><strong>Nachteil:</strong> bei Verbrennung entsteht HCl.<br><strong>Anwendungen:</strong> Rohre, Schläuche, Folien, Böden, Fensterrahmen, Gummistiefel.</div></div>
-    <div class="accordion-item"><div class="acc-header"><span>d) Polytetrafluorethan (PTFE · Teflon)</span><span class="acc-icon">+</span></div><div class="acc-body"><strong>Monomer:</strong> Tetrafluorethen (C₂F₄)<br><br>F-Atome schützen die C-C-Bindung. C-F-Bindung sehr stark → <strong>beständig</strong> gegen Säuren, Basen, Lösungsmittel. −200 °C bis 300 °C elastisch. Ab 350 °C sublimiert. Lebensmittelecht.<br><br><strong>Anwendung:</strong> Rohre, Gleitlager, Beschichtungen, Goretex, Ventile, Schmiermittel.</div></div>
-    <div class="accordion-item"><div class="acc-header"><span>e) Polystyrol (PS)</span><span class="acc-icon">+</span></div><div class="acc-body"><strong>Monomer:</strong> Styrol · <strong>Styropor</strong> = geschäumtes PS.<br><br>Geschäumtes PS als Dämm-/Verpackungsmaterial. Schlecht beständig gegen organische Lösungsmittel. Transparent → Lichterabdeckung bei Autos.</div></div>
-    <div class="accordion-item"><div class="acc-header"><span>Polyester (UP) · Polykondensation</span><span class="acc-icon">+</span></div><div class="acc-body">Pro Monomer mindestens 2 reaktive Gruppen. <strong>Wasser wird abgespalten</strong>.<br><br>Eigenschaften je nach Monomer: weich, hart, elastisch. Meist glasklar, gut gegen schwache Säuren, schlecht gegen Basen.<br><br><strong>Pyrolyse:</strong> 600–700 °C, Sauerstoffausschluss/Vakuum.<br><strong>Polyamid:</strong> nimmt bei 100 °C ~2–3 % Wasser auf → quillt → nicht für elektr. Isolierung. Verwendung: Zahnräder, Dichtungen, Schrauben, Kraftstofftanks.</div></div>
+    <div class="skript-block">
+      <p><strong>Monomere:</strong> Ethylen</p>
+      <p>Man unterscheidet zwischen <strong>2 Arten von PE</strong>:</p>
+      <ul>
+        <li><strong>LDPE</strong> (Low Density PolyEthylen): ρ = 0,92 g/cm³. LDPE ist <strong>weich und flexibel</strong> und wird bei Drücken bis <strong>3000 bar</strong> erzeugt.</li>
+        <li><strong>HDPE</strong> (High Density PolyEthylen): ρ = 0,98 bis 1,12 g/cm³. HDPE ist <strong>hart und spröde</strong> und wird bei Drücken von <strong>1 bis 100 bar</strong> erzeugt.</li>
+      </ul>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Warum gibt es zwei Arten?</p>
+      <p>Je nach Herstellungsdruck bilden sich unterschiedliche Ketten-Strukturen:</p>
+      <ul>
+        <li><strong>LDPE</strong> (hoher Druck): Ketten sind verzweigt → können nicht eng gepackt werden → geringe Dichte, flexibel</li>
+        <li><strong>HDPE</strong> (niedriger Druck, Katalysator): Ketten bleiben linear → packen sich dicht → hohe Dichte, steif</li>
+      </ul>
+      <p><strong>Typische Anwendungen:</strong></p>
+      <ul>
+        <li>LDPE: Plastiktüten, Frischhaltefolie, Quetschflaschen</li>
+        <li>HDPE: Milchflaschen, Shampoo-Flaschen, Rohrleitungen</li>
+      </ul>
+    </div>
   </div>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.8rem;margin:3rem 0 1.5rem;font-weight:600;">Zusatzstoffe</h3>
+  <!-- 6.3 PP -->
+  <div class="topic-block">
+    <div class="topic-num">6.3</div>
+    <h3>I. Polymerisation — b) Polypropylen (PP)<span class="test-badge hot">Test</span></h3>
 
-  <div class="card-grid">
-    <div class="card"><div class="card-eyebrow">1 · Füllstoffe</div><h3 class="card-title">Billiger &amp; fester</h3><div class="card-body">Papierfasern, Gesteinsmehl → billiger. Glasfasern → Festigkeit. Kohlenstoff/Graphit → Leitfähigkeit.</div></div>
-    <div class="card"><div class="card-eyebrow">2 · Farbstoffe</div><h3 class="card-title">Optik &amp; Alterung</h3><div class="card-body">Chemisch gebunden oder eingelagert. Optik &amp; Alterungsschutz.</div></div>
-    <div class="card"><div class="card-eyebrow">3 · Weichmacher</div><h3 class="card-title">Elastizität</h3><div class="card-body">Verhindern die Anziehung der Molekülketten / Vernetzung.</div></div>
-    <div class="card"><div class="card-eyebrow">4 · Flammschutz</div><h3 class="card-title">Phosphor</h3><div class="card-body">Bei Verbrennung entsteht Phosphorsäure. Schwerer als Luft → verhindert Sauerstoffzutritt.</div></div>
-    <div class="card"><div class="card-eyebrow">5 · Antistatika</div><h3 class="card-title">Oberflächenleitung</h3><div class="card-body">Erhöhen Oberflächenleitfähigkeit → keine elektrostatische Aufladung.</div></div>
-    <div class="card"><div class="card-eyebrow">6 · Alterungsschutz</div><h3 class="card-title">UV-Abbau</h3><div class="card-body">Greifen direkt in den radikalischen Abbau durch UV-Licht ein.</div></div>
+    <div class="skript-block">
+      <p><strong>Monomere:</strong> Propylen</p>
+
+      <p class="sub-h">Eigenschaften von PE und PP</p>
+      <ul>
+        <li>+ gut färbbar</li>
+        <li>+ gut schweißbar</li>
+        <li>+ gut spanabhebend bearbeitbar</li>
+        <li>− kaum klebbar</li>
+        <li>− hoher Wärmeausdehnungskoeffizient</li>
+      </ul>
+
+      <p class="sub-h">Verwendung von PE und PP</p>
+      <ul>
+        <li>Abdeckungen</li>
+        <li>Schläuche</li>
+        <li>Folien</li>
+        <li>Verpackungsmaterialien</li>
+        <li>Maschinenteile</li>
+      </ul>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Was bedeutet "spanabhebend bearbeitbar"?</p>
+      <p>Man kann PE/PP mit Fräser, Drehmaschine oder Säge bearbeiten, so wie Metall. Beim Bearbeiten entstehen Späne. Gut für präzise Werkstücke.</p>
+
+      <p class="sub-h">Warum "kaum klebbar"?</p>
+      <p>Die Oberfläche ist unpolar und glatt → Klebstoffe finden keine Angriffspunkte. Darum werden PE/PP nicht geklebt, sondern geschweißt (verschmolzen).</p>
+
+      <p class="sub-h">"Hoher Wärmeausdehnungskoeffizient"</p>
+      <p>Bei Erwärmung dehnen sich PE/PP deutlich aus (viel stärker als Metall oder Glas). Muss man beim Konstruieren beachten — z. B. Dehnungsfugen in PE-Rohrleitungen.</p>
+    </div>
+  </div>
+
+  <!-- 6.4 PVC -->
+  <div class="topic-block">
+    <div class="topic-num">6.4</div>
+    <h3>I. Polymerisation — c) Polyvinylchlorid (PVC)<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p><strong>Monomere:</strong> Vinylchlorid</p>
+
+      <p class="sub-h">Begründung für die Entwicklung von PVC</p>
+      <p>Schmelzflusselektrolyse von <strong>NaCl</strong> liefert als Nebenprodukt Chlor, das in PVC verwertet wird.</p>
+
+      <p class="sub-h">Vorteile von PVC</p>
+      <ul>
+        <li>Lebensmittelecht</li>
+        <li>kostengünstig</li>
+        <li>spanabhebend bearbeitbar</li>
+        <li>sehr gut färbbar</li>
+        <li>es gibt <strong>Hart- und Weich-PVC</strong></li>
+      </ul>
+
+      <p class="sub-h">Nachteil von PVC</p>
+      <p>Bei der Verbrennung entsteht <strong>HCl</strong> (Salzsäure).</p>
+
+      <p class="sub-h">Anwendungen von PVC</p>
+      <ul>
+        <li>Rohre</li>
+        <li>Schläuche</li>
+        <li>Folien</li>
+        <li>Böden</li>
+        <li>Maschinenteile</li>
+        <li>Abdeckungen</li>
+        <li>Fensterrahmen</li>
+        <li>Gummistiefel</li>
+      </ul>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Was ist Schmelzflusselektrolyse?</p>
+      <p>Geschmolzenes Kochsalz (NaCl) wird elektrolysiert, um Natrium zu gewinnen:</p>
+      <p><span class="f-inline">2 NaCl → 2 Na + Cl₂</span></p>
+      <p>Das Cl₂ fällt als Nebenprodukt in riesigen Mengen an. Die Erfindung von PVC war also auch eine wirtschaftliche Entscheidung — das viele Chlor musste irgendwo hin.</p>
+
+      <p class="sub-h">Hart- und Weich-PVC</p>
+      <p><strong>Hart-PVC</strong>: ohne Weichmacher → steif (Fensterrahmen, Rohre).<br>
+      <strong>Weich-PVC</strong>: mit Weichmachern → flexibel (Gummistiefel, Böden, Schläuche).</p>
+
+      <p class="sub-h">Warum ist HCl bei Verbrennung problematisch?</p>
+      <p>Bei Wohnungsbränden mit viel PVC entsteht Salzsäure → extrem ätzend, gefährlich für Atemwege. Darum wird PVC in öffentlichen Gebäuden oft vermieden oder durch halogenfreie Materialien ersetzt.</p>
+    </div>
+  </div>
+
+  <!-- 6.5 PTFE -->
+  <div class="topic-block">
+    <div class="topic-num">6.5</div>
+    <h3>I. Polymerisation — d) Polytetrafluorethan (PTFE / Teflon)<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p><strong>Monomere:</strong> Tetrafluorethen</p>
+      <p>Die Fluoratome sind so groß, dass sie die <strong>C-C-Bindung vor Angriffen von außen schützen</strong>. Außerdem ist die C-F-Bindung sehr stark. Dadurch ist Teflon beständig gegen <strong>Säuren, Basen und Lösungsmittel</strong>.</p>
+      <p>In einem Temperaturbereich von <strong>−200 °C bis 300 °C</strong> bleibt Teflon elastisch. Ab <strong>350 °C sublimiert</strong> Teflon. Teflon ist lebensmittelecht.</p>
+
+      <p class="sub-h">Anwendung von PTFE</p>
+      <ul>
+        <li>Rohre</li>
+        <li>Gleitlager</li>
+        <li>Schläuche</li>
+        <li>Beschichtungen</li>
+        <li>Folien</li>
+        <li>Dichtungsmaterial</li>
+        <li>Goretex</li>
+        <li>Ventile</li>
+        <li>Schmiermittel (Spray)</li>
+      </ul>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Warum ist Teflon so "unzerstörbar"?</p>
+      <p>Die C-F-Bindung ist eine der stärksten Einfachbindungen der Chemie. Fluor ist zudem so groß und elektronenreich, dass es das C-Gerüst wie ein Schutzmantel umhüllt. Kaum etwas kommt da durch — weder Säuren noch Basen noch Lösungsmittel.</p>
+
+      <p class="sub-h">Was heißt "sublimiert"?</p>
+      <p>Der Stoff geht direkt vom festen in den gasförmigen Zustand, ohne zu schmelzen. Bei Teflon passiert das ab 350 °C — deshalb sollte man Teflon-Pfannen niemals leer auf heißer Platte stehen lassen. Die entstehenden Dämpfe sind giftig.</p>
+
+      <p class="sub-h">Goretex?</p>
+      <p>Ja, der Stoff aus Regenjacken. Goretex ist eine Membran aus gestrecktem PTFE mit mikroskopisch kleinen Poren — groß genug für Wasserdampf (von innen → raus, "atmungsaktiv"), aber zu klein für Wassertropfen (von außen → kommen nicht rein).</p>
+    </div>
+  </div>
+
+  <!-- 6.6 PS -->
+  <div class="topic-block">
+    <div class="topic-num">6.6</div>
+    <h3>I. Polymerisation — e) Polystyrol (PS)<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p><strong>Monomere:</strong> Styrol</p>
+      <p><strong>Styropor</strong> ist geschäumtes Polystyrol.</p>
+
+      <p class="sub-h">Eigenschaften und Anwendung von Polystyrol</p>
+      <ul>
+        <li>Geschäumtes Polystyrol wird als <strong>Dämmmaterial</strong> bzw. als <strong>Verpackungsmaterial</strong> verwendet.</li>
+        <li>Polystyrol ist <strong>schlecht beständig gegen organische Lösungsmittel</strong>.</li>
+        <li>Polystyrol ist <strong>transparent</strong> und wird für Lichterabdeckungen bei Autos verwendet.</li>
+      </ul>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Wie wird PS zu Styropor?</p>
+      <p>Beim "Aufschäumen" werden in das PS kleine Gasbläschen (früher oft Pentan) eingebracht. Das Ergebnis: ein extrem leichter Kunststoff, der zu ~98 % aus Luft besteht. Darum ist Styropor ein hervorragender Wärmedämmer — Luft leitet schlecht Wärme.</p>
+
+      <p class="sub-h">Warum löst sich Styropor in Lösungsmitteln?</p>
+      <p>Die aromatischen Ringe (vom Styrol) werden von organischen Lösungsmitteln wie Aceton oder Benzin gut gelöst. Das ist auch die Ursache, warum Autoklarlack manchmal nicht mit PS verträglich ist.</p>
+    </div>
+  </div>
+
+  <!-- 6.7 Polykondensation -->
+  <div class="topic-block">
+    <div class="topic-num">6.7</div>
+    <h3>II. Polykondensation<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p>Polykondensation ist die Erzeugung von Makromolekülen aus <strong>zwei artgleichen oder artverschiedenen Monomeren mit zwei reaktiven Gruppen</strong>. Dabei werden immer <strong>kleine Moleküle abgespalten</strong> (meist Wasser).</p>
+
+      <p class="sub-h">a) Polyester (UP)</p>
+      <p>Für die Erzeugung eines Polyesters sind bei jedem Monomer zumindest <strong>2 reaktive Gruppen</strong> (entweder 2 Säuren oder 2 Alkoholgruppen oder eine Mischung aus beiden) notwendig.</p>
+      <p>Aufgrund der unzählig möglichen Monomere können die Polyester die verschiedensten Eigenschaften haben (weich, hart, elastisch). Sie sind meistens glasklar, gut beständig gegen schwache Säuren, aber <strong>schlecht beständig gegen Basen</strong>.</p>
+      <p><strong>Pyrolyse:</strong> erfolgt bei <strong>600–700 °C</strong> unter Sauerstoffausschluss oder Vakuum.</p>
+      <p><strong>Polyamid</strong> nimmt bei 100 °C etwa <strong>2–3 % Wasser</strong> auf. Der Kunststoff <strong>quillt</strong>. Dadurch ist Polyamid <strong>nicht für elektrische Isolierungen</strong> verwendbar.</p>
+
+      <p class="sub-h">Verwendung (Polyamid)</p>
+      <ul>
+        <li>Zahnräder</li>
+        <li>Dichtungen</li>
+        <li>Schrauben</li>
+        <li>Kraftstofftanks</li>
+      </ul>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Warum müssen es 2 reaktive Gruppen sein?</p>
+      <p>Damit eine <strong>Kette</strong> entsteht, muss jedes Monomer mit zwei Partnern verbunden werden — vorne und hinten. Mit nur einer reaktiven Gruppe würde man nur kleine Paare bilden, keine Polymere.</p>
+
+      <p class="sub-h">Warum schlecht gegen Basen?</p>
+      <p>Die Estergruppen (-COO-) werden von Basen hydrolysiert — die Base zerschneidet die Polymerkette genau dort. Deshalb altern Polyesterstoffe schneller bei alkalischen Reinigern.</p>
+
+      <p class="sub-h">Was ist Pyrolyse?</p>
+      <p>Thermische Zersetzung bei hoher Temperatur <strong>ohne Sauerstoff</strong>. Statt zu verbrennen, werden die langen Ketten in kleine Fragmente zerlegt. Wird zum Recyceln alter Kunststoffe genutzt.</p>
+
+      <p class="sub-h">Warum quillt Polyamid?</p>
+      <p>Polyamid (z. B. Nylon) hat Amid-Bindungen, die Wasser gut anziehen (wie H-Brücken beim Wasser!). Das aufgenommene Wasser macht den Kunststoff weicher und leitfähiger → nicht geeignet für elektrische Isolierung.</p>
+    </div>
+  </div>
+
+  <!-- 6.8 Polyaddition -->
+  <div class="topic-block">
+    <div class="topic-num">6.8</div>
+    <h3>III. Polyaddition<span class="test-badge hot">Test</span></h3>
+
+    <div class="skript-block">
+      <p>Die Makromoleküle werden durch <strong>Umlagerung von Atomen ohne Abspaltung</strong> von Molekülen erzeugt (2 Monomere).</p>
+      <p>Z. B. <strong>Polyurethane</strong> und <strong>Polyharnstoff (Nylon)</strong>.</p>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Polyurethane — wo man sie findet</p>
+      <p>Schaumstoffe (Matratzen, Sitzpolster), Lacke, Klebstoffe, Dämmungen. Vielseitig einsetzbar, weil man über die Monomere Härte, Elastizität und Wärmeformbeständigkeit einstellen kann.</p>
+
+      <p class="sub-h">Unterschied Polyaddition ↔ Polymerisation</p>
+      <p>Beides ohne Abspaltung, aber:</p>
+      <ul>
+        <li><strong>Polymerisation:</strong> startet durch Radikale, Doppelbindungen öffnen sich</li>
+        <li><strong>Polyaddition:</strong> Atome springen zwischen den beiden Monomeren hin und her (Umlagerung), keine Radikale nötig</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6.9 Veränderung (Zusatzstoffe) -->
+  <div class="topic-block">
+    <div class="topic-num">6.9</div>
+    <h3>Veränderung von Kunststoffen (Zusatzstoffe)</h3>
+
+    <div class="skript-block">
+      <p class="sub-h">1. Füllstoffe</p>
+      <p>Füllstoffe werden beigemengt, um Kunststoff <strong>billiger</strong> zu machen (z. B. Papierfasern, Gesteinsmehl). Durch Zugabe von <strong>Glasfasern</strong> wird die Festigkeit erhöht (Glasfaser-Verbundkunststoffe). <strong>Kohlenstoff</strong> erhöht die Wärmeleitfähigkeit bzw. die elektrische Leitfähigkeit (z. B. Reifen). Mit <strong>Graphit</strong> können Kunststoffe elektrisch leitfähig gemacht werden.</p>
+
+      <p class="sub-h">2. Farbstoffe</p>
+      <p>Die meisten, aber nicht alle Kunststoffe lassen sich sehr gut färben. Die Farbpartikel werden entweder chemisch gebunden oder einfach in den Kunststoff eingelagert.<br>
+      Zweck: Optik, Alterungsschutz.</p>
+
+      <p class="sub-h">3. Weichmacher</p>
+      <p>Weichmacher sind verantwortlich für die <strong>Elastizität</strong> der Kunststoffe. Sie verhindern die Anziehung der Molekülketten bzw. verhindern die Vernetzung des Kunststoffes.</p>
+
+      <p class="sub-h">4. Flammschutz</p>
+      <p>Als Flammschutzmittel werden <strong>Phosphorverbindungen</strong> verwendet, da bei einer Verbrennung <strong>Phosphorsäure</strong> entsteht. Diese Phosphorsäure ist <strong>schwerer als Luft</strong> und verhindert den weiteren Zutritt von Sauerstoff.</p>
+
+      <p class="sub-h">5. Antistatika</p>
+      <p>Diese verhindern durch Erhöhung der Oberflächenleitfähigkeit die <strong>elektrostatische Aufladung</strong> der Kunststoffe.</p>
+
+      <p class="sub-h">6. Alterungs- und Lichtschutz</p>
+      <p>Die Alterungsschutzmittel greifen direkt in den <strong>radikalischen Abbau</strong> des Kunststoffes ein, der durch das UV-Licht ausgelöst wird.</p>
+    </div>
+
+    <div class="explain-block">
+      <p class="sub-h">Warum Glasfasern?</p>
+      <p>Glasfasern sind extrem zugfest. Eingebettet in Kunststoff → Verbundmaterial (GFK, Fiberglas) mit den besten Eigenschaften aus beiden Welten: formbar wie Kunststoff, fest wie Glas. Findet man in Bootsrümpfen, Windradflügeln, Autoteilen.</p>
+
+      <p class="sub-h">Warum sind Weichmacher manchmal problematisch?</p>
+      <p>Weichmacher sind nur eingelagert, nicht fest gebunden. Sie können mit der Zeit ausdünsten oder in Lebensmittel / Umgebung übergehen. Darum gibt es EU-Regulierungen für Weichmacher wie Phthalate, besonders in Spielzeug und Lebensmittelverpackungen.</p>
+
+      <p class="sub-h">Flammschutz durch Phosphor — clever</p>
+      <p>Wenn ein P-haltiger Kunststoff brennt, entsteht Phosphorsäure als Dampf. Diese ist schwerer als Luft und legt sich wie eine Decke über die Flamme → kein O₂ mehr → die Flamme erstickt.</p>
+
+      <p class="sub-h">Warum laden sich Kunststoffe statisch auf?</p>
+      <p>Unpolare Kunststoffe leiten Elektrizität schlecht → Reibungsladungen können nicht abfließen. Bei Antistatika wird die Oberflächenleitfähigkeit erhöht → Ladungen fließen ab, keine Aufladung mehr.</p>
+    </div>
   </div>
 </section>
-
 <section class="chapter reveal" id="quiz">
   <div class="chapter-header">
     <div class="chapter-num">Final Boss · Zufalls-Quiz</div>
