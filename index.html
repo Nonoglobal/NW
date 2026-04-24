@@ -320,12 +320,416 @@
   .reveal { opacity:0;transform:translateY(40px);transition:all 0.8s cubic-bezier(0.2,0.8,0.2,1);}
   .reveal.visible { opacity:1;transform:translateY(0);}
 
+  /* ═══ PROFIL-SYSTEM ═══ */
+  nav {
+    gap: 0.8rem;
+  }
+  .nav-profile-wrap {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .profile-chip {
+    background: rgba(10, 14, 12, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-bright);
+    color: var(--acid);
+    padding: 0.4rem 0.9rem;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .profile-chip:hover {
+    background: rgba(180, 255, 57, 0.1);
+  }
+  .profile-chip .chip-avatar {
+    width: 18px; height: 18px;
+    background: var(--acid);
+    color: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.65rem;
+  }
+
+  .profile-modal-bg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .profile-modal-bg.open { display: flex; animation: fadeIn 0.25s ease;}
+
+  .profile-modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border-bright);
+    border-radius: 14px;
+    padding: 2.2rem;
+    max-width: 480px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(180,255,57,0.08);
+  }
+  .profile-modal h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+  }
+  .profile-modal p.modal-sub {
+    color: var(--ink-dim);
+    font-size: 0.88rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .profile-list { display: grid; gap: 0.6rem; margin-bottom: 1.2rem;}
+  .profile-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.9rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .profile-item:hover {
+    border-color: var(--acid);
+    transform: translateX(3px);
+  }
+  .profile-item.active {
+    border-color: var(--acid);
+    background: rgba(180, 255, 57, 0.05);
+  }
+  .profile-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--acid);
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .profile-avatar.c2 { background: var(--cobalt);}
+  .profile-avatar.c3 { background: var(--violet);}
+  .profile-avatar.c4 { background: var(--gold);}
+  .profile-avatar.c5 { background: var(--rose);}
+  .profile-avatar.c6 { background: var(--flame);}
+
+  .profile-info { flex: 1; min-width: 0;}
+  .profile-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .profile-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-dim);
+    margin-top: 0.2rem;
+  }
+  .profile-actions { display: flex; gap: 0.3rem;}
+  .profile-btn-x {
+    background: transparent;
+    border: none;
+    color: var(--ink-faint);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  .profile-btn-x:hover { color: var(--rose); background: rgba(255,71,133,0.08);}
+
+  .profile-create {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: var(--bg-elev);
+    border-radius: 8px;
+    margin-top: 0.5rem;
+  }
+  .profile-create input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--ink);
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    font-family: 'Geist', sans-serif;
+    font-size: 0.9rem;
+  }
+  .profile-create input:focus { outline: none; border-color: var(--acid);}
+  .profile-create button {
+    background: var(--acid);
+    color: var(--bg);
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .profile-create button:hover { background: var(--acid-dim);}
+  .profile-create button:disabled { opacity: 0.4; cursor: not-allowed;}
+
+  .profile-modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--ink-dim);
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.3rem 0.5rem;
+  }
+  .profile-modal-close:hover { color: var(--ink);}
+
   @media (max-width: 768px) {
-    nav { padding:0.8rem 1rem;flex-direction:column;gap:0.5rem;}
-    .nav-links { justify-content:center;}
-    section.chapter { padding:4rem 1rem;}
-    .hardness-diagram { grid-template-columns:1fr;}
-    .hardness-side.temp { border-right:none;border-bottom:1px solid var(--border);}
+    .profile-chip { font-size: 0.68rem; padding: 0.35rem 0.7rem;}
+    .profile-modal { padding: 1.5rem 1.2rem;}
+    .profile-modal h3 { font-size: 1.35rem;}
+  }
+
+  /* ═══ RESPONSIVE ═══ */
+  @media (max-width: 1024px) {
+    section.chapter { padding: 4rem 1.5rem;}
+    .chapter-title { font-size: 2.5rem;}
+    .molecule-canvas { padding: 2rem 0.5rem; min-height: 260px;}
+    .nomen-result { font-size: clamp(1rem, 4vw, 1.5rem); padding: 1.5rem 1rem;}
+  }
+
+  @media (max-width: 768px) {
+    /* NAV — Mit Profil-Chip in der ersten Zeile */
+    nav {
+      padding: 0.7rem 1rem;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: stretch;
+    }
+    .nav-brand {
+      text-align: left;
+      font-size: 1.1rem;
+      white-space: nowrap;
+    }
+    .nav-profile-wrap {
+      /* In mobile: vom Ende der nav-brand flex übernommen */
+      position: static;
+      margin-left: auto;
+    }
+    /* Wrap profile chip inside nav-brand visually — using order */
+    nav {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "brand profile"
+        "links links";
+      gap: 0.5rem 0.7rem;
+      align-items: center;
+    }
+    .nav-brand { grid-area: brand;}
+    .nav-profile-wrap { grid-area: profile;}
+    .nav-links {
+      grid-area: links;
+      justify-content: flex-start;
+      gap: 0.1rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding: 0.15rem 0;
+      flex-wrap: nowrap;
+      display: flex;
+    }
+    .nav-links::-webkit-scrollbar { display: none;}
+    .nav-links a {
+      flex-shrink: 0;
+      padding: 0.4rem 0.7rem;
+      font-size: 0.7rem;
+    }
+
+    /* HERO */
+    .hero { padding: 10rem 1rem 3rem; min-height: auto;}
+    h1.hero-title { font-size: clamp(2.3rem, 12vw, 4rem);}
+    .hero-subtitle { font-size: 0.95rem; margin-bottom: 2rem;}
+    .hero-tag { font-size: 0.65rem; padding: 0.35rem 0.7rem;}
+    .hero-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem;}
+    .hero-stat { padding: 0.9rem;}
+    .hero-stat-num { font-size: 1.7rem;}
+    .hero-stat-label { font-size: 0.62rem;}
+    .molecule-bg { display: none;}
+
+    /* SECTIONS */
+    section.chapter { padding: 3rem 1rem;}
+    .chapter-header { gap: 0.5rem; margin-bottom: 1.5rem;}
+    .chapter-num { font-size: 0.75rem;}
+    .chapter-title { font-size: clamp(1.6rem, 8vw, 2.2rem); line-height: 1.15;}
+    .chapter-intro { font-size: 0.95rem; margin-bottom: 2rem;}
+
+    /* TOPIC BLOCKS */
+    .topic-block { margin: 2rem 0;}
+    .topic-block > h3 { font-size: 1.3rem; line-height: 1.25;}
+    .skript-block, .explain-block { padding: 1.5rem 1.2rem 1.3rem;}
+    .skript-block::before, .explain-block::before {
+      font-size: 0.55rem;
+      padding: 0.15rem 0.6rem;
+      left: 12px;
+    }
+    .skript-block p, .explain-block p { font-size: 0.92rem;}
+    .skript-block li, .explain-block li { font-size: 0.92rem;}
+    .skript-block .sub-h, .explain-block .sub-h { font-size: 0.98rem; margin-top: 1rem;}
+
+    /* TEST BADGE */
+    .test-badge { font-size: 0.55rem; padding: 0.22rem 0.55rem; margin-left: 0.3rem;}
+
+    /* TESTSTOFF BOX */
+    .teststoff-box { padding: 1.3rem;}
+    .teststoff-box h3 { font-size: 1.25rem;}
+    .teststoff-box ul { grid-template-columns: 1fr; gap: 0.5rem;}
+    .teststoff-box li { padding: 0.65rem 0.85rem; font-size: 0.85rem;}
+    .test-legend { padding: 1rem; gap: 0.8rem; flex-direction: column; align-items: flex-start;}
+
+    /* CARDS */
+    .card-grid { gap: 0.9rem;}
+    .card { padding: 1.3rem;}
+    .card-title { font-size: 1.2rem;}
+    .card-body { font-size: 0.88rem;}
+
+    /* HARDNESS */
+    .hardness-diagram { grid-template-columns: 1fr;}
+    .hardness-side { padding: 1.3rem;}
+    .hardness-side.temp { border-right: none; border-bottom: 1px solid var(--border);}
+    .hardness-title { font-size: 1.25rem;}
+
+    /* HOMOLOG */
+    .homolog-table { grid-template-columns: repeat(3, 1fr); gap: 0.4rem;}
+    .homolog-cell { padding: 0.85rem 0.5rem;}
+    .homolog-name { font-size: 0.95rem;}
+    .homolog-formula { font-size: 0.72rem;}
+
+    /* MOLECULE VIEWER */
+    .molecule-viewer { padding: 1.3rem 1rem;}
+    .molecule-canvas { padding: 1.5rem 0.4rem; min-height: 200px;}
+    .molecule-canvas svg { width: 100%; max-width: 100%; height: auto;}
+    .viewer-header { margin-bottom: 1rem;}
+    .molecule-info { grid-template-columns: repeat(2, 1fr); gap: 0.6rem;}
+    .info-pill { padding: 0.7rem;}
+    .info-pill-value { font-size: 1.05rem;}
+
+    /* FUNC GROUPS */
+    .func-groups-wheel { grid-template-columns: 1fr; gap: 0.7rem;}
+
+    /* NOMENCLATURE */
+    .nomen-builder { padding: 1.5rem 1.2rem;}
+    .nomen-result { font-size: clamp(0.95rem, 4.5vw, 1.4rem); padding: 1.3rem 0.8rem;}
+    .nomen-controls { grid-template-columns: 1fr;}
+
+    /* REACTIONS */
+    .reaction-container { padding: 1.5rem 1rem;}
+    .reaction-stage { padding: 1.5rem 0.6rem; min-height: 220px; font-size: 1rem;}
+    .step-equation { font-size: clamp(0.78rem, 3.5vw, 1rem); line-height: 1.5;}
+    .step-desc { font-size: 0.82rem;}
+    .step-label { font-size: 0.65rem; letter-spacing: 0.12em;}
+    .reaction-controls { gap: 0.35rem;}
+    .btn { padding: 0.55rem 0.9rem; font-size: 0.72rem;}
+
+    /* QUIZ */
+    .quiz-container { padding: 1.3rem 1rem;}
+    .quiz-topbar { flex-direction: column; align-items: stretch; gap: 0.7rem;}
+    .quiz-actions { justify-content: space-between;}
+    .question-text { font-size: 1.1rem; line-height: 1.35;}
+    .question-topic { font-size: 0.65rem;}
+    .answer { padding: 0.85rem 1rem; font-size: 0.88rem; gap: 0.7rem;}
+    .answer-key { font-size: 0.7rem; min-width: 24px; padding: 0.2rem 0.4rem;}
+    .quiz-explanation { padding: 0.85rem 1rem; font-size: 0.82rem;}
+    .quiz-settings { padding: 1rem; gap: 0.8rem; grid-template-columns: 1fr;}
+    .quiz-action-row { gap: 0.5rem;}
+    .quiz-action-row .btn { width: 100%;}
+    .quiz-score { font-size: 3.5rem;}
+
+    /* REVIEW */
+    .review-item { padding: 1.2rem 1rem;}
+    .review-q { font-size: 1rem;}
+    .review-meta { gap: 0.6rem; font-size: 0.62rem;}
+    .review-answer { font-size: 0.85rem; flex-direction: column; gap: 0.2rem;}
+    .review-answer .label { min-width: auto;}
+
+    /* SAVED */
+    .saved-section { padding: 1.3rem 1rem;}
+    .saved-section h3 { font-size: 1.3rem;}
+    .saved-item { padding: 1rem;}
+    .saved-item-q { font-size: 0.95rem;}
+
+    /* BATTERIES */
+    .battery-select { grid-template-columns: 1fr; gap: 0.6rem;}
+    .bat-btn { padding: 0.9rem;}
+    .bat-details { padding: 1.3rem 1rem;}
+    .bat-specs { grid-template-columns: 1fr; gap: 0.6rem;}
+
+    /* FORMULA BLOCK */
+    .formula-block { padding: 1rem; font-size: 0.85rem; overflow-x: auto;}
+    .f-inline { font-size: 0.88em; padding: 0.08em 0.35em;}
+
+    /* GALVANIC */
+    .galvanic-cell { padding: 1.3rem 1rem;}
+
+    /* ACCORDION */
+    .acc-header { padding: 1rem 1.2rem; font-size: 1rem;}
+    .accordion-item.open .acc-body { padding: 0 1.2rem 1.2rem;}
+
+    /* FOOTER */
+    footer { padding: 3rem 1rem 2rem;}
+    .footer-title { font-size: 1.5rem;}
+  }
+
+  @media (max-width: 480px) {
+    .hero-grid { grid-template-columns: 1fr 1fr;}
+    .chapter-title { font-size: 1.6rem;}
+    .topic-block > h3 { font-size: 1.15rem;}
+    h1.hero-title { font-size: 2rem;}
+    .hero-stat-num { font-size: 1.5rem;}
+    .homolog-table { grid-template-columns: repeat(2, 1fr);}
+    .info-pill-value { font-size: 0.95rem;}
+    .nav-brand { font-size: 1.1rem;}
+  }
+
+  /* Larger touch targets for mobile */
+  @media (hover: none) and (pointer: coarse) {
+    .btn, .mini-btn, .answer, .homolog-cell, .nav-links a, .bat-btn, .func-group, .acc-header {
+      min-height: 44px;
+    }
+    .card:hover { transform: none;}
+    .homolog-cell:hover { transform: none;}
+    .func-group:hover { transform: none;}
+    .hero-stat:hover { transform: none;}
+    .bat-btn:hover { transform: none;}
   }
 
   .atom-c { fill:#2a2a2a;stroke:var(--ink);stroke-width:1.5;}
@@ -357,7 +761,28 @@
     <a href="#kunststoffe">Kunststoffe</a>
     <a href="#quiz">Quiz</a>
   </div>
+  <div class="nav-profile-wrap">
+    <button class="profile-chip" onclick="openProfileModal()" id="profileChip">
+      <span class="chip-avatar" id="chipAvatar">?</span>
+      <span id="chipName">Profil</span>
+    </button>
+  </div>
 </nav>
+
+<div class="profile-modal-bg" id="profileModalBg" onclick="if(event.target===this) closeProfileModal()">
+  <div class="profile-modal">
+    <button class="profile-modal-close" onclick="closeProfileModal()">×</button>
+    <h3>Lernprofile</h3>
+    <p class="modal-sub">
+      Mehrere Personen können sich hier eigene Profile anlegen. Jedes Profil speichert seine eigenen gemerkten Fragen separat — wählt einfach vor dem Lernen euer Profil aus.
+    </p>
+    <div class="profile-list" id="profileList"></div>
+    <div class="profile-create">
+      <input type="text" id="newProfileName" placeholder="Dein Name…" maxlength="20" onkeydown="if(event.key==='Enter') createProfile()">
+      <button onclick="createProfile()" id="createBtn">+ Neu</button>
+    </div>
+  </div>
+</div>
 
 <div class="hero">
   <div class="hero-bg">
@@ -1665,8 +2090,19 @@
 // REVEAL ON SCROLL
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible');});
-}, { threshold: 0.08 });
+}, { rootMargin: '0px 0px -50px 0px', threshold: 0 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Fallback: falls durch direkten Link zu einer Sektion gesprungen wird,
+// zeige alle Sections sofort (nach 2s, falls der Observer noch nicht getriggert hat)
+setTimeout(() => {
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('visible');
+    }
+  });
+}, 100);
 
 // NAV ACTIVE
 const navLinks = document.querySelectorAll('.nav-links a');
@@ -1731,32 +2167,6 @@ function showHomolog(a) {
   d.scrollIntoView({behavior:'smooth', block:'center'});
 }
 showHomolog(alkanes[2]);
-
-// BATTERIEN
-const batteries = {
-  leclanche: { name:'Leclanché · Zink-Kohle', type:'Primärelement', cathode:'MnO₂ (Braunstein)', electrolyte:'NH₄Cl (Ammoniumchlorid)', anode:'Zn', reactions:['Anode:   Zn → Zn²⁺ + 2e⁻','Kathode: 2Mn⁴⁺ + 2e⁻ → 2Mn³⁺'], notes:'Aufbau: Graphitstab mit Messingkappe (Pluspol) · Vergussmasse · Braunsteinbeutel · gelatinierte Ammoniumchlorid-Lösung · Zinkbehälter (Minuspol).'},
-  alkali: { name:'Alkalische Zink/Braunsteinzelle', type:'Weiterentwicklung des Leclanché-Elements', cathode:'MnO₂', electrolyte:'KOH (Kalilauge)', anode:'Zn (mit Quecksilber dotiert)', reactions:['Anode:   Zn → Zn²⁺ + 2e⁻','Kathode: 2Mn⁴⁺ + 2e⁻ → 2Mn³⁺'], notes:'Unterschiede zur Zink-Kohle: Stahlbehälter statt Zink · Anode/Kathode getauscht · KOH statt NH₄Cl · Zn mit Quecksilber dotiert · Stahlnagel. Vorteile: Auslaufsicherheit, lange Lebensdauer, hohe Kapazität.'},
-  afc: { name:'AFC', type:'Alkaline Fuel Cell', cathode:'Sauerstoff bzw. Luft', electrolyte:'Kalilauge (KOH)', anode:'Wasserstoff, Methanol', temp:'60–120 °C', reactions:[], notes:'Brennstoffzellen erzeugen Gleichstrom, solange Brennstoff zugeführt wird.'},
-  pemfc: { name:'PEMFC', type:'Polymer Electrolyte Membrane Fuel Cell', cathode:'Sauerstoff bzw. Luft', electrolyte:'saure Membran', anode:'Wasserstoff, Methanol', temp:'60–120 °C', reactions:[], notes:'Häufig in Fahrzeugen eingesetzt.'},
-  pafc: { name:'PAFC', type:'Phosphoric Acid Fuel Cell', cathode:'Sauerstoff bzw. Luft', electrolyte:'Phosphorsäure', anode:'Wasserstoff (reformiertes Erdgas, mit Resten von CO)', temp:'180–220 °C', reactions:[], notes:'Kann leicht verunreinigten Wasserstoff verarbeiten.'},
-  mcfc: { name:'MCFC', type:'Molten Carbonate Fuel Cell', cathode:'Sauerstoff bzw. Luft', electrolyte:'geschmolzenes Karbonat', anode:'Wasserstoff, CO', temp:'ca. 650 °C', reactions:[], notes:'Hochtemperatur-Zelle für Großanlagen.'},
-  sofc: { name:'SOFC', type:'Solid Oxide Fuel Cell', cathode:'Sauerstoff bzw. Luft', electrolyte:'Keramik', anode:'Wasserstoff, CO', temp:'ca. 1000 °C', reactions:[], notes:'Sehr hohe Betriebstemperatur → hoher Wirkungsgrad.'}
-};
-function renderBattery(key) {
-  const b = batteries[key];
-  const box = document.getElementById('batDetails');
-  let html = `<div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:1rem;"><h4 style="font-family:'Fraunces',serif;font-size:1.6rem;">${b.name}</h4><div class="chapter-num">${b.type}</div></div><p style="color:var(--ink-dim);margin:1rem 0;">${b.notes}</p><div class="bat-specs"><div class="bat-spec"><div class="bat-spec-label">Anode</div><div class="bat-spec-value">${b.anode}</div></div><div class="bat-spec"><div class="bat-spec-label">Elektrolyt</div><div class="bat-spec-value">${b.electrolyte}</div></div><div class="bat-spec"><div class="bat-spec-label">Kathode</div><div class="bat-spec-value">${b.cathode}</div></div>${b.temp ? `<div class="bat-spec"><div class="bat-spec-label">Betriebstemp.</div><div class="bat-spec-value">${b.temp}</div></div>` : ''}</div>`;
-  if (b.reactions && b.reactions.length) html += `<div class="formula-block" style="margin-top:1.5rem;">${b.reactions.join('<br>')}</div>`;
-  box.innerHTML = html;
-}
-renderBattery('leclanche');
-document.querySelectorAll('.bat-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.bat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderBattery(btn.dataset.bat);
-  });
-});
 
 // REAKTIONS-STEPS
 let reactStep = 0;
@@ -1954,7 +2364,165 @@ const questionPool = [
 // ═══════════════════════════════════════════════════════════
 // QUIZ ENGINE
 // ═══════════════════════════════════════════════════════════
-const STORAGE_KEY = 'nw_chemie_saved_v1';
+
+// ═══ MULTI-USER PROFIL-SYSTEM ═══
+const PROFILES_KEY = 'nw_chemie_profiles_v1';
+const ACTIVE_PROFILE_KEY = 'nw_chemie_active_v1';
+
+function getProfiles() {
+  try {
+    const raw = localStorage.getItem(PROFILES_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+function setProfiles(arr) {
+  try { localStorage.setItem(PROFILES_KEY, JSON.stringify(arr));} catch(e) {}
+}
+
+function getActiveProfileId() {
+  return localStorage.getItem(ACTIVE_PROFILE_KEY) || null;
+}
+
+function setActiveProfileId(id) {
+  if (id) localStorage.setItem(ACTIVE_PROFILE_KEY, id);
+  else localStorage.removeItem(ACTIVE_PROFILE_KEY);
+}
+
+function getActiveProfile() {
+  const id = getActiveProfileId();
+  if (!id) return null;
+  return getProfiles().find(p => p.id === id) || null;
+}
+
+function STORAGE_KEY() {
+  const id = getActiveProfileId();
+  return id ? `nw_chemie_saved_${id}` : 'nw_chemie_saved_guest';
+}
+
+function makeProfileId() {
+  return 'p_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+function profileInitials(name) {
+  const words = name.trim().split(/\s+/);
+  if (words.length === 0 || !words[0]) return '?';
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return (words[0][0] + words[1][0]).toUpperCase();
+}
+
+function openProfileModal() {
+  document.getElementById('profileModalBg').classList.add('open');
+  renderProfileList();
+  setTimeout(() => document.getElementById('newProfileName').focus(), 100);
+}
+
+function closeProfileModal() {
+  document.getElementById('profileModalBg').classList.remove('open');
+}
+
+function renderProfileList() {
+  const profiles = getProfiles();
+  const activeId = getActiveProfileId();
+  const list = document.getElementById('profileList');
+
+  if (profiles.length === 0) {
+    list.innerHTML = '<div style="color:var(--ink-dim);font-size:0.88rem;padding:1rem;text-align:center;font-style:italic;">Noch keine Profile. Leg unten eins an.</div>';
+    return;
+  }
+
+  list.innerHTML = profiles.map((p, i) => {
+    const savedCount = getSavedForProfile(p.id).length;
+    const isActive = p.id === activeId;
+    const colorClass = 'c' + ((i % 6) + 1);
+    return `
+      <div class="profile-item ${isActive ? 'active' : ''}" onclick="selectProfile('${p.id}')">
+        <div class="profile-avatar ${colorClass}">${profileInitials(p.name)}</div>
+        <div class="profile-info">
+          <div class="profile-name">${p.name}${isActive ? ' · aktiv' : ''}</div>
+          <div class="profile-meta">${savedCount} gespeicherte Fragen</div>
+        </div>
+        <div class="profile-actions">
+          <button class="profile-btn-x" onclick="event.stopPropagation(); deleteProfile('${p.id}')" title="Profil löschen">×</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function getSavedForProfile(profileId) {
+  try {
+    const raw = localStorage.getItem(`nw_chemie_saved_${profileId}`);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) { return []; }
+}
+
+function createProfile() {
+  const input = document.getElementById('newProfileName');
+  const name = input.value.trim();
+  if (!name) { input.focus(); return; }
+
+  const profiles = getProfiles();
+  if (profiles.length >= 8) {
+    alert('Maximal 8 Profile. Lösche zuerst eins.');
+    return;
+  }
+  if (profiles.some(p => p.name.toLowerCase() === name.toLowerCase())) {
+    alert('Ein Profil mit diesem Namen gibt es schon.');
+    return;
+  }
+
+  const newP = { id: makeProfileId(), name: name, created: Date.now() };
+  profiles.push(newP);
+  setProfiles(profiles);
+  setActiveProfileId(newP.id);
+  input.value = '';
+  renderProfileList();
+  updateProfileChip();
+  renderSaved();
+}
+
+function selectProfile(id) {
+  setActiveProfileId(id);
+  renderProfileList();
+  updateProfileChip();
+  renderSaved();
+  setTimeout(closeProfileModal, 300);
+}
+
+function deleteProfile(id) {
+  const profiles = getProfiles();
+  const p = profiles.find(x => x.id === id);
+  if (!p) return;
+  if (!confirm(`Profil "${p.name}" wirklich löschen? Alle gespeicherten Fragen gehen verloren.`)) return;
+
+  const filtered = profiles.filter(x => x.id !== id);
+  setProfiles(filtered);
+  try { localStorage.removeItem(`nw_chemie_saved_${id}`); } catch(e) {}
+
+  if (getActiveProfileId() === id) {
+    if (filtered.length > 0) setActiveProfileId(filtered[0].id);
+    else setActiveProfileId(null);
+  }
+  renderProfileList();
+  updateProfileChip();
+  renderSaved();
+}
+
+function updateProfileChip() {
+  const active = getActiveProfile();
+  const avatar = document.getElementById('chipAvatar');
+  const name = document.getElementById('chipName');
+  if (active) {
+    avatar.textContent = profileInitials(active.name);
+    name.textContent = active.name;
+  } else {
+    avatar.textContent = '?';
+    name.textContent = 'Profil wählen';
+  }
+}
+
+// ═══ QUIZ STATE ═══
 let quizState = {
   questions: [],      // aktuelle Fragen-Auswahl
   currentIdx: 0,
@@ -2167,18 +2735,18 @@ function showReview(mode) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// SAVED QUESTIONS (localStorage)
+// SAVED QUESTIONS (localStorage, pro Profil)
 // ═══════════════════════════════════════════════════════════
 function getSavedIdxs() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(STORAGE_KEY());
     return raw ? JSON.parse(raw) : [];
   } catch(e) { return []; }
 }
 
 function setSavedIdxs(arr) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    localStorage.setItem(STORAGE_KEY(), JSON.stringify(arr));
   } catch(e) { console.warn('LocalStorage fehlgeschlagen:', e); }
 }
 
@@ -2208,11 +2776,17 @@ function toggleSave(poolIdx) {
 
 function renderSaved() {
   const saved = getSavedIdxs();
-  document.getElementById('savedCount').textContent = `${saved.length} Frage${saved.length !== 1 ? 'n' : ''}`;
+  const active = getActiveProfile();
+  document.getElementById('savedCount').textContent = active
+    ? `${active.name} · ${saved.length} Frage${saved.length !== 1 ? 'n' : ''}`
+    : `Gast · ${saved.length} Frage${saved.length !== 1 ? 'n' : ''}`;
   const list = document.getElementById('savedList');
 
   if (saved.length === 0) {
-    list.innerHTML = '<div class="saved-empty">Noch keine Fragen gespeichert. Markiere Fragen im Quiz mit dem ☆ um sie hier zu sammeln.</div>';
+    const hint = active
+      ? 'Noch keine Fragen gespeichert. Markiere Fragen im Quiz mit dem ☆ um sie hier zu sammeln.'
+      : 'Tipp: Leg oben rechts ein Profil an, damit deine Fragen getrennt gespeichert werden, wenn mehrere Personen diese Seite nutzen.';
+    list.innerHTML = `<div class="saved-empty">${hint}</div>`;
     return;
   }
 
@@ -2254,7 +2828,13 @@ function printSaved() {
 }
 
 // Init
+updateProfileChip();
 renderSaved();
+
+// Falls kein Profil existiert, öffne Modal beim ersten Laden
+if (getProfiles().length === 0) {
+  setTimeout(() => openProfileModal(), 800);
+}
 </script>
 </body>
 </html>
