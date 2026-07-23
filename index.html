@@ -86,7 +86,7 @@
     // Passende Quelle(n) je nach Gerät einfügen
     if (isMobile) {
       video.insertAdjacentHTML('afterbegin', `
-        <source src="2.webm" type="video/webm">
+        <source src="2.mp4" type="video/mp4">
       `);
     } else {
       video.insertAdjacentHTML('afterbegin', `
@@ -96,13 +96,33 @@
     }
     video.load();
 
-    // Sobald die Metadaten (Länge etc.) geladen sind
-    video.addEventListener('loadedmetadata', () => {
-      duration = video.duration;
-      durationInfo.textContent = duration.toFixed(2);
-      // Sicherstellen, dass beim Laden bei Frame 0 pausiert wird
-      video.currentTime = 0;
+    // Debugging: falls eine Videodatei nicht gefunden/geladen werden kann
+    video.addEventListener('error', () => {
+      frameInfo.textContent = 'Fehler beim Laden!';
+      console.error('Video-Fehler:', video.error);
     });
+
+    // Manche WebM/MKV-Dateien liefern beim loadedmetadata-Event noch
+    // keine gültige Dauer (duration ist dann NaN oder Infinity).
+    // Workaround: einmal ans Ende springen, das zwingt den Browser,
+    // die echte Dauer zu berechnen.
+    function initDuration() {
+      if (isFinite(video.duration) && video.duration > 0) {
+        duration = video.duration;
+        durationInfo.textContent = duration.toFixed(2);
+        video.currentTime = 0;
+      } else {
+        video.currentTime = 1e101;
+        video.addEventListener('timeupdate', function getDuration() {
+          video.removeEventListener('timeupdate', getDuration);
+          duration = video.duration;
+          durationInfo.textContent = isFinite(duration) ? duration.toFixed(2) : '– (Fehler)';
+          video.currentTime = 0;
+        });
+      }
+    }
+
+    video.addEventListener('loadedmetadata', initDuration);
 
     function updateVideoTime() {
       if (!duration) return;
@@ -130,8 +150,7 @@
 
     // Falls Metadaten schon vor Listener-Registrierung geladen waren
     if (video.readyState >= 1) {
-      duration = video.duration;
-      durationInfo.textContent = duration.toFixed(2);
+      initDuration();
     }
   </script>
 
