@@ -121,23 +121,39 @@ resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
 const images = new Array(FRAME_COUNT);
-let loadedCount = 0;
+let settledCount = 0; // erfolgreich ODER fehlgeschlagen geladen
+let errorCount = 0;
+
+function checkAllSettled() {
+  settledCount++;
+  loading.textContent = `Lade Frames... ${Math.round(settledCount / FRAME_COUNT * 100)}%`;
+  if (settledCount === FRAME_COUNT) {
+    if (errorCount > 0) {
+      loading.innerHTML = `${errorCount} von ${FRAME_COUNT} Frames konnten nicht geladen werden.<br>Liegt der komplette "frames"-Ordner im Repo? Details in der Konsole (F12).`;
+      loading.style.fontSize = '14px';
+      loading.style.padding = '2rem';
+      loading.style.textAlign = 'center';
+      // Seite trotzdem nutzbar machen, falls zumindest ein Teil geladen ist
+      if (errorCount < FRAME_COUNT) {
+        setTimeout(() => { loading.remove(); }, 4000);
+      }
+    } else {
+      loading.remove();
+    }
+    drawFrame(0);
+    updateFrameFromScroll();
+  }
+}
 
 function loadRealFrames() {
   for (let i = 0; i < FRAME_COUNT; i++) {
     const img = new Image();
     img.src = FRAME_PATH(i + 1); // frame_0001.jpg = erstes Bild
-    img.onload = () => {
-      loadedCount++;
-      loading.textContent = `Lade Frames... ${Math.round(loadedCount / FRAME_COUNT * 100)}%`;
-      if (loadedCount === FRAME_COUNT) {
-        loading.remove();
-        drawFrame(0);
-        updateFrameFromScroll();
-      }
-    };
+    img.onload = checkAllSettled;
     img.onerror = () => {
+      errorCount++;
       console.error('Frame konnte nicht geladen werden:', img.src);
+      checkAllSettled();
     };
     images[i] = img;
   }
