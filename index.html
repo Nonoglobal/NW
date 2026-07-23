@@ -3,211 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scroll-Video Demo</title>
+<title>Scroll Video Scrub</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:#0b0b0b; font-family:sans-serif; color:#fff; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  body {
+    font-family: system-ui, sans-serif;
+    background: #111;
+    color: #eee;
+  }
+
+  /* Dieser Container gibt dem Scroll "Platz" — je größer die Höhe,
+     desto langsamer/länger dauert das Durchscrubben des Videos. */
   .scroll-stage {
-    height: 400vh; /* <- Scroll-Länge: größer = feiner/langsamer scrubbbar */
+    height: 400vh; /* -> auf 300vh/500vh etc. anpassen für schneller/langsamer */
     position: relative;
   }
 
-  .sticky-wrap {
+  /* Das Video bleibt fix im Viewport stehen, während man scrollt */
+  .video-sticky {
     position: sticky;
     top: 0;
     height: 100vh;
+    width: 100%;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     background: #000;
   }
 
-  canvas {
+  #scrub-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
   }
 
-  .progress-bar {
+  .info {
     position: fixed;
-    top: 0; left: 0;
-    height: 4px;
-    background: #ffffff;
-    z-index: 10;
-  }
-
-  .hint {
-    position: fixed;
-    bottom: 24px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 14px;
+    bottom: 20px;
+    left: 20px;
+    font-size: 13px;
     opacity: 0.6;
     z-index: 10;
   }
 
-  .spacer {
+  .filler {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 24px;
-    opacity: 0.5;
-  }
-
-  .loading {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #000;
-    color: #fff;
-    font-size: 16px;
-    z-index: 20;
+    color: #888;
   }
 </style>
 </head>
 <body>
 
-<div class="loading" id="loading">Lade Frames... 0%</div>
-<div class="progress-bar" id="progressBar"></div>
-<div class="hint">Scrolle nach unten &darr; / nach oben &uarr;</div>
+  <div class="filler">↓ Runterscrollen, um zu starten ↓</div>
 
-<div class="spacer">Nach unten scrollen, um das Video zu starten</div>
-
-<div class="scroll-stage" id="scrollStage">
-  <div class="sticky-wrap">
-    <canvas id="canvas"></canvas>
+  <div class="scroll-stage">
+    <div class="video-sticky">
+      <video id="scrub-video" muted playsinline preload="auto">
+        <source src="video1.mp4" type="video/mp4">
+        <source src="1.mkv" type="video/x-matroska">
+        Dein Browser unterstützt das Video-Tag nicht.
+      </video>
+      <div class="info">Frame: <span id="frame-info">0</span> / <span id="duration-info">–</span>s</div>
+    </div>
   </div>
-</div>
 
-<div class="spacer">Ende der Sequenz</div>
+  <div class="filler">Ende</div>
 
-<script>
-/* ==========================================================================
-   SCROLL-SCRUBBING mit vielen (interpolierten) Frame-Bildern
-   --------------------------------------------------------------------------
-   Vorher im Terminal, im selben Ordner wie 1.mkv:
+  <script>
+    const video = document.getElementById('scrub-video');
+    const stage = document.querySelector('.scroll-stage');
+    const frameInfo = document.getElementById('frame-info');
+    const durationInfo = document.getElementById('duration-info');
 
-     mkdir frames
-     ffmpeg -i 1.mkv -filter:v "minterpolate=fps=120:mi_mode=mci:mc_mode=aobmc:vsbmc=1" frames/frame_%04d.jpg
+    let duration = 0;
+    let ticking = false;
 
-   -> erzeugt 120 Frames pro Sekunde Videolänge, auch wenn das Original
-      viel weniger fps hatte (ffmpeg berechnet Zwischenbilder).
-      Für noch mehr Frames: fps=120 z.B. auf 240 erhöhen.
+    // Sobald die Metadaten (Länge etc.) geladen sind
+    video.addEventListener('loadedmetadata', () => {
+      duration = video.duration;
+      durationInfo.textContent = duration.toFixed(2);
+      // Sicherstellen, dass beim Laden bei Frame 0 pausiert wird
+      video.currentTime = 0;
+    });
 
-   Danach zeigt ffmpeg in der letzten Zeile an, wie viele Frames erzeugt
-   wurden (z.B. "frame= 480"). Diese Zahl unten bei FRAME_COUNT eintragen.
-   ========================================================================== */
+    function updateVideoTime() {
+      if (!duration) return;
 
-// ---- KONFIGURATION ----
-const FRAME_COUNT = 480;               // <- ANPASSEN: tatsächliche Anzahl erzeugter Dateien
-const FRAME_PATH  = i => `frames/frame_${String(i).padStart(4,'0')}.jpg`;
+      const stageRect = stage.getBoundingClientRect();
+      const stageHeight = stage.offsetHeight - window.innerHeight;
 
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const scrollStage = document.getElementById('scrollStage');
-const progressBar = document.getElementById('progressBar');
-const loading = document.getElementById('loading');
+      // Scroll-Fortschritt innerhalb des Stage-Containers, 0 bis 1
+      let progress = -stageRect.top / stageHeight;
+      progress = Math.min(Math.max(progress, 0), 1);
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-const images = new Array(FRAME_COUNT);
-let settledCount = 0; // erfolgreich ODER fehlgeschlagen geladen
-let errorCount = 0;
-
-function checkAllSettled() {
-  settledCount++;
-  loading.textContent = `Lade Frames... ${Math.round(settledCount / FRAME_COUNT * 100)}%`;
-  if (settledCount === FRAME_COUNT) {
-    if (errorCount > 0) {
-      loading.innerHTML = `${errorCount} von ${FRAME_COUNT} Frames konnten nicht geladen werden.<br>Liegt der komplette "frames"-Ordner im Repo? Details in der Konsole (F12).`;
-      loading.style.fontSize = '14px';
-      loading.style.padding = '2rem';
-      loading.style.textAlign = 'center';
-      // Seite trotzdem nutzbar machen, falls zumindest ein Teil geladen ist
-      if (errorCount < FRAME_COUNT) {
-        setTimeout(() => { loading.remove(); }, 4000);
-      }
-    } else {
-      loading.remove();
+      video.currentTime = progress * duration;
+      frameInfo.textContent = video.currentTime.toFixed(2);
+      ticking = false;
     }
-    drawFrame(0);
-    updateFrameFromScroll();
-  }
-}
 
-function loadRealFrames() {
-  for (let i = 0; i < FRAME_COUNT; i++) {
-    const img = new Image();
-    img.src = FRAME_PATH(i + 1); // frame_0001.jpg = erstes Bild
-    img.onload = checkAllSettled;
-    img.onerror = () => {
-      errorCount++;
-      console.error('Frame konnte nicht geladen werden:', img.src);
-      checkAllSettled();
-    };
-    images[i] = img;
-  }
-}
+    // requestAnimationFrame sorgt für butterweiches Scrubbing ohne
+    // den Scroll-Handler zu überlasten
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateVideoTime);
+        ticking = true;
+      }
+    }, { passive: true });
 
-function drawFrame(index) {
-  index = Math.max(0, Math.min(FRAME_COUNT - 1, index));
-  const img = images[index];
-  if (!img || !img.complete || img.naturalWidth === 0) return;
-
-  const canvasRatio = canvas.width / canvas.height;
-  const imgRatio = img.width / img.height;
-  let sx, sy, sw, sh;
-  if (imgRatio > canvasRatio) {
-    sh = img.height;
-    sw = sh * canvasRatio;
-    sx = (img.width - sw) / 2;
-    sy = 0;
-  } else {
-    sw = img.width;
-    sh = sw / canvasRatio;
-    sx = 0;
-    sy = (img.height - sh) / 2;
-  }
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
-}
-
-let ticking = false;
-
-function onScroll() {
-  if (!ticking) {
-    requestAnimationFrame(updateFrameFromScroll);
-    ticking = true;
-  }
-}
-
-function updateFrameFromScroll() {
-  const rect = scrollStage.getBoundingClientRect();
-  const stageHeight = scrollStage.offsetHeight - window.innerHeight;
-  let progress = -rect.top / stageHeight;
-  progress = Math.max(0, Math.min(1, progress));
-
-  const frameIndex = Math.round(progress * (FRAME_COUNT - 1));
-  drawFrame(frameIndex);
-
-  progressBar.style.width = (progress * 100) + '%';
-  ticking = false;
-}
-
-window.addEventListener('scroll', onScroll, { passive: true });
-
-loadRealFrames();
-</script>
+    // Falls Metadaten schon vor Listener-Registrierung geladen waren
+    if (video.readyState >= 1) {
+      duration = video.duration;
+      durationInfo.textContent = duration.toFixed(2);
+    }
+  </script>
 
 </body>
 </html>
