@@ -8,14 +8,11 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:#0b0b0b; font-family:sans-serif; color:#fff; }
 
-  /* Der Bereich, über den man scrollen muss, damit das Video komplett abläuft.
-     Höher = langsamer scrubbt das Video (mehr Scroll-Distanz pro Sekunde Video). */
   .scroll-stage {
-    height: 400vh; /* <- hier die Scroll-Länge anpassen */
+    height: 400vh; /* <- Scroll-Länge: größer = feiner/langsamer scrubbbar */
     position: relative;
   }
 
-  /* Der Video-Bereich bleibt beim Scrollen fix im Bildschirm stehen */
   .sticky-wrap {
     position: sticky;
     top: 0;
@@ -27,7 +24,7 @@
     background: #000;
   }
 
-  video {
+  canvas {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -75,7 +72,7 @@
 </head>
 <body>
 
-<div class="loading" id="loading">Video wird geladen...</div>
+<div class="loading" id="loading">Lade Frames... 0%</div>
 <div class="progress-bar" id="progressBar"></div>
 <div class="hint">Scrolle nach unten &darr; / nach oben &uarr;</div>
 
@@ -83,8 +80,7 @@
 
 <div class="scroll-stage" id="scrollStage">
   <div class="sticky-wrap">
-    <!-- WICHTIG: Dateiname muss zu deiner Datei im Repo passen -->
-    <video id="video" src="1.mp4" muted playsinline preload="auto"></video>
+    <canvas id="canvas"></canvas>
   </div>
 </div>
 
@@ -92,38 +88,85 @@
 
 <script>
 /* ==========================================================================
-   SCROLL-SCRUBBING mit direktem <video>-Element
+   SCROLL-SCRUBBING mit vielen (interpolierten) Frame-Bildern
    --------------------------------------------------------------------------
-   Einfacher als die Frame-Bilder-Variante: nur EINE Videodatei nötig statt
-   hunderter Einzelbilder. Beim Scrollen wird video.currentTime passend zur
-   Scroll-Position gesetzt. Etwas weniger butterweich als echtes Frame-
-   Scrubbing, dafür viel einfacher zu hosten (z.B. auf GitHub Pages).
+   Vorher im Terminal, im selben Ordner wie 1.mkv:
 
-   Voraussetzung: 1.mkv wurde vorher zu 1.mp4 konvertiert:
+     mkdir frames
+     ffmpeg -i 1.mkv -filter:v "minterpolate=fps=120:mi_mode=mci:mc_mode=aobmc:vsbmc=1" frames/frame_%04d.jpg
 
-     ffmpeg -i 1.mkv -c:v libx264 -crf 23 -preset medium -movflags +faststart -an 1.mp4
+   -> erzeugt 120 Frames pro Sekunde Videolänge, auch wenn das Original
+      viel weniger fps hatte (ffmpeg berechnet Zwischenbilder).
+      Für noch mehr Frames: fps=120 z.B. auf 240 erhöhen.
 
-   Die Datei 1.mp4 muss im selben Ordner wie diese index.html liegen und
-   mit ins Repo gepusht werden.
+   Danach zeigt ffmpeg in der letzten Zeile an, wie viele Frames erzeugt
+   wurden (z.B. "frame= 480"). Diese Zahl unten bei FRAME_COUNT eintragen.
    ========================================================================== */
 
-const video = document.getElementById('video');
+// ---- KONFIGURATION ----
+const FRAME_COUNT = 480;               // <- ANPASSEN: tatsächliche Anzahl erzeugter Dateien
+const FRAME_PATH  = i => `frames/frame_${String(i).padStart(4,'0')}.jpg`;
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 const scrollStage = document.getElementById('scrollStage');
 const progressBar = document.getElementById('progressBar');
 const loading = document.getElementById('loading');
 
-let duration = 0;
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const images = new Array(FRAME_COUNT);
+let loadedCount = 0;
+
+function loadRealFrames() {
+  for (let i = 0; i < FRAME_COUNT; i++) {
+    const img = new Image();
+    img.src = FRAME_PATH(i + 1); // frame_0001.jpg = erstes Bild
+    img.onload = () => {
+      loadedCount++;
+      loading.textContent = `Lade Frames... ${Math.round(loadedCount / FRAME_COUNT * 100)}%`;
+      if (loadedCount === FRAME_COUNT) {
+        loading.remove();
+        drawFrame(0);
+        updateFrameFromScroll();
+      }
+    };
+    img.onerror = () => {
+      console.error('Frame konnte nicht geladen werden:', img.src);
+    };
+    images[i] = img;
+  }
+}
+
+function drawFrame(index) {
+  index = Math.max(0, Math.min(FRAME_COUNT - 1, index));
+  const img = images[index];
+  if (!img || !img.complete || img.naturalWidth === 0) return;
+
+  const canvasRatio = canvas.width / canvas.height;
+  const imgRatio = img.width / img.height;
+  let sx, sy, sw, sh;
+  if (imgRatio > canvasRatio) {
+    sh = img.height;
+    sw = sh * canvasRatio;
+    sx = (img.width - sw) / 2;
+    sy = 0;
+  } else {
+    sw = img.width;
+    sh = sw / canvasRatio;
+    sx = 0;
+    sy = (img.height - sh) / 2;
+  }
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+}
+
 let ticking = false;
-
-video.addEventListener('loadedmetadata', () => {
-  duration = video.duration;
-  loading.remove();
-  updateFrameFromScroll();
-});
-
-video.addEventListener('error', () => {
-  loading.textContent = 'Video konnte nicht geladen werden. Prüfe, ob "1.mp4" im selben Ordner liegt und im Repo committed wurde.';
-});
 
 function onScroll() {
   if (!ticking) {
@@ -133,21 +176,21 @@ function onScroll() {
 }
 
 function updateFrameFromScroll() {
-  if (!duration) { ticking = false; return; }
-
   const rect = scrollStage.getBoundingClientRect();
   const stageHeight = scrollStage.offsetHeight - window.innerHeight;
   let progress = -rect.top / stageHeight;
   progress = Math.max(0, Math.min(1, progress));
 
-  // kleiner Sicherheitsabstand vom Videoende, sonst manchmal Ruckler am letzten Frame
-  video.currentTime = progress * (duration - 0.05);
+  const frameIndex = Math.round(progress * (FRAME_COUNT - 1));
+  drawFrame(frameIndex);
 
   progressBar.style.width = (progress * 100) + '%';
   ticking = false;
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });
+
+loadRealFrames();
 </script>
 
 </body>
