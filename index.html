@@ -60,13 +60,9 @@
 </head>
 <body>
 
-  <div class="filler">↓ Runterscrollen, um zu starten ↓</div>
-
   <div class="scroll-stage">
     <div class="video-sticky">
       <video id="scrub-video" muted playsinline preload="auto">
-        <source src="video1.mp4" type="video/mp4">
-        <source src="1.mkv" type="video/x-matroska">
         Dein Browser unterstützt das Video-Tag nicht.
       </video>
       <div class="info">Frame: <span id="frame-info">0</span> / <span id="duration-info">–</span>s</div>
@@ -83,6 +79,22 @@
 
     let duration = 0;
     let ticking = false;
+
+    // Breakpoint, ab dem die mobile Version geladen wird
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+    // Passende Quelle(n) je nach Gerät einfügen
+    if (isMobile) {
+      video.insertAdjacentHTML('afterbegin', `
+        <source src="2.webm" type="video/webm">
+      `);
+    } else {
+      video.insertAdjacentHTML('afterbegin', `
+        <source src="video1.mp4" type="video/mp4">
+        <source src="1.mkv" type="video/x-matroska">
+      `);
+    }
+    video.load();
 
     // Sobald die Metadaten (Länge etc.) geladen sind
     video.addEventListener('loadedmetadata', () => {
