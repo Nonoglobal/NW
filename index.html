@@ -1,1 +1,211 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scroll-Video Demo</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0b0b0b; font-family:sans-serif; color:#fff; }
 
+  /* Der Bereich, über den man scrollen muss, damit das Video komplett abläuft.
+     Höher = langsamer scrubbt das Video (mehr Scroll-Distanz pro Frame). */
+  .scroll-stage {
+    height: 400vh; /* <- hier die Scroll-Länge anpassen */
+    position: relative;
+  }
+
+  /* Das Canvas bleibt beim Scrollen fix im Bildschirm stehen */
+  .sticky-wrap {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #000;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 4px;
+    background: #ffffff;
+    z-index: 10;
+    transition: width 0.05s linear;
+  }
+
+  .hint {
+    position: fixed;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    opacity: 0.6;
+    z-index: 10;
+  }
+
+  .spacer {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="hint">Scrolle nach unten &darr; / nach oben &uarr;</div>
+
+<div class="spacer">Nach unten scrollen, um das Video zu starten</div>
+
+<div class="scroll-stage" id="scrollStage">
+  <div class="sticky-wrap">
+    <canvas id="canvas"></canvas>
+  </div>
+</div>
+
+<div class="spacer">Ende der Sequenz</div>
+
+<script>
+/* ==========================================================================
+   SCROLL-SCRUBBING PRINZIP
+   --------------------------------------------------------------------------
+   1. Das Video wird NICHT als <video> abgespielt (das ruckelt beim Scrubben
+      in vielen Browsern), sondern vorher in einzelne Bilder (Frames)
+      zerlegt, z.B. mit ffmpeg:
+
+        ffmpeg -i mein-video.mp4 -vf fps=24 frames/frame_%04d.jpg
+
+      (fps=24 = 24 Bilder pro Sekunde Video -> Anzahl der Frame-Dateien.
+       Weniger fps = weniger Dateien = kleinere Website, aber "gröberes"
+       Scrubben. 12-24 ist meist ein guter Kompromiss.)
+
+   2. Diese Bilder werden alle vorgeladen und in ein <canvas> gezeichnet.
+
+   3. Beim Scrollen wird berechnet, wie weit man durch den "scroll-stage"
+      Bereich gescrollt hat (0 = oben, 1 = ganz unten) und dieser Wert
+      wird auf die Frame-Nummer gemappt. Scrollt man hoch, sinkt der Wert
+      wieder -> das Video läuft rückwärts.
+   ========================================================================== */
+
+// ---- KONFIGURATION FÜR 1.mkv ----
+// Vorher im Terminal ausführen (im selben Ordner wie diese HTML-Datei):
+//
+//   mkdir frames
+//   ffmpeg -i 1.mkv -vf fps=24 frames/frame_%04d.jpg
+//
+// Danach zeigt ffmpeg an, wie viele Frames erzeugt wurden (letzte Zeile der
+// Ausgabe, z.B. "frame=  186"). Diese Zahl unten bei FRAME_COUNT eintragen.
+const FRAME_COUNT = 186;               // <- ANPASSEN: Anzahl der erzeugten Frame-Dateien
+const FRAME_PATH  = i => `frames/frame_${String(i).padStart(4,'0')}.jpg`;
+// Passt zur Benennung von ffmpeg oben: frames/frame_0001.jpg, frame_0002.jpg, ...
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const scrollStage = document.getElementById('scrollStage');
+const progressBar = document.getElementById('progressBar');
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// ---- ECHTE VIDEO-FRAMES LADEN (aus 1.mkv exportiert) ----
+const images = new Array(FRAME_COUNT);
+let loadedCount = 0;
+
+// Ladebalken, solange die Frames noch nicht alle im Speicher sind
+const loadingEl = document.createElement('div');
+loadingEl.style.cssText = 'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;font-size:16px;z-index:20;';
+loadingEl.textContent = 'Lade Frames... 0%';
+document.body.appendChild(loadingEl);
+
+function loadRealFrames() {
+  for (let i = 0; i < FRAME_COUNT; i++) {
+    const img = new Image();
+    img.src = FRAME_PATH(i + 1); // frame_0001.jpg = erstes Bild
+    img.onload = () => {
+      loadedCount++;
+      loadingEl.textContent = `Lade Frames... ${Math.round(loadedCount / FRAME_COUNT * 100)}%`;
+      if (loadedCount === FRAME_COUNT) {
+        loadingEl.remove();
+        drawFrame(0);
+        updateFrameFromScroll();
+      }
+    };
+    img.onerror = () => {
+      console.error('Frame konnte nicht geladen werden:', img.src);
+    };
+    images[i] = img;
+  }
+}
+
+function drawFrame(index) {
+  index = Math.max(0, Math.min(FRAME_COUNT - 1, index));
+  const img = images[index];
+  if (!img) return;
+
+  // "cover"-Skalierung: Bild füllt das Canvas ohne Verzerrung
+  const canvasRatio = canvas.width / canvas.height;
+  const imgRatio = img.width / img.height;
+  let sx, sy, sw, sh;
+  if (imgRatio > canvasRatio) {
+    sh = img.height;
+    sw = sh * canvasRatio;
+    sx = (img.width - sw) / 2;
+    sy = 0;
+  } else {
+    sw = img.width;
+    sh = sw / canvasRatio;
+    sx = 0;
+    sy = (img.height - sh) / 2;
+  }
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+}
+
+// ---- SCROLL -> FRAME MAPPING ----
+let ticking = false;
+
+function onScroll() {
+  if (!ticking) {
+    requestAnimationFrame(updateFrameFromScroll);
+    ticking = true;
+  }
+}
+
+function updateFrameFromScroll() {
+  const rect = scrollStage.getBoundingClientRect();
+  const stageHeight = scrollStage.offsetHeight - window.innerHeight;
+  // wie weit ist man innerhalb des scroll-stage Bereichs? (0 bis 1)
+  let progress = -rect.top / stageHeight;
+  progress = Math.max(0, Math.min(1, progress));
+
+  const frameIndex = Math.round(progress * (FRAME_COUNT - 1));
+  drawFrame(frameIndex);
+
+  progressBar.style.width = (progress * 100) + '%';
+  ticking = false;
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+
+// Beim Start: Frames aus 1.mkv laden
+loadRealFrames();
+</script>
+
+</body>
+</html>
